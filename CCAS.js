@@ -32,8 +32,14 @@ app.get('/Register', function(req,res){
 });
 
 app.post("/postSignup", function (req, res) {
-        console.log(req.body.name);
-        res.send(req.body.name);
+        var sql = "INSERT INTO student VALUES ?";
+        var value =[[req.body.SID,req.body.name]];
+  		connection.query(sql,[value], function (err, result) {
+    	if (err) throw err;
+    	console.log("1 record inserted");
+  });
+       
+       
 });
 app.listen(3000, '0.0.0.0', function() {
 	console.log('Hosting started...');
