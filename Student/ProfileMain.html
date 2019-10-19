@@ -3,19 +3,19 @@
 <title>Student Functionality</title>
 
 <head>
-<meta name="description" content="">  
-<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">  
+<meta name="description" content="">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<meta charset="utf-8">   
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body {margin: 0;}
 ul.topnav{
-	list-style-type: none; margin: 0; padding: 0; top :0; width: 100%; 
+	list-style-type: none; margin: 0; padding: 0; top :0; width: 100%;
 	position: fixed; overflow: hidden; background-color: #333;
 }
 ul.topnav li {float: left;}
@@ -36,7 +36,7 @@ ul.topnav li.center {
 	padding-left: 500px; font-size :30px;
 }/*
 @media screen and (max-width: 600px) {
-	ul.topnav li.right, 
+	ul.topnav li.right,
 	ul.topnav li {float: none;}
 }*/
 body {
@@ -70,6 +70,20 @@ body {
 #nam {
 		font-size: 27px; text-align: center;
 }
+.split {
+  height: 100%; position: fixed;
+  z-index: 1; top: 0; overflow-x: hidden;padding-top: 20px;
+}
+
+.left {left: 0;}
+.right {right: 0;}
+.anch a:hover, a:active{
+    text-decoration: none;
+    display: inline-block;
+    color: black;
+
+}
+
 </style>
 </head>
 
@@ -85,20 +99,21 @@ body {
 
 <body ng-app>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-		<div class="sidenav">
+		<div class="sidenav split left anch">
 			<img src="peclogo.png" width="250px" height="250px" style="margin: 0px 10px";>
-			<br>
-			<br>
-			<br>
-			<a href="/ViewStProfile">View Profile</a>
-			<a href="/UpdateStProfile">Update Profile</a>
-			<a href="/ViewStAchievements">View Achievements</a>
-			<a href="/RequestInitiation">Request Initiation</a>
+			<br><br><br>
+			<a ng-click="ViewProfile= true ;UpdateProfile= false; ViewAchievements = false;  RequestInitiation =false;" >View Profile</a>
+			<a ng-click="ViewProfile= false;UpdateProfile= true; ViewAchievements = false;  RequestInitiation =false;">Update Profile</a>
+			<a ng-click="ViewProfile= fasle ;UpdateProfile= false; ViewAchievements = true;  RequestInitiation =false;">View Achievements</a>
+			<a ng-click="ViewProfile= false ;UpdateProfile= false; ViewAchievements = false;  RequestInitiation =true;" >Request Initiation</a>
 		</div>
 
-		<div class="othernav">
-		<button ng-click="hideShow=(hideShow ? false : true)">Toggle</button>
-		<div ng-if="hideShow">hide and show content ...</div>
+		<div class="othernav split right">
+		<br><br><br>
+		<div ng-if="ViewProfile">Student Display Profile</div>
+		<div ng-if="UpdateProfile">Update Student Profile</div>
+		<div ng-if="ViewAchievements">View Achievements</div>
+		<div ng-if="RequestInitiation">RequestInitiation</div>
 	</div>
 
 </html>

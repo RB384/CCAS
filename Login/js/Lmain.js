@@ -2,12 +2,11 @@
 (function ($) {
     "use strict";
 
-
     /*==================================================================
-    [ Focus input ]*/
+    [ Focus Contact2 ]*/
     $('.input100').each(function(){
         $(this).on('blur', function(){
-            if($(this).val().trim() != "") {
+            if($(this).val() != "") {
                 $(this).addClass('has-val');
             }
             else {
@@ -15,15 +14,29 @@
             }
         })    
     })
-  
-  
+
+
+    /*==================================================================
+    [ Validate after type ]*/
+    $('.validate-input .input100').each(function(){
+        $(this).on('blur', function(){
+            if(validate(this) == false){
+                showValidate(this);
+                
+            }
+            else {
+                $(this).parent().addClass('true-validate');
+            }
+        })    
+    })
+
     /*==================================================================
     [ Validate ]*/
     var input = $('.validate-input .input100');
 
     $('.validate-form').on('submit',function(){
         var check = true;
-
+        alert("#4");
         for(var i=0; i<input.length; i++) {
             if(validate(input[i]) == false){
                 showValidate(input[i]);
@@ -38,23 +51,28 @@
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){
            hideValidate(this);
+           $(this).parent().removeClass('true-validate');
         });
     });
 
-    function validate (input) {
-        if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+    function validate (input){
+        if($(input).attr('name') == 'email') 
+        {
+            var x=/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/;
+            if($(input).val().trim().match(x) == null ) 
+            {
                 return false;
             }
         }
-        else {
-            alert("hello");
-            if($(input).val().trim() == ''){
-                return false;
-            }
-        }
+        else 
+        {
 
+           if($(input).val() == ''){
+                return false;
+            }
+        }
     }
+    
 
     function showValidate(input) {
         var thisAlert = $(input).parent();
@@ -68,22 +86,6 @@
         $(thisAlert).removeClass('alert-validate');
     }
     
-    /*==================================================================
-    [ Show pass ]*/
-    var showPass = 0;
-    $('.btn-show-pass').on('click', function(){
-        if(showPass == 0) {
-            $(this).next('input').attr('type','text');
-            $(this).addClass('active');
-            showPass = 1;
-        }
-        else {
-            $(this).next('input').attr('type','password');
-            $(this).removeClass('active');
-            showPass = 0;
-        }
-        
-    });
 
 
 })(jQuery);
