@@ -39,70 +39,66 @@
   				<select ng-model="Logintype">
   				<option value="Student">Student
   				<option value="Societyhead">Society Head
-  				<option value="Admin">Admin
+  				<option value="Admin">College Administrator
 				</select>
 				
 				
   				<div ng-switch ="Logintype">
   					<div ng-switch-when="Student">
 					<form class="login100-form validate-form p-b-33 p-t-5">
+						<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" name="username" placeholder="User name">
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+						</div>
 						
-						<input class="input100" type="text" ng-model="username" name="username" placeholder="Username">
-						
-
 						<div class="wrap-input100 validate-input" data-validate="Enter password">
 						<input class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100"></span>
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
 						</div>
 
 						<div class="container-login100-form-btn m-t-32">
 						<button class="login100-form-btn">Login</button>
 						</div>
 						
-						<a style="font-size:15px" href="../Registration/Registration.html"><u>New User? Signup</u></a>
-						</form>
-
-					</div>
-
-				<div ng-switch-when="Societyhead">
-					<form class="login100-form validate-form p-b-33 p-t-5">
-					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="User name">
-						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
-					</div>
-
-					<div class="container-login100-form-btn m-t-32">
-						<button class="login100-form-btn">
-							Login
-						</button>
-					</div>
+						<a style="font-size:20px" href="/Register"><u>New User? Signup</u></a>
 					</form>
 				</div>
 
-				<div ng-switch-when="Admin">
+				<div ng-switch-when="Societyhead">
 					<form class="login100-form validate-form p-b-33 p-t-5">
-					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<div class="wrap-input100 validate-input" data-validate = "Enter username">
 						<input class="input100" type="text" name="username" placeholder="User name">
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
-					</div>
+						</div>
 
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<div class="wrap-input100 validate-input" data-validate="Enter password">
 						<input class="input100" type="password" name="pass" placeholder="Password">
 						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
-					</div>
+						</div>
 
-					<div class="container-login100-form-btn m-t-32">
-						<button class="login100-form-btn">
-							Login
-						</button>
-					</div>
+						<div class="container-login100-form-btn m-t-32">
+						<button class="login100-form-btn">Login</button>
+						</div>
+				</form>
+			</div>
+
+				<div ng-switch-when="Admin">
+					<form class="login100-form validate-form p-b-33 p-t-5">
+						<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" name="username" placeholder="User name">
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+						</div>
+
+						<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100" type="password" name="pass" placeholder="Password">
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+						</div>
+
+						<div class="container-login100-form-btn m-t-32">
+						<button class="login100-form-btn">Login</button>
+						</div>
 					</form>
-					</div>
+				</div>
 				
 					</div>
 				</div>
