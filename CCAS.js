@@ -40,19 +40,25 @@ app.post('/authenticate', function(req, res) {
 
   connection.query('SELECT * FROM login_details WHERE username = ? and password = MD5(?) and interface = ?',[username,password,interface], function (error, results, fields) {
         if(results.length >0){
-               req.session.loggedin = true;
-							 if(interface == "Student"){ req.session.SID=username;  res.redirect('/StudentFunc');}
+
+							 if(interface == "Student"){ req.session.loggedin = true;  req.session.SID=username;  res.redirect('/StudentFunc');}
 							 else if(interface == "SocietyHead") {
-								 var societyname = req.body.societyname;
-								 req.session.Sname= soicietyname; res.redirect('/SocietyHeadFunc');}
-               else if(interface == "CollegeAdmin") {res.redirect('/CollegeAdmin');}
+								 var societyname = req.body.Society;
+								 connection.query('SELECT * FROM login_details WHERE username = ? and password = MD5(?) and interface = ? and Societyname =?',[username,password,interface,societyname],function (error, results2, fields) {
+									 	if(results2.length >0){
+															req.session.loggedin = true;
+															req.session.Sname= societyname;
+															res.redirect('/SocietyHeadFunc');
+												}
+											else 	res.send("<h1>Incorrect Username and/or password !!!  Please <a href=\"/login\"> Login</a> again with correct credentials");
+										});
+									}
+               else if(interface == "CollegeAdmin") {req.session.loggedin = true;res.redirect('/CollegeAdmin');}
             }
             else
-					res.send("<h1>Incorrect Username and/or password !!!  Please <a href=\"/login\"> Login</a> again with correct credentials");
-
- 	   });
+							res.send("<h1>Incorrect Username and/or password !!!  Please <a href=\"/login\"> Login</a> again with correct credentials");
 });
-
+});
 
 app.get('/Register', function(req,res){
 	if(req.session.loggedin){
@@ -81,6 +87,21 @@ app.get('/StudentFunc', function(req,res){
 }
 });
 
+app.post('/UpdateStProfile', function(req,res){
+	if(req.session.loggedin){
+		var values= [req.body.address,req.body.Email,req.body.Mobile,req.body.Year,req.body.CGPA,req.body.Backlog,req.session.SID];
+		console.log(values);
+		connection.query("Update Student_Details set address= ? ,email = ?, Mobile= ? ,Year= ?, CGPA= ? , backlog= ? where SID = ?",values,function (err, result, fields) {
+    if (err) throw err;
+	});
+		connection.query("SELECT * FROM Student_Details where SID = ?",[req.session.SID],function (err, result, fields) {
+		if (err) throw err;
+		res.redirect('/StudentFunc');
+});
+}
+	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
+});
+
 app.get('/SocietyHeadFunc', function(req,res){
 	/*if(req.session.loggedin){
 		req.session.destroy();
@@ -98,6 +119,13 @@ app.get('/CollegeAdmin', function(req,res){
 	var name = 'hello';
 
 	res.render('SocietyHeadFunc',{name:name});
+});
+
+app.get('/Logout', function(req,res){
+	if(req.session.loggedin){
+		req.session.destroy();
+	}
+	res.redirect('/');
 });
 
 app.listen(3000, '0.0.0.0', function() {

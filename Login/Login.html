@@ -47,12 +47,12 @@
   					<div ng-switch-when="Student">
 							<form class="login100-form validate-form p-b-33 p-t-5" action="/authenticate" method ="POST">
 							<div class="wrap-input100 validate-input" data-validate = "Enter username">
-									<input class="input100" type="text" name="username" placeholder="Student ID ">
+									<input class="input100" type="text" name="username" placeholder="Student ID " required>
 									<span class="focus-input100" data-placeholder="&#xe82a;"></span>
 							</div>
 
 							<div class="wrap-input100 validate-input" data-validate="Enter password">
-								<input class="input100" type="password" name="pass" placeholder="Password">
+								<input class="input100" type="password" name="pass" placeholder="Password" required>
 								<span class="focus-input100" data-placeholder="&#xe80f;"></span>
 							</div>
 								 <input type="hidden"  name="interface" value="Student">
@@ -65,14 +65,41 @@
 					</div>
 
 				<div ng-switch-when="Societyhead">
-					<form class="login100-form validate-form p-b-33 p-t-5">
+					<form class="login100-form validate-form p-b-33 p-t-5" action="/authenticate" method ="POST">
+					<select name="Society" class="input100" required>
+					<option value="SelectDefault">Select Society</option>
+					 <option value="ATS">Aerospace Technical Society (ATS)</option>
+					 <option value="ASCE">American Society of Civil Engineers (ASCE)</option>
+					 <option value="ACM_CSS">ACM CSS</option>
+					 <option value="IIM">Indian Institute of Metals (IIM)</option>
+					 <option value="ASPS">Astronomy and Space Physics Society (ASPS)</option>
+					 <option value="IEEE">Institute of Electronics and Electrical Engineers (IEEE)</option>
+					 <option value="IETE">The Institution of Electronics and Telecommunication Engineers(IETE)</option>
+					 <option value="SAE">Society of Automotive Engineers (SAE)</option>
+					 <option value="SME">Society of Manufacturing Engineers (SME)</option>
+					 <option value="SESI">Solar Energy Society of India (SESI)</option>
+					 <option value="RE">Robotics Society</option>
+					 <option value="ASME">American Society of Mechanical Engineers (ASME)</option>
+					 <option value="APC">Art and Photography Club (APC)</option>
+					 <option value="MC">Music Club</option>
+					 <option value="DC">Dramatics Club</option>
+					 <option value="SAASC">Speakers Association & Study Circle (SAASC)</option>
+					 <option value="PDC">Production and Design Club (PDC)</option>
+					 <option value="RC">Rotaract Club</option>
+					 <option value="CIMC">Communication, Information & Media Cell (CIM)</option>
+					 <option value="EED">English Editorial Board (EEB)</option>
+					 <option value="EIC">Entrepreneurship & Incubation Cell (EIC)</option>
+					 <option value="HED">Hindi Editorial Board</option>
+					 <option value="PED">Punjabi Editorial Board (PEB)</option>
+					 <option value="SCC">Student Counselling Cell (SCC)</option>
+					 </select>
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="Society Head ID">
+						<input class="input100" type="text" name="username" placeholder="Society Head ID" required>
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="pass" placeholder="Password" required>
 						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
 					</div>
 							<input type="hidden"  name="interface" value="SocietyHead">
@@ -83,14 +110,14 @@
 				</div>
 
 				<div ng-switch-when="Admin">
-					<form class="login100-form validate-form p-b-33 p-t-5">
+					<form class="login100-form validate-form p-b-33 p-t-5" action="/authenticate" method ="POST">
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="College Administrator ID">
+						<input class="input100" type="text" name="username" placeholder="College Administrator ID" required>
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="pass" placeholder="Password" required>
 						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
 					</div>
 						<input type="hidden"  name="interface" value="CollegeAdmin">
