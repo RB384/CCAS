@@ -74,10 +74,9 @@ app.post("/postSignup", function (req, res) {
 
 app.get('/StudentFunc', function(req,res){
 	if(req.session.loggedin){
-		con.query("SELECT * FROM Student_Details where SID = ?", function (err, result, fields) {
+		connection.query("SELECT * FROM Student_Details where SID = ?",[req.session.SID],function (err, result, fields) {
     	if (err) throw err;
-    	console.log(result);
-		res.render('Student',{data:res});
+    res.render('Student',{data:result[0]});
 });
 }
 });
@@ -88,7 +87,7 @@ app.get('/SocietyHeadFunc', function(req,res){
 	}*/
 	var name = 'hello';
 
-	res.render('SocietyHeadFunc',{name:name});
+	res.render('SocietyHeadFunc',{print:name});
 });
 
 app.get('/CollegeAdmin', function(req,res){

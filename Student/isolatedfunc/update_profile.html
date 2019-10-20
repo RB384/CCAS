@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style >
+
+.input100 {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  font-family: Poppins-Regular;
+  font-size: 22px;
+  color: #555555;
+  line-height: 1.2;
+  padding: 0 2px;
+}
+
+
+h4{font-size:25px; font-family: calibri;}
+
+</style>
+
+
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+
+
+
+
+<body ng-app="" >
+
+<div >
+
+<h2 ><u>Update Profile </u></h2>
+<h3 style="font-size:25px; font-family: calibri;">
+<form  name="Request" ng-model="Request" action="" method="POST">
+<table style="width:70%; margin-left:10%" >
+<tr>
+  <td style="width:35%">SID:</td>
+  <td style="width:30%"> <input type="text"  class="input100"   name="SID"  ng-model="SID" value="<%= data.SID %>" disabled></td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>Name:</td>
+  <td> <input type="text"  class="input100"   name="Name"  ng-model="Name" value="<%= data.name %>" disabled></td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>Father's Name:</td>
+   <td> <input type="text"  class="input100"   name="Father_Name"  ng-model="Father_Name" value="<%= data.father_name %>" disabled></td>
+   <td></td>
+</tr>
+
+<tr>
+  <td>Address:</td>
+  <td> <textarea class="input100" name="Address"  required ng-model="Address">"<%= data.address %>"</textarea></td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>Email:</td>
+  <td><input type="email" name="Email"  class="input100"  required ng-model="Email" value="<%= data.email %>"></td>
+  <td> <span ng-show="Request.Email.$dirty  && Request.Email.$invalid"><h4><b><p style="color:red">Enter valid Email</p></b></h4></span></td>
+</tr>
+
+<tr>
+  <td>Mobile Number</td>
+  <td> <input type="number"  class="input100" min="1000000000" max="9999999999"  name="Mobile" required ng-model="Mobile" value="<%= data.Mobile %>"></td>
+  <td><span ng-show="Request.Mobile.$dirty && Request.Mobile.$invalid"><h4><b><p style="color:red">Enter valid Mobile number</p></b></h4></span>  </td>
+</tr>
+
+<tr>
+  <td>UG_PG:</td>
+   <td> <input type="text"  class="input100"  placeholder="" name="UG_PG"  ng-model="UG_PG" value="<%= data.UG_PG %>" disabled></td>
+   <td></td>
+</tr>
+
+<tr>
+  <td>Branch:</td>
+  <td> <input type="text"  class="input100"  placeholder="" name="Branch"  ng-model="Branch" disabled value="<%= data.Branch %>"></td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>Year :</td>
+  <td>
+  <select  name="Year"  ng-model="Year" class="input100" required value="<%= data.Year %>">
+  <option value="Select Year">Select Year</option>
+  <option value="First">First</option>
+  <option value="Seconf">Second</option>
+  <option value="Third">Third</option>
+  <option value="Fourth">Fourth</option>
+  </select>
+</td>
+<td></td>
+
+</tr>
+  <td>CGPA:</td>
+  <td> <input type="text"  class="input100"  placeholder="" name="CGPA"  ng-model="CGPA" required value="<%= data.CGPA %>"></td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>Backlog :</td>
+  <td >
+  <select  name="Backlog"  ng-model="Backlog" class="input100" required value="<%= data.backlog %>">
+   <option value="Yes">Yes</option>
+   <option value="No">No</option>
+  </select>
+</td>
+<td></td>
+</tr>
+
+<tr rowspan=2>
+  <td>Disciplinary Action<br> taken against You:</td>
+  <td><input type="text"  class="input100"  placeholder="" name="UG_PG"  ng-model="UG_PG" value="<%= data.UG_PG %>" disabled></td>
+  </td></td>
+</tr>
+
+<tr>
+  <td></td>
+  <td style="width:30%"><button style="width:70%; background-color: #4CAF50; color:white; "
+    type="submit" class="button"><h3 style="font-size:25px; font-family: calibri;">Update </h3></button></td>
+  <td></td>
+  </tr>
+
+</table>
+</form>
+</div>
+</body>
+</html>
