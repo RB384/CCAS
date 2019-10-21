@@ -51,7 +51,7 @@ body {
 	overflow-x: hidden; padding-top: 20px;
 }
 .othernav{
-	height:100%;; width:82%; position:fixed; z-index:1;
+	height:100%;; width:82%; position:fixed;
 }
 .sidenav a {
 	padding: 6px 6px 6px 32px; text-decoration: none;
@@ -111,7 +111,7 @@ h4{font-size:25px; font-family: calibri;}
 </div>
 </header>
 
-<body ng-app>
+<body ng-app="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 		<div class="sidenav split left anch">
 			<img src="peclogo.png" width="250px" height="250px" style="margin: 0px 10px";>
@@ -191,15 +191,16 @@ h4{font-size:25px; font-family: calibri;}
 			</table>
 			</div>
 
-		<div ng-if="UpdateProfile" style="padding:10px 10px 10px 40px" ng-init="Email='<%= data.email %>'; Mobile='<%= data.Mobile %>';
-		Year='<%= data.Year %>';CGPA='<%= data.CGPA %>';Backlog='<%= data.backlog %>'">
+		<div ng-if="UpdateProfile"  style="padding:10px 10px 10px 40px"
+	 ng-init="Email='<%= data.email %>'; Mobile='<%= data.Mobile %>'; Year='<%= data.Year %>';
+	 CGPA='<%= data.CGPA %>';Backlog='<%= data.backlog %>';address='<%= data.address %>'" >
 			<h2 ><u>Update Profile </u></h2>
 			<h3 style="font-size:25px; font-family: calibri;">
-			<form  name="UpdateProfile" ng-model="UpdateProfile" action="" method="POST">
+			<form name="UpdateProfile" ng-model="UpdateProfile" action="/UpdateStProfile" method="POST">
 			<table style="width:70%; margin-left:10%" >
 			<tr>
 			  <td style="width:35%">SID:</td>
-			  <td style="width:30%"> <input type="text" style="background:#dddddd;" class="input100"   name="SID" value="<%= data.SID %>" disabled></td>
+			  <td style="width:40%"> <input type="text" style="background:#dddddd;" class="input100"   name="SID" value="<%= data.SID %>" disabled></td>
 			  <td></td>
 			</tr>
 
@@ -218,7 +219,7 @@ h4{font-size:25px; font-family: calibri;}
 
 			<tr>
 			  <td>Address:</td>
-			  <td> <textarea rows="3" class="input100" ><%= data.address %></textarea></td>
+			  <td> <textarea name ="address" ng-model="address" rows="3" class="input100" ></textarea></td>
 			  <td></td>
 			</tr>
 
@@ -288,7 +289,7 @@ h4{font-size:25px; font-family: calibri;}
 
 			<tr>
 			  <td></td>
-			  <td style="width:30%"><button style="width:70%; background-color: #4CAF50; color:white; "
+			  <td style="width:30%"><button  style="width:70%; background-color: #4CAF50; color:white; "
 			    type="submit" class="button"><h3 style="font-size:25px; font-family: calibri;">Update </h3></button></td>
 			  <td></td>
 			  </tr>
@@ -376,10 +377,8 @@ h4{font-size:25px; font-family: calibri;}
 			</tr>
 			</table>
 			</form>
+			{{PostDataResponse}}
 			</div>
 	</div>
-<script>
-
-</script>
-
+</body>-->
 </html>

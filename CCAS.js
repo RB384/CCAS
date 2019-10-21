@@ -85,12 +85,12 @@ app.get('/StudentFunc', function(req,res){
     res.render('Student',{data:result[0]});
 });
 }
+		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
 
 app.post('/UpdateStProfile', function(req,res){
 	if(req.session.loggedin){
 		var values= [req.body.address,req.body.Email,req.body.Mobile,req.body.Year,req.body.CGPA,req.body.Backlog,req.session.SID];
-		console.log(values);
 		connection.query("Update Student_Details set address= ? ,email = ?, Mobile= ? ,Year= ?, CGPA= ? , backlog= ? where SID = ?",values,function (err, result, fields) {
     if (err) throw err;
 	});
@@ -103,12 +103,10 @@ app.post('/UpdateStProfile', function(req,res){
 });
 
 app.get('/SocietyHeadFunc', function(req,res){
-	/*if(req.session.loggedin){
-		req.session.destroy();
-	}*/
-	var name = 'hello';
-
-	res.render('SocietyHeadFunc',{print:name});
+	if(req.session.loggedin){
+		res.sendFile(__dirname + '/SocietyHead/SocietyheadMain.html')
+}
+	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
 
 app.get('/CollegeAdmin', function(req,res){
@@ -121,10 +119,8 @@ app.get('/CollegeAdmin', function(req,res){
 	res.render('SocietyHeadFunc',{name:name});
 });
 
-app.get('/Logout', function(req,res){
-	if(req.session.loggedin){
-		req.session.destroy();
-	}
+app.get('/logout', function(req,res){
+	if(req.session.loggedin){req.session.destroy();}
 	res.redirect('/');
 });
 

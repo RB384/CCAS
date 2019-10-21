@@ -39,7 +39,7 @@
   				<select ng-model="Logintype">
   				<option value="Student">Student
   				<option value="Societyhead">Society Head
-  				<option value="Admin">Admin
+  				<option value="CollegeAdmin">College Administrator
 				</select>
 
 
@@ -109,7 +109,7 @@
 					</form>
 				</div>
 
-				<div ng-switch-when="Admin">
+				<div ng-switch-when="CollegeAdmin">
 					<form class="login100-form validate-form p-b-33 p-t-5" action="/authenticate" method ="POST">
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
 						<input class="input100" type="text" name="username" placeholder="College Administrator ID" required>

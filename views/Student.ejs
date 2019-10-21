@@ -98,19 +98,19 @@ body {
 h4{font-size:25px; font-family: calibri;}
 </style>
 
-</style>
 </head>
 
 <header>
 <div class="header" id="myHeader">
 		 <ul class="topnav">
-				<li class="right"><button href="/Logout">Logout</button></li>
+				<li class="right"><a href="/logout">Logout</a></li>
 				<li class="center">Student Functionality </li>
 			</ul>
 </div>
 </header>
 
 <body ng-app="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<div class="sidenav split left anch">
 			<img src="peclogo.png" width="250px" height="250px" style="margin: 0px 10px";>
 			<br><br><br>
@@ -181,7 +181,7 @@ h4{font-size:25px; font-family: calibri;}
 			  <td> <input style="border:0px;" type="text"  class="input100" name="Backlog"  value="<%= data.backlog %>" disabled></td>
 			</tr>
 
-			<tr rowspan=2>
+			<tr>
 			  <td>Disciplinary Action <br> taken against you :</td>
 			  <td><input style="border:0px;" type="text"  class="input100" name="Disciplinary" value="<%= data.disciplinary %>" disabled></td>
 			</tr>
