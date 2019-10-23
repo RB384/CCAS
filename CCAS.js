@@ -110,18 +110,20 @@ app.get('/SocietyHeadFunc', function(req,res){
 });
 
 app.get('/CollegeAdmin', function(req,res){
-	/*if(req.session
-	.loggedin){
-		req.session.destroy();
-	}*/
-	var name = 'hello';
-
-	res.render('SocietyHeadFunc',{name:name});
+	if(req.session.loggedin){
+		res.render('CollegeAdmin');
+	}
+	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
 
 app.get('/logout', function(req,res){
 	if(req.session.loggedin){req.session.destroy();}
 	res.redirect('/');
+});
+
+app.get('/homeredirect', function(req,res){
+	if(req.session.loggedin){}
+	else res.send("<h1>To access this functionality Please <a href=\"/login\"> Login</a>");
 });
 
 app.listen(3000, '0.0.0.0', function() {

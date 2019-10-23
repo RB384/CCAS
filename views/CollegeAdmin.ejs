@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<title>College Administrator</title>
+
+<head>
+<meta name="description" content="">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {margin: 0;}
+ul.topnav{
+	list-style-type: none; margin: 0; padding: 0; top :0; width: 100%;
+	position: fixed; overflow: hidden; background-color: #333;
+}
+ul.topnav li {float: left;}
+ul.topnav li a {
+	display: block; color: white; text-align: center;
+	padding: 14px 16px; text-decoration: none;
+}
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+ul.topnav li a.active {
+	font-color :white; font-size :25px;	background-color: #000000;
+}
+ul.topnav li.right {
+	font-color :white; font-size :20px; padding-top: 3px;
+	background-color: #000000; float: right;
+}
+ul.topnav li.center {
+	color :white; padding-top: 8px;
+	padding-left: 500px; font-size :30px;
+}
+@media screen and (max-width: 600px) {
+	ul.topnav li.right,
+	ul.topnav li {float: none;}
+}
+body {
+	/*background: url("images/dashboard.jpg");*/
+	background-repeat: no-repeat; background-size: cover;
+	height : 100%; width : 100%;
+	font-family: "Lato", sans-serif;
+}
+.sidenav {
+	height: 100%; width: 18%; position: fixed; z-index: 1;
+	top: 63   ; color: white; left: 0; background-color: #3081C8;
+	overflow-x: hidden; padding-top: 20px;
+}
+.sidenav a {
+	padding: 6px 6px 6px 32px; text-decoration: none;
+	font-size: 25px;color: #FFFFFF; display: block;
+}
+.sidenav a:hover {
+	color: #f1f1f1;
+}
+.main {
+	margin-top: 75px; margin-left: 200px;
+}
+/*@media screen and (max-height: 450px) {
+	.sidenav {padding-top: 15px;}
+	.sidenav a {font-size: 18px;}*/
+}
+#nam {
+		font-size: 27px; text-align: center;
+}
+.othernav{
+	height:100%;; width:82%; position:fixed;
+}
+.split {
+  height: 100%; position: fixed;
+  z-index: 1; top: 0; overflow-x: hidden;padding-top: 20px;
+}
+
+.left {left: 0;}
+.right {right: 0;}
+.anch a:hover, a:active{
+    text-decoration: none;
+    display: inline-block;
+    color: black;
+
+}
+.input100 {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  font-family: Poppins-Regular;
+  font-size: 22px;
+  color: #555555;
+  line-height: 1.2;
+  padding: 0 2px;
+}
+
+h4{font-size:25px; font-family: calibri;}
+</style>
+</head>
+
+<header>
+<div class="header" id="myHeader">
+		 <ul class="topnav">
+				<li class="center">College Administrator Functionality </li>
+			</ul>
+</div>
+</header>
+
+<body ng-app>
+		<div class="sidenav split left anch" style="width:300px;">
+			<img src="peclogo.png" width="270px" height="270px" style="margin: 0px 10px";>
+			<br><br><br>
+			<a ng-click="Award=false;IC=false; IC=false;COA=false;COE=false;Specify_Criteria=true; ">Specify Criteria</a>
+			<a ng-click="Award=false;IC=false;IC=false; COA=true;COE=false;Specify_Criteria=false; " >COA Elgible List</a>
+			<a ng-click="Award=false;IC=false; IC=false;COA=false;COE=true;Specify_Criteria=false; ">COE Eligible List</a>
+			<a ng-click="Award=false;IC=false; IC=true;COA=false;COE=false;Specify_Criteria=false; ">IC Eligible List</a>
+			<a ng-click="Award=true;IC=false; IC=false;COA=false;COE=false;Specify_Criteria=false; ">Generate Award List</a>
+			<a href="/logout">Logout</a>
+		</div>
+
+		<div class="othernav split right">
+		<br><br><br>
+			<div ng-if="Specify_Criteria" style="padding:10px 10px 10px 40px">
+				<h1>Specify_Criteria</h1>
+			</div>
+
+	   	<div ng-if="COA" style="padding:10px 10px 10px 40px" >
+				<p>COA
+			</div>
+
+			<div ng-if="COE" style="padding:10px 10px 10px 40px" >
+			<p>COE
+			</div>
+
+			<div ng-if="IC" style="padding:10px 10px 10px 40px" >
+		 	<p>IC
+	 		</div>
+
+	 		<div ng-if="Award" style="padding:10px 10px 10px 40px" >
+		 	<p>Award
+	 		</div>
+		</div>
+</body>
+
+</html>

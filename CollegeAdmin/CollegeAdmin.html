@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<title>College Administrator</title>
+
+<head>
+<meta name="description" content="">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {margin: 0;}
+ul.topnav{
+	list-style-type: none; margin: 0; padding: 0; top :0; width: 100%;
+	position: fixed; overflow: hidden; background-color: #333;
+}
+ul.topnav li {float: left;}
+ul.topnav li a {
+	display: block; color: white; text-align: center;
+	padding: 14px 16px; text-decoration: none;
+}
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+ul.topnav li a.active {
+	font-color :white; font-size :25px;	background-color: #000000;
+}
+ul.topnav li.right {
+	font-color :white; font-size :20px; padding-top: 3px;
+	background-color: #000000; float: right;
+}
+ul.topnav li.center {
+	color :white; padding-top: 8px;
+	padding-left: 500px; font-size :30px;
+}
+@media screen and (max-width: 600px) {
+	ul.topnav li.right,
+	ul.topnav li {float: none;}
+}
+body {
+	/*background: url("images/dashboard.jpg");*/
+	background-repeat: no-repeat; background-size: cover;
+	height : 100%; width : 100%;
+	font-family: "Lato", sans-serif;
+}
+.sidenav {
+	height: 100%; width: 18%; position: fixed; z-index: 1;
+	top: 63   ; color: white; left: 0; background-color: #3081C8;
+	overflow-x: hidden; padding-top: 20px;
+}
+.sidenav a {
+	padding: 6px 6px 6px 32px; text-decoration: none;
+	font-size: 25px;color: #FFFFFF; display: block;
+}
+.sidenav a:hover {
+	color: #f1f1f1;
+}
+.main {
+	margin-top: 75px; margin-left: 200px;
+}
+/*@media screen and (max-height: 450px) {
+	.sidenav {padding-top: 15px;}
+	.sidenav a {font-size: 18px;}*/
+}
+#nam {
+		font-size: 27px; text-align: center;
+}
+.othernav{
+	height:100%;; width:82%; position:fixed;
+}
+.split {
+  height: 100%; position: fixed;
+  z-index: 1; top: 0; overflow-x: hidden;padding-top: 20px;
+}
+
+.left {left: 0;}
+.right {right: 0;}
+.anch a:hover, a:active{
+    text-decoration: none;
+    display: inline-block;
+    color: black;
+
+}
+.input100 {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  font-family: Poppins-Regular;
+  font-size: 22px;
+  color: #555555;
+  line-height: 1.2;
+  padding: 0 2px;
+}
+
+
+table, th, td {
+  border: 2px solid black;
+}
+
+
+th, td {
+  padding: 5px;
+}
+
+
+h4{font-size:25px; font-family: calibri;}
+</style>
+</head>
+
+<header>
+<div class="header" id="myHeader">
+		 <ul class="topnav">
+				<li class="center">College Administrator Functionality </li>
+			</ul>
+</div>
+</header>
+
+<body ng-app>
+		<div class="sidenav split left anch" style="width:300px;">
+			<img src="peclogo.png" width="270px" height="270px" style="margin: 0px 10px";>
+			<br><br><br>
+			<a ng-click="Award=false;IC=false; IC=false;COA=false;COE=false;Specify_Criteria=true; ">Specify Criteria</a>
+			<a ng-click="Award=false;IC=false;IC=false; COA=true;COE=false;Specify_Criteria=false; " >COA Elgible List</a>
+			<a ng-click="Award=false;IC=false; IC=false;COA=false;COE=true;Specify_Criteria=false; ">COE Eligible List</a>
+			<a ng-click="Award=false;IC=false; IC=true;COA=false;COE=false;Specify_Criteria=false; ">IC Eligible List</a>
+			<a ng-click="Award=true;IC=false; IC=false;COA=false;COE=false;Specify_Criteria=false; ">Generate Award List</a>
+			<a href="/logout">Logout</a>
+		</div>
+
+		<div class="othernav split right">
+		<br><br>
+			<div ng-if="Specify_Criteria" style="padding:10px 10px 10px 40px">
+				<h3 style="font-size:25px; font-family: calibri;">
+				<form  name="Request" ng-model="Request" action="" method="POST">
+          <h2><u>Cultural Clubs & Technical Societies Certification Criteria Specification</u></h2>
+					<br>
+          <table style="width:70%; margin-left:10%" >
+          <tr>
+          <th style="width:70%;">Marks For Participation in Activities</th>
+          <th style="width:15%">Marks For Participation</th>
+          <th>Marks For Award</th>
+          </tr>
+
+
+          <tr>
+					<td >PEC and other institutes </td>
+					<td > <input type="text"  class="input100"   name="Pec_Participate"  ng-model="Pec_Participate" required></td>
+					<td > <input type="text"  class="input100"   name="Pec_Award"  ng-model="Pec_Award" required></td>
+          </tr>
+
+					<tr>
+					<td >Premier institutes like IITs, NITs, IIMs,IIITs,AIMS etc </td>
+					<td ><input type="text"  name="Premier_Participate"  class="input100"  ng-model="Premier_Participate" required></td>
+					<td ><input type="text"  name="Premier_Award"  class="input100"  ng-model="Premier_Award" required></td>
+          </tr>
+
+					<tr>
+					<td >International (held outside India)</td>
+					<td ><input type="text"   name="International_Participate"   class="input100" ng-model="International_Participate" required></td>
+					<td ><input type="text"   name="International_Award"   class="input100" ng-model="International_Award" required></td>
+          </tr>
+
+
+				</table>
+        <br>
+        <br>
+
+				<table style="width:70%; margin-left:10%" >
+				<tr>
+				<th style="width:90%;">Marks For Organizing  Activity</th>
+				<th>Organizing Marks</th>
+				</tr>
+
+
+				<tr>
+				<td >Organizing Event with more than 250 members </td>
+				<td > <input type="text"  class="input100"   name="gt250"  ng-model="gt250" required></td>
+				</tr>
+
+				<tr>
+				<td >Organizing Event with less than 250 members</td>
+				<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
+				</tr>
+
+				<tr>
+				<td style="width:30%">Maximum Number of Co-ordinators considered for Certification</td>
+				<td style="width:30%"><input type="text"   name="max_coordinator"   class="input100" ng-model="max_coordinator" required></td>
+				</tr>
+
+
+			</table>
+
+      <br>
+      <br>
+
+			<table style="width:70%; margin-left:10%" >
+			<tr>
+			<th style="width:90%;">Eligibilty Criteria</th>
+			<th>Marks required </th>
+			</tr>
+
+
+			<tr>
+			<td >For Institue Color : Minimum marks in each year from 2nd year to 4th year</td>
+			<td > <input type="text"  class="input100"   name="min_IC"  ng-model="min_IC" required></td>
+			</tr>
+
+			<tr>
+			<td >For Certificate of Excellence : Minimum marks in each of the two preceding years</td>
+			<td ><input type="text"  name="min_COE"  class="input100"  ng-model="min_COE" required></td>
+			</tr>
+
+			<tr>
+			<td >For Certificate of Appreciation : Minimum marks in preceding year </td>
+			<td ><input type="text"   name="min_COA"   class="input100" ng-model="min_COA" required></td>
+			</tr>
+
+
+		</table>
+    <br>
+    <br>
+
+
+		<table style="width:70%; margin-left:10%" >
+		<tr>
+		<th style="width:90%;">Certification Max Limit</th>
+		<th>Value Associated</th>
+		</tr>
+
+
+		<tr>
+		<td >Maximum Number of Institute Color (Technical)</td>
+		<td > <input type="text"  class="input100"   name="IC_T"  ng-model="IC_T" required></td>
+		</tr>
+
+		<tr>
+		<td >Maximum Number of Institute Color (Cultural)</td>
+		<td ><input type="text"  name="IC_C"  class="input100"  ng-model="IC_C" required></td>
+		</tr>
+
+		<tr>
+		<td > Certificate of  Appreciation is what times number of IC</td>
+		<td ><input type="text"   name="COA_times"   class="input100" ng-model="COA_times" required></td>
+		</tr>
+
+
+		<tr>
+		<td > Certificate of  Excellence is what times number of IC</td>
+		<td ><input type="text"   name="COE_times"   class="input100" ng-model="COE_times" required></td>
+		</tr>
+   </table>
+		<br>
+    <br>
+ 	 <button style="width:70%; background-color: #4CAF50; color:white;margin-left: 10%" type="submit" class="button"><h3 style="font-size:25px; font-family: calibri;">Update Certification Criteria </h3></button></td>
+   </h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    			</form>
+
+
+        	</div>
+
+
+
+
+
+
+
+
+
+	   	<div ng-if="COA" style="padding:10px 10px 10px 40px" >
+				<p>COA
+			</div>
+
+			<div ng-if="COE" style="padding:10px 10px 10px 40px" >
+			<p>COE
+			</div>
+
+			<div ng-if="IC" style="padding:10px 10px 10px 40px" >
+		 	<p>IC
+	 		</div>
+
+	 		<div ng-if="Award" style="padding:10px 10px 10px 40px" >
+		 	<p>Award
+	 		</div>
+		</div>
+</body>
+
+</html>
