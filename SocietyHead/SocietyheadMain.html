@@ -124,7 +124,7 @@ h4{font-size:25px; font-family: calibri;}
 		<div ng-if="Add_Event" style="padding:10px 10px 10px 40px">
 			<h2 style="margin-left:8%"><u> Event Details </u></h2>
 			<h3 style="font-size:25px; font-family: calibri;">
-			<form  name="Request" ng-model="Request" action="" method="POST">
+			<form  name="Request" ng-model="Request" action="/AddEventDetails" method="POST" enctype="multipart/form-data">
 			<table style="width:70%; margin-left:12%;">
 				<tr>
 				<td style="width:36%;">Event Name :</td>
@@ -140,7 +140,7 @@ h4{font-size:25px; font-family: calibri;}
 
 				<tr>
 				<td >Event Date :</td>
-				<td><input type="date"   name="date"   class="input100" ng-model="Event_Date" required></td>
+				<td><input type="date"   name="Event_Date"   class="input100" ng-model="Event_Date" required></td>
 				<td><span ng-show="Request.Event_Date.$touched && Request.Event_Date.$invalid"><h4><b><p style="color:red">Event Date required</p></b></h4></span>   </td>
 				</tr>
 
@@ -174,9 +174,9 @@ h4{font-size:25px; font-family: calibri;}
 				<td><br><br>Consider for Certification :<br><br><br></td>
 				<td>
         <br>
-				<input type="checkbox" ng-checked="Consider_for_Certification">&nbsp&nbsp Participation<br>
-				<input type="checkbox" ng-checked="Consider_for_Certification">&nbsp&nbsp Organizing<br>
-				<input type="checkbox" ng-checked="Consider_for_Certification">&nbsp&nbsp Achievement<br>
+				<input type="checkbox" name="P_Certification">&nbsp&nbsp Participation<br>
+				<input type="checkbox" name="O_Certification">&nbsp&nbsp Organizing<br>
+				<input type="checkbox" name="A_Certification">&nbsp&nbsp Achievement<br>
 				<br>
 				</td>
 				<td><span ng-show="Request.Consider_for_Certification.$touched && Request.Consider_for_Certification.$invalid"><h4><b><p style="color:red">Consider for Certification Data required</p></b></h4></span>   </td>
@@ -202,7 +202,7 @@ h4{font-size:25px; font-family: calibri;}
 	   	<div ng-if="Add_Workshop" style="padding:10px 10px 10px 40px" >
 				<h2 style="margin-left:8%"><u> Workshop Details </u></h2>
 				<h3 style="font-size:25px; font-family: calibri;">
-				<form  name="Request" ng-model="Request" action="" method="POST">
+				<form  name="Request" ng-model="Request" action="/AddWorkshopDetails" method="POST">
 				<table style="width:70%; margin-left:12%" >
 					<tr>
 					<td style="width:36%">Workshop Name :</td>
@@ -218,7 +218,7 @@ h4{font-size:25px; font-family: calibri;}
 
 					<tr>
 					<td>Workshop Date :</td>
-					<td><input type="date"   name="date"   class="input100" ng-model="Workshop_Date" required></td>
+					<td><input type="date"   name="Workshop_Date"   class="input100" ng-model="Workshop_Date" required></td>
 					<td ><span ng-show="Request.Workshop_Date.$touched && Request.Workshop_Date.$invalid"><h4><b><p style="color:red">Workshop Date required</p></b></h4></span>   </td>
 					</tr>
 
@@ -251,8 +251,8 @@ h4{font-size:25px; font-family: calibri;}
 					<td>Consider for Certification :</td>
 				  <td>
                <br>
-					     <input type="checkbox" ng-checked="Consider_for_Certification">&nbsp&nbsp Participation<br>
-							 <input type="checkbox" ng-checked="Consider_for_Certification">&nbsp&nbsp Organizing<br>
+							 <input type="checkbox" name="P_Certification">&nbsp&nbsp Participation<br>
+			 					<input type="checkbox" name="O_Certification">&nbsp&nbsp Organizing<br>
                <br>
 				  </td>
 				 	<td><span ng-show="Request.Consider_for_Certification.$touched && Request.Consider_for_Certification.$invalid"><h4><b><p style="color:red">Consider for Certification Data required</p></b></h4></span>   </td>

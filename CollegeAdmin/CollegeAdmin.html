@@ -147,20 +147,21 @@ h4{font-size:25px; font-family: calibri;}
 
           <tr>
 					<td >PEC and other institutes </td>
-					<td > <input type="text"  class="input100"   name="Pec_Participate"  ng-model="Pec_Participate" required></td>
-					<td > <input type="text"  class="input100"   name="Pec_Award"  ng-model="Pec_Award" required></td>
+					<td > <input type="text"  class="input100"   name="Pec_Participation"
+						value="<%= pmarks.PEC_Participation %>" required></td>
+					<td ><input type="text"  class="input100"   name="Pec_Award" value= "<%= pmarks.PEC_Award %>" required></td>
           </tr>
 
 					<tr>
 					<td >Premier institutes like IITs, NITs, IIMs,IIITs,AIMS etc </td>
-					<td ><input type="text"  name="Premier_Participate"  class="input100"  ng-model="Premier_Participate" required></td>
-					<td ><input type="text"  name="Premier_Award"  class="input100"  ng-model="Premier_Award" required></td>
+					<td ><input type="text"  name="Pr_Participation"  class="input100" value="<%= pmarks.Pr_Participation %>" required></td>
+					<td ><input type="text"  name="Pr_Award"  class="input100"  value="<%= pmarks.Pr_Award %>" required></td>
           </tr>
 
 					<tr>
 					<td >International (held outside India)</td>
-					<td ><input type="text"   name="International_Participate"   class="input100" ng-model="International_Participate" required></td>
-					<td ><input type="text"   name="International_Award"   class="input100" ng-model="International_Award" required></td>
+					<td ><input type="text"   name="Int_Participation"   class="input100" value="<%= pmarks.Int_Participation %>" required></td>
+					<td ><input type="text"   name="Int_Award"   class="input100" value="<%= pmarks.Int_Award %>" required></td>
           </tr>
 
 
@@ -177,17 +178,17 @@ h4{font-size:25px; font-family: calibri;}
 
 				<tr>
 				<td >Organizing Event with more than 250 members </td>
-				<td > <input type="text"  class="input100"   name="gt250"  ng-model="gt250" required></td>
+				<td > <input type="text"  class="input100"   name="Gt250"  value="<%= omarks.Gt250 %>" required></td>
 				</tr>
 
 				<tr>
 				<td >Organizing Event with less than 250 members</td>
-				<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
+				<td ><input type="text"  name="Lt250"  class="input100"  value="<%= omarks.Lt250 %>" required></td>
 				</tr>
 
 				<tr>
 				<td style="width:30%">Maximum Number of Co-ordinators considered for Certification</td>
-				<td style="width:30%"><input type="text"   name="max_coordinator"   class="input100" ng-model="max_coordinator" required></td>
+				<td style="width:30%"><input type="text"   name="Max_Organizers"   class="input100" value="<%= omarks.Max_Organizers %>" required></td>
 				</tr>
 
 
@@ -205,17 +206,17 @@ h4{font-size:25px; font-family: calibri;}
 
 			<tr>
 			<td >For Institue Color : Minimum marks in each year from 2nd year to 4th year</td>
-			<td > <input type="text"  class="input100"   name="min_IC"  ng-model="min_IC" required></td>
+			<td > <input type="text"  class="input100"   name="IC" value="<%= eligibility.IC %>" required></td>
 			</tr>
 
 			<tr>
 			<td >For Certificate of Excellence : Minimum marks in each of the two preceding years</td>
-			<td ><input type="text"  name="min_COE"  class="input100"  ng-model="min_COE" required></td>
+			<td ><input type="text"  name="COE"  class="input100"   value="<%= eligibility.COE %>" required></td>
 			</tr>
 
 			<tr>
 			<td >For Certificate of Appreciation : Minimum marks in preceding year </td>
-			<td ><input type="text"   name="min_COA"   class="input100" ng-model="min_COA" required></td>
+			<td ><input type="text"   name="COA"   class="input100" value="<%= eligibility.COA %>" required></td>
 			</tr>
 
 
@@ -233,61 +234,31 @@ h4{font-size:25px; font-family: calibri;}
 
 		<tr>
 		<td >Maximum Number of Institute Color (Technical)</td>
-		<td > <input type="text"  class="input100"   name="IC_T"  ng-model="IC_T" required></td>
+		<td > <input type="text"  class="input100"   name="Max_IC_Technical"  value="<%= award.Max_IC_Technical %>"required></td>
 		</tr>
 
 		<tr>
 		<td >Maximum Number of Institute Color (Cultural)</td>
-		<td ><input type="text"  name="IC_C"  class="input100"  ng-model="IC_C" required></td>
+		<td ><input type="text"  name="Max_IC_Cultural"  class="input100"  value="<%= award.Max_IC_Cultural %>"required></td>
 		</tr>
 
 		<tr>
 		<td > Certificate of  Appreciation is what times number of IC</td>
-		<td ><input type="text"   name="COA_times"   class="input100" ng-model="COA_times" required></td>
+		<td ><input type="text"   name="COA_times"   class="input100"  value="<%= award.COA_times %>" required></td>
 		</tr>
 
 
 		<tr>
 		<td > Certificate of  Excellence is what times number of IC</td>
-		<td ><input type="text"   name="COE_times"   class="input100" ng-model="COE_times" required></td>
+		<td ><input type="text"   name="COE_times"   class="input100"  value="<%= award.COE_times %>" required></td>
 		</tr>
    </table>
 		<br>
     <br>
  	 <button style="width:70%; background-color: #4CAF50; color:white;margin-left: 10%" type="submit" class="button"><h3 style="font-size:25px; font-family: calibri;">Update Certification Criteria </h3></button></td>
    </h3>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    			</form>
-
-
-        	</div>
-
-
-
-
-
-
-
-
+</form>
+</div>
 
 	   	<div ng-if="COA" style="padding:10px 10px 10px 40px" >
 				<p>COA
