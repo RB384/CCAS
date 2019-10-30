@@ -80,7 +80,7 @@
         }
         else if($(input).attr('name') == 'CGPA')
         {
-            var x=/^\d{1}$/;
+            var x=/^[0-9][.][0-9]+$/;
             var y=/^[1][0]$/;
             if($(input).val().trim().match(x) == null )
             {
