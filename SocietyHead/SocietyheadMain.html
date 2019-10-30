@@ -93,9 +93,34 @@ body {
   color: #555555;
   line-height: 1.2;
   padding: 0 2px;
-}
+ }
 
 h4{font-size:25px; font-family: calibri;}
+.RequestApproval th{
+	border: 2px solid black;
+	padding:5px;
+	font-family: calibri;
+	font-size:20px;
+	text-align: center;
+
+}
+.RequestApproval td {
+	border: 2px solid black;
+	padding:5px;
+	font-family: calibri;
+	font-size:18px;
+	font-decoration:none;
+
+}
+.RequestApproval table {
+	border: 2px solid black;
+}
+
+
+
+
+
+
 </style>
 </head>
 
@@ -278,7 +303,45 @@ h4{font-size:25px; font-family: calibri;}
 				</form>
 			</div>
 			<div ng-if="Request_Approval" style="padding:10px 10px 10px 40px">
-			<h1>	Request Approval </h1>
+			<h1 style="margin-left:6%" >	Request Approval </h1>
+      <br>
+      <br>
+
+
+      <table  class="RequestApproval" style="width:75%; margin-left:12%">
+      <tr>
+      <th  style="width:10%">  SID                                         </th>
+      <th  style="width:15%"> Student Name                                 </th>
+      <th  style="width:15%">  Event name                                  </th>
+      <th  style="width:20%">  Event Location                              </th>
+      <th  style="width:10%">  Achievement Type                            </th>
+      <th  style="width:20%">  Institute Type                              </th>
+      <th  style="width:10%">  Uploaded Certificate                       </th>
+      </tr>
+
+
+
+
+
+
+
+
+
+
+      </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
 			</div>
 </div>
 </body>
