@@ -1,0 +1,104 @@
+<style>
+.input100 {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  font-family: Poppins-Regular;
+  font-size: 22px;
+  color: #555555;
+  line-height: 1.2;
+  padding: 0 2px;
+}
+.SocietyDropDown th{
+	border: 2px solid black;
+	padding:5px;
+	font-family: calibri;
+	font-size:20px;
+	text-align: center;
+
+}
+.SocietyDropDown td {
+	border: 2px solid black;
+	padding:5px;
+	font-family: calibri;
+	font-size:18px;
+	font-decoration:none;
+
+}
+.SocietyDropDown table {
+	border: 2px solid black;
+}
+table, th, td {
+  margin-left: 80px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+</style>
+<div ng-if="">
+ 		 <h2 ><u>COA Eligible List</u></h2>
+ 		<table class="SocietyDropDown" style="border:0px ; width:70%" > 
+		<th style="border:0px ; width:25%" >Select Society :</th>
+		  <th style="border:0px ">
+		  <select    ng-model="Society" class="input100" required>
+		  <option value="ATS">Aerospace Technical Society (ATS)</option>
+		  <option value="ASCE">American Society of Civil Engineers (ASCE)</option>
+		  <option value="ACM_CSS">ACM CSS</option>
+		  <option value="IIM">Indian Institute of Metals (IIM)</option>
+		  <option value="ASPS">Astronomy and Space Physics Society (ASPS)</option>
+		  <option value="IEEE">Institute of Electronics and Electrical Engineers (IEEE)</option>
+		  <option value="IETE">The Institution of Electronics and Telecommunication Engineers(IETE)</option>
+		  <option value="SAE">Society of Automotive Engineers (SAE)</option>
+		  <option value="SME">Society of Manufacturing Engineers (SME)</option>
+		  <option value="SESI">Solar Energy Society of India (SESI)</option>
+		  <option value="RE">Robotics Society</option>
+		  <option value="ASME">American Society of Mechanical Engineers (ASME)</option>
+		  <option value="APC">Art and Photography Club</option>
+		  <option value="MC">Music Club</option>
+		  <option value="DC">Dramatics Club</option>
+		  <option value="SAASC">Speakers Association & Study Circle (SAASC)</option>
+		  <option value="PDC">Production and Design Club</option>
+		  <option value="RC">Rotaract Club</option>
+		  <option value="CIMC">Communication, Information & Media Cell</option>
+		  <option value="EED">English Editorial Board</option>
+		  <option value="EIC">Entrepreneurship & Incubation Cell</option>
+		  <option value="HED">Hindi Editorial Board</option>
+		  <option value="PED">Punjabi Editorial Board</option>
+		  <option value="SCC">Student Counselling Cell</option>
+		  
+		
+		  </select>
+		</th >
+		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " type="submit" class="button">
+				<h3 style="font-size:20px; font-family: calibri;">Display List </h3></button></th>
+		</table>
+		<br>
+		
+		<table style="width:80%">
+  <tr>
+    <th>Year</th>
+    <th>SID</th>
+	<th>Name</th>
+	<th>P1</th>
+	<th>A1</th>
+	<th>O1</th>
+	<th>P2</th>
+	<th>A2</th>
+	<th>O2</th>
+	<th>P3</th>
+	<th>A3</th>
+	<th>O3</th>
+	<th>P4</th>
+	<th>A4</th>
+	<th>O4</th>
+  </tr>
+  <tr>
+    
+  </tr>
+</table>
+
+
