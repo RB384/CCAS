@@ -227,7 +227,7 @@ h4{font-size:25px; font-family: calibri;}
 	   	<div ng-if="Add_Workshop" style="padding:10px 10px 10px 40px" >
 				<h2 style="margin-left:8%"><u> Workshop Details </u></h2>
 				<h3 style="font-size:25px; font-family: calibri;">
-				<form  name="Request" ng-model="Request" action="/AddWorkshopDetails" method="POST">
+				<form  name="Request" ng-model="Request" action="/AddWorkshopDetails" method="POST" enctype="multipart/form-data">
 				<table style="width:70%; margin-left:12%" >
 					<tr>
 					<td style="width:36%">Workshop Name :</td>

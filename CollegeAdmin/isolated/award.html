@@ -1,0 +1,75 @@
+<style>
+.input100 {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  font-family: Poppins-Regular;
+  font-size: 22px;
+  color: #555555;
+  line-height: 1.2;
+  padding: 0 2px;
+}
+.SocietyDropDown th{
+	border: 2px solid black;
+	padding:5px;
+	font-family: calibri;
+	font-size:20px;
+	text-align: center;
+
+}
+.SocietyDropDown td {
+	border: 2px solid black;
+	padding:5px;
+	font-family: calibri;
+	font-size:18px;
+	font-decoration:none;
+
+}
+.SocietyDropDown table {
+	border: 2px solid black;
+}
+table, th, td {
+  margin-left: 80px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+</style>
+<div ng-if="">
+ 		 <h2 ><u>Award List</u></h2>
+ 		<table class="SocietyDropDown" style="border:0px ; width:70%" > 
+		<th style="border:0px ; width:25%" >Select Award :</th>
+		  <th style="border:0px ">
+		  <select    ng-model="Society" class="input100" required>
+		  
+		  <option value="COA">Certificate of Appreciation(COA)</option>
+		  <option value="COE">Certificate of Excellence(COE)</option>
+		  <option value="IC">Institute Color(IC)</option>
+		  </select>
+		</th >
+		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " type="submit" class="button">
+				<h3 style="font-size:20px; font-family: calibri;">Display Award List </h3></button></th>
+		</table>
+		<br>
+		
+		<table style="width:80%">
+  <tr>
+    <th>Year</th>
+    <th>SID</th>
+	<th>Name</th>
+	<th>Society Associated</th>
+	<th>Participation Marks</th>
+	<th>Achievement Marks</th>
+	<th>Organizing Marks</th>
+	<th>Total Marks</th>
+  </tr>
+  <tr>
+    
+  </tr>
+</table>
+
+
