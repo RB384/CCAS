@@ -14,6 +14,7 @@ app.use(express.static('Student'));
 app.use(express.static('SocietyHead'));
 app.use(express.static('uploads'));
 app.use(express.static('DisplayCriteria'));
+app.use(express.static('uploads/Requests'));
 
 app.use(session({
 	secret: 'secret',
@@ -29,7 +30,19 @@ var storage = multer.diskStorage({
       cb(null,"UploadCertificationData.xlsx");
   }
 });
+
+var storage2 = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './SocietyHead/Requests')
+  },
+  filename: function (req, file, cb) {
+			var filename =file.fieldname + '-' + req.session.SID + '-' + Date.now();
+			req.session.requestupload = filename;
+      cb(null,filename);
+  }
+});
 var upload = multer({ storage: storage });
+var uploadrequest = multer({ storage: storage2 });
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
@@ -103,6 +116,17 @@ app.get('/StudentFunc', function(req,res){
 		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
 
+app.post('/RequestInitiation',  uploadrequest.single('Certificate'),function(req,res){
+	if(req.session.loggedin){
+		var sql = "INSERT INTO Pending_Requests VALUES ?";
+		var filepath = "Requests" + "/" + req.session.requestupload;
+		var value =[[req.session.SID,req.body.Event_Name,req.body.Event_Location,req.body.Event_Date,req.body.Achievement,
+		req.body.Institute_Type,req.body.Society,filepath,0]];
+		connection.query(sql,[value], function (err, result) {
+		if (err) throw err;});
+}
+		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
+});
 app.post('/UpdateStProfile', function(req,res){
 	if(req.session.loggedin){
 		var values= [req.body.address,req.body.Email,req.body.Mobile,req.body.Year,req.body.CGPA,req.body.Backlog,req.session.SID];
@@ -185,7 +209,7 @@ app.get('/CollegeAdmin', function(req,res){
 	if(req.session.loggedin){
 		connection.query("SELECT * FROM participation_marks, organizing_marks ,eligibilty,award_distribution LIMIT 1",function (err, result, fields) {
 		if (err) throw err;
-		res.render('CollegeAdmin',{pmarks:result[0],omarks:result[0],eligibility:result[0],award:result[0]});
+		res.render('CollegeAdmin',{pmarks:result[0],omarks:result[0],eligibility:result[0],award:result[0],variable:""});
 	});
 	}
 	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
@@ -217,6 +241,14 @@ app.post('/UpdateCriteria', function(req,res){
 	}
 	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
+app.get('/CoaEligible', function(req,res){
+	if(req.session.loggedin){
+		console.log("HELLOworld");
+		var data =[{SID : 17103027},{SID : 17103028}];
+		res.send(data);
+}
+});
+
 
 app.get('/logout', function(req,res){
 	if(req.session.loggedin){req.session.destroy();}
