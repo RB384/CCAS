@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Eligible">
 <title>College Administrator</title>
 
 <head>
@@ -149,7 +149,7 @@ h4{font-size:25px; font-family: calibri;}
 			<a href="/logout">Logout</a>
 		</div>
 
-		<div class="othernav split right" ng-app="Eligible">
+		<div class="othernav split right" >
 		<br><br>
 			<div ng-if="Specify_Criteria" style="padding:10px 10px 10px 40px">
 				<h3 style="font-size:25px; font-family: calibri;">
@@ -279,7 +279,7 @@ h4{font-size:25px; font-family: calibri;}
 </form>
 </div>
 
-	   	<div   ng-controller ="COA" ng-if="COA" style="padding:10px 10px 10px 40px" >
+	   	<div   ng-controller ="Appreciation" ng-if="COA" style="padding:10px 10px 10px 40px" >
 				<h2 ><u>COA Eligible List</u></h2>
  	 		<table class="SocietyDropDown" style="border:0px ; width:70%" >
  			<th style="border:0px ; width:25%" >Select Society :</th>
@@ -324,7 +324,21 @@ h4{font-size:25px; font-family: calibri;}
  			<th>A2</th><th>O2</th><th>P3</th><th>A3</th><th>O3</th><th>P4</th><th>A4</th><th>O4</th>
  	  </tr>
  	  <tr ng-repeat ="Student in CoaEligble">
-			<td>{{Student.SID}} </td>
+			<td>{{Student.Year}}</td>
+			<td>{{Student.SID}}</td>
+			<td>{{Student.name}}</td>
+			<td>{{Student.P1}}</td>
+			<td>{{Student.A1}}</td>
+			<td>{{Student.O1}}</td>
+			<td>{{Student.P2}}</td>
+			<td>{{Student.A2}}</td>
+			<td>{{Student.O2}}</td>
+			<td>{{Student.P3}}</td>
+			<td>{{Student.A3}}</td>
+			<td>{{Student.O3}}</td>
+			<td>{{Student.P4}}</td>
+			<td>{{Student.A4}}</td>
+			<td>{{Student.O4}}</td>
  	  </tr>
  	</table>
 
@@ -466,20 +480,20 @@ h4{font-size:25px; font-family: calibri;}
 		</div>
 		<script>
 	  var myApp = angular.module('Eligible', []);
-	 	myApp.controller('COA', function($scope, $http){
-	   $scope.CoaEligible = [];
-
+	 	myApp.controller('Appreciation', function($scope, $http){
 	   $scope.test = function(){
-	 		 console.log("getting user projects, please wait ......");
-	        $http.get("http://localhost:3000/CoaEligible", {}).
-	    			success(function(data, status, headers, config) {
-	               $scope.CoaEligble = data;
-	    }).
-	    error(function(data, status, headers, config) {
-	 	 console.log(headers); });
-	   };
+					$http({
+					     method: 'get',
+					     url: 'http://localhost:3000/CoaEligible',
+							 responseType:'json'
+					 }).then(function (response) {
+					     $scope.CoaEligble = response.data;
+						 },function (error){
+					     console.log(error, 'can not get data.');
+					 });
+}
+});
 
-	 });
 	 </script>
 </body>
 

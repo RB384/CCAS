@@ -243,9 +243,12 @@ app.post('/UpdateCriteria', function(req,res){
 });
 app.get('/CoaEligible', function(req,res){
 	if(req.session.loggedin){
-		console.log("HELLOworld");
-		var data =[{SID : 17103027},{SID : 17103028}];
-		res.send(data);
+		var sql ="Select * from student_details, Marks,eligibilty where student_details.SID = marks.SID and Societyname =? and ((Year = ? and (P1+ A1+O1) > COA ) or (Year= ? and COA_Status =0 and (P2+A2+O2)> COA))";
+		connection.query(sql,req.body.Society,second,third,function (err, result, fields) {
+		if (err) throw err;
+		console.log(result);
+	});
+		res.send(result);
 }
 });
 
