@@ -147,19 +147,23 @@ h4{font-size:25px; font-family: calibri;}
 
 <body ng-app="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-		<div class="sidenav split left anch">
+		<div class="sidenav split left anch" >
 			<img src="peclogo.png" width="250px" height="250px" style="margin: 0px 10px";>
 			<br><br><br>
-			<a ng-click="ViewMarks=false; ViewProfile= true ;UpdateProfile= false; ViewAchievements = false;  RequestInitiation =false;" >View Profile</a>
-			<a ng-click="ViewMarks=false;ViewProfile= false;UpdateProfile= true; ViewAchievements = false;  RequestInitiation =false;">Update Profile</a>
-			<a ng-click="ViewMarks=false;ViewProfile= fasle ;UpdateProfile= false; ViewAchievements = true;  RequestInitiation =false;">View Achievements</a>
-			<a ng-click="ViewMarks=true;ViewProfile= fasle ;UpdateProfile= false; ViewAchievements = false;  RequestInitiation =false;">View Marks</a>
-			<a ng-click="ViewMarks=false;ViewProfile= false ;UpdateProfile= false; ViewAchievements = false;  RequestInitiation =true;" >Request Initiation</a>
+			<a ng-click="Background=false; ViewMarks=false; ViewProfile= true ;UpdateProfile= false; ViewAchievements = false;  RequestInitiation =false;" >View Profile</a>
+			<a ng-click="Background=false;ViewMarks=false;ViewProfile= false;UpdateProfile= true; ViewAchievements = false;  RequestInitiation =false;">Update Profile</a>
+			<a ng-click="Background=false;ViewMarks=false;ViewProfile= fasle ;UpdateProfile= false; ViewAchievements = true;  RequestInitiation =false;">View Achievements</a>
+			<a ng-click="Background=false;ViewMarks=true;ViewProfile= fasle ;UpdateProfile= false; ViewAchievements = false;  RequestInitiation =false;">View Marks</a>
+			<a ng-click="Background=false;ViewMarks=false;ViewProfile= false ;UpdateProfile= false; ViewAchievements = false;  RequestInitiation =true;" >Request Initiation</a>
 			<a href ="/logout">Logout</a>
 		</div>
 
-		<div class="othernav split right">
+		<div class="othernav split right" ng-init="Background=true">
 		<br><br><br>
+		<div ng-if="Background" style="padding:10px 10px 10px 40px">
+			<img src="background.jpg" width="250px" height="250px" style="margin: 0px 10px";>
+		</div>
+
 		<div ng-if="ViewProfile" style="padding:10px 10px 10px 40px">
 			<h2 ><u>Student Profile </u></h2>
 			<h3 style="font-size:25px; font-family: calibri;">

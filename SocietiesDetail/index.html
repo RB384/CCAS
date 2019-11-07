@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<title>Student Functionality</title>
+
+<head>
+	<meta name="description" content="">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+</head>
+<style>
+.containers {
+    margin: 70px;
+    text-align:justify;
+
+}
+body {
+    margin: 0;
+}
+
+.topnav {
+
+    display: grid;
+    /* align-content: center; */
+}
+
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    overflow: hidden;
+    background-color: #333;
+    align-items: center;
+}
+
+ul.topnav li {
+    float: left;
+}
+
+ul.topnav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {
+    background-color: #111;
+}
+
+ul.topnav li a.active {
+    color: white;
+    font-size: 25px;
+    background-color: #000000;
+}
+
+ul.topnav li.right {
+    color: white;
+    font-size: 20px;
+    padding-top: 3px;
+    background-color: #000000;
+    float: right;
+}
+
+ul.topnav li.center {
+    color: white;
+    padding-top: 8px;
+    padding-left: 500px;
+    font-size: 30px;
+    /* justify-content: center; */
+    /* align-content: center; */
+}
+
+/*
+@media screen and (max-width: 600px) {
+ul.topnav li.right,
+ul.topnav li {float: none;}
+}*/
+body {
+    background: url("images/dashboard.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+    height: 100%;
+    width: 18%;
+    position: fixed;
+    z-index: 1;
+    top: 63;
+    color: white;
+    left: 0;
+    background-color: #3081C8;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.othernav {
+    height: 100%;
+    ;
+    width: 82%;
+    position: fixed;
+}
+
+.sidenav a {
+    padding: 6px 6px 6px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #FFFFFF;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-top: 75px;
+    margin-left: 200px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+#nam {
+    font-size: 27px;
+    text-align: center;
+}
+
+.split {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.left {
+    left: 0;
+}
+
+.right {
+    right: 0;
+}
+
+.anch a:hover,
+a:active {
+    text-decoration: none;
+    display: inline-block;
+    color: black;
+
+}
+
+.input100 {
+    display: block;
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    font-family: Poppins-Regular;
+    font-size: 22px;
+    color: #555555;
+    line-height: 1.2;
+    padding: 0 2px;
+}
+
+h4 {
+    font-size: 25px;
+    font-family: calibri;
+}
+</style>
+
+<header>
+	<div class="header" id="myHeader">
+		<ul class="topnav">
+			<li class="center">TECHNICAL SOCIETIES </li>
+
+		</ul>
+	</div>
+</header>
+
+<body ng-app="" style="background-image:url(background.jpg)">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<div class="sidenav split left anch">
+		<img src="peclogo.png" width="250px" height="250px" style="margin: 0px 10px" ;>
+		<br><br><br>
+		<a
+			ng-click="Background=false; ASME=false; ATS= true;   ASPS= false; ASCE = false; I.I.M = false; IEEE = false; I.E.T.E = false;  S.A.E=false; S.M.E=false; S.E.S.I=false; Robotics=false;">ATS</a>
+		<a
+			ng-click="Background=false; ASME=false; ATS= false ; ASPS= false; ASCE = true;  I.I.M = false; IEEE = false; I.E.T.E = false;  S.A.E=false; S.M.E=false; S.E.S.I=false; Robotics=false;">ASCE</a>
+		<a
+			ng-click="Background=false; ASME=true;  ATS= false ; ASPS= false; ASCE= false;  I.I.M = false; IEEE = false; I.E.T.E = false;  S.A.E=false; S.M.E=false; S.E.S.I=false; Robotics=false;">ASME</a>
+		<a
+			ng-click="Background=false; ASME=false; ATS= false ; ASPS= false; ASCE = false; I.I.M = true;  IEEE = false; I.E.T.E = false;  S.A.E=false; S.M.E=false; S.E.S.I=false; Robotics=false;">I.I.M</a>
+		<a
+			ng-click="Background=false; ASME=false; ATS= false ; ASPS= true;  ASCE = false; I.I.M = false; IEEE = false; I.E.T.E = false;  S.A.E=false; S.M.E=false; S.E.S.I=false; Robotics=false;">ASPS</a>
+		<a
+			ng-click="Background=false; ASME=false; ATS= false ; ASPS= false;  ASCE = false; I.I.M = false; IEEE = true; I.E.T.E = false;  S.A.E=false; S.M.E=false; S.E.S.I=false; Robotics=false;">IEEE</a>
+		<a
+			ng-click="Background=false; ASME=false; ATS= false ; ASPS= false;  ASCE = false; I.I.M = false; IEEE = false; I.E.T.E = true;  S.A.E=false; S.M.E=false; S.E.S.I=false; Robotics=false;">I.E.T.E</a>
+		<a
+			ng-click="Background=false; ASME=false; ATS= false ; ASPS= false;  ASCE = false; I.I.M = false; IEEE = false; I.E.T.E = false; S.A.E=true;  S.M.E=false; S.E.S.I=false; Robotics=false;">S.A.E</a>
+		<a
+			ng-click="Background=false; ASME=false; ATS= false ; ASPS= false;  ASCE = false; I.I.M = false; IEEE = false; I.E.T.E = false; S.A.E=false; S.M.E=true;  S.E.S.I=false; Robotics=false;">S.M.E</a>
+		<a
+			ng-click="Background=false; ASME=false; ATS= false ; ASPS= false;  ASCE = false; I.I.M = false; IEEE = false; I.E.T.E = false; S.A.E=false; S.M.E=false; S.E.S.I=true; Robotics=false;">S.E.S.I</a>
+		<a
+			ng-click="Background=false; ASME=false; ATS= false ; ASPS= false;  ASCE = false; I.I.M = false; IEEE = false; I.E.T.E = false; S.A.E=false; S.M.E=false; S.E.S.I=false; Robotics=true;">Robotics</a>
+	</div>
+
+	<div class="othernav split right" ng-init="Background=true">
+		<br>
+		<div ng-if="Background" style="padding:10px 10px 10px 40px">
+			
+		</div>
+
+		<div ng-if="ATS" class="containers">
+			<h2><u>Aerospace Technical Society (ATS)</u></h2>
+			<h3 style="font-size:25px; font-family: calibri;">
+				<p>Aerospace Technical Society is an interdisciplinary society which focuses on the amalgamation of various different engineering areas such as electronics, mechanical, aeronautical and computer science. 
+					Its primary aim is to make students acquainted of the leading areas in aerospace research and industry via various practical projects in the field of Aeromodelling, CFD(Computational Fluid Dynamics), electronics etc. 
+				</p> <p>Some of its major projects include RC (Remote Controlled) Aircraft, Avion Rocket Motor, Hovercraft Design and Fabrication etc. The society has been consistently involved in participating across various Aeromodelling events and fests organized across the nation in several IITs.
+					 Some of its major achievements include getting the first position in the Hover-On competition organized at the Thapar University, bagging the third position at the Boeing Aeromodelling event (Prelims) organized at IIT Kharagpur etc. 
+					 Along with project oriented knowledge, it also focuses on imparting high end theoretical knowledge to students in the field of Aircraft Design, Aerodynamics, Computational Application and Engineering etc.
+				</p>
+		</div>
+		<div ng-if="ASCE" class="containers">
+			<h2><u>American Society of Civil Engineers (ASCE)</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+				<p>ASCE-PEC is the International Student Group of the American Society of Civil Engineers and is the first society in the college entirely dedicated to Civil Engineering. Inaugurated on 31st January 2014, the society is the latest addition to the societies of the university.</p>
+
+				<p>Founded in 1852, the American Society of Civil Engineers (ASCE) represents more than 145,000 members of the civil engineering profession worldwide and is America’s oldest national engineering society.</p>
+				
+				<br>Objectives of the International Student Group at PEC:</br>
+                <br>1.Facilitate the advancement of technology to enhance quality, knowledge, competitiveness and sustainability.</br>
+                <br>2.Develop student’s technical understanding through workshops, seminars and guest lectures.</br>
+				<br>3.Encouraging students to participate in technical fests, conferences and workshops.</br>
+				<br>4.Develop framework for students and industry interaction.</br>
+		</div>
+		<div ng-if="ASME" class="containers">
+			<h2><u>American Society of Mechanical Engineers (ASME)</u></h2>
+			<h3 style="font-size:25px;   font-family: calibri;">
+				<p >ASME is a not-for-profit membership organization that enables collaboration, knowledge sharing,
+					career enrichment, and skills development across all engineering disciplines, toward a goal of helping
+					the global engineering community develop solutions to benefit lives and livelihoods.
+					ASME aims to inculcate a sense of technical curiosity amongst the PEC students.
+					It promotes the art of engineering and allied science around the globe.
+					It provides technical support for safety and ergonomics within the area.
+					<p>
+						<p>
+							Mechanical engineers create and develop mechanical systems for all of humankind.
+							Concerned with the principles of force, energy and motion, mechanical engineers use their
+							knowledge of design, manufacture, and operational processes to advance the world around us —
+							enhancing safety, economic vitality and enjoyment throughout the world.
+							Not only do mechanical engineers help design everything from athletic equipment, medical devices
+							and personal computers to air conditioners, automobile engines and electric power plants, they
+							also design the machines that produce these innovations.
+							Virtually every aspect of life is touched by mechanical engineering. Spanning multiple
+							industries, the career opportunities for mechanical engineers are diverse and found worldwide
+							throughout thousands of companies ranging from large multinational to small local ﬁrms.
+							ASME helps in guiding that mechanical engineer.
+						</p>
+	
+		</div>
+		<div ng-if="I.I.M" class="containers">
+			<h2><u>I.I.M</u></h2>
+			<h3 style="font-size:25px; font-family: calibri;">
+				<p>
+					IIM is a professional association of metallurgists in India with greater interactions between industry
+					and academia aiming at development in the metallurgical domain. Our student’s chapter at PEC which is
+					also associated with the Chandigarh chapter has been helping further this aim though interactions and
+					also conducting events to develop the organizing and soft skills of members with the events being
+					conducted keeping in mind the goals of our parent body.
+					We have had getogethers of the IIM Chandigarh chapter bringing together members from industry and our
+					student members.
+					These gathering have evolved over time and presently act as knowledge sharing sessions for IIM members.
+					In one such knowledge sharing session our students got a chance to interact with Shri Chandra Mohan
+					(Founder of Swaraj Tractors and one of our esteemed alumni).
+					Furthermore the student chapter of IIM has helped organize regional level rounds for the preliminary
+					round for the annual quiz which is held on National Metallurgist Day organized by IIM nationally where
+					all chapters are invited.
+					Internally also IIM has been at the forefront of creating more awareness about materials and metallurgy
+					through inter-PEC quizzes and events at the annual technical quizzes. In addition, tours for students of
+					metallurgy to different industrial units such as Mahindra casting plant near Chandigarh have also been
+					organized with the help of the local Chandigarh chapter.
+				</p>
+	
+		</div>
+	
+		<div ng-if="ASPS" class="containers">
+			<h2><u>ASPS</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+				<p>“Astronomy compels the soul to look upward, and leads us from this world to another”.
+					The Astronomy & Space Physics Society, otherwise called as the Astro-Space Society is an
+					attempt by students and peers of PEC University of Technology.
+					Proposed as of 2015, this society has recruited the best and the brightest of the most dedicated
+					students from a selected pool of applicants to work in the field of space settlement programs, design of
+					telescopes and trajectories to planets, electronics and observations of
+					space related instrumentation and objects.</p>
+					<p> society has the latest software to track and map the constellations at a given point, and has a
+					state of the art telescope (Celestron) capable of focusing deep space objects.</p>
+	
+					<br>Objectives :</br>
+					<br>1. To study the natural forces of motion in outer space and interactions between the earth and the
+					heavenly objects using the sciences of Astronomy and Astrophysics,
+					while earnestly employing methods of Astronautics into this vast eld.</br>
+					<br>2. To give basic knowledge of both technical and non-technical issues about Astro-Space.</br>
+					<br>3. To create a more enhanced understanding of space amongst undergraduates for further avenue of
+					engineering research in the college.</br>
+					<br>4. To organize the thought process of young talents, and attempt to give them a research platform, for
+					their voices to be heard and their curious questions to be answered.</br>
+				</p>
+		</div>
+	
+		<div ng-if="IEEE" class="containers">
+			<h2><u>Institute of Electrical and Electronics Engineers (IEEE)</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+				<p>The Institute of Electrical and Electronics Engineers (IEEE) is a professional association dedicated to
+					advancing technological innovation and excellence.</p>
+					<p>It has about 425,000 members in about 160 countries.The Student Chapter of IEEE in PEC was started in
+					2001 by Dr. Gurnam Singh. With 100+ active members, IEEE-PEC has been the strongest technical society
+					not only in institute but entire region, for years it has served as a platform, with objective of
+					spreading knowledge for enhancement of computer science, electrical and electronics engineers. Be it
+					regular interactions, workshops, events or competitions, IEEE PEC has done it all.
+					Guest lectures have been an old tradition and we have hosted Dr. Ravi Sehgal (MD, General Electric), Er.
+					Ashish Jain (DGM, ONGC), just to name a few.</p>
+					<p>IEEE has been essential to the global technical community and to technical professionals everywhere, and
+					has been universally recognized for the contributions of technology and of technical professionals in
+					improving global conditions.</p>
+					<p>To provide quality and competitive environment we have collaborated with various IIT’s to host workshops
+					and online platforms like Hackerearth for different competitions. Activities organized by IEEE PEC are
+					central hub for technical action during our institutes, annual Technical-Cultural fest, PECFEST. Events
+					ranging from PEC Hackathons for developers and coders to Design your Web, circuit trek and Light it up
+					for electrical and electronic geeks, see great participation. Our vision to conquer zenith, zeal to
+					learn, and the cooperation among the members has been constantly driving us forward and encouraging the
+					budding minds at PEC to innovate for better good of society and excel in all fields.</p>
+					<p>Taking a step ahead apart from the workshops, sessions, events, members of society also indulge in
+					projects ranging from the field of computer vision to smart city, IOT & sensors to android and website
+					development. Members of student branch have brought many laurels to the institute by winning various
+					International and National events</p>
+					<p>
+						For more details check our website: http://sites.ieee.org/sb-pec</p>
+					<p>For Updates, follow us on: https://www.facebook.com/IEEEPEC
+					</p>
+		</div>
+	
+		<div ng-if="I.E.T.E" class="containers">
+			<h2><u>I.E.T.E</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+				<p>' IETE StudentsForum, PEC '</p> <p>The Institution of Electronics and Telecommunication Engineers (IETE) is India’s leading recognised
+					professional society devoted to the advancement of Science and Technology of Electronics,
+					Telecommunication & IT.</p>
+					<p> In 1953, it serves more than 60,000 members through various centres, whose number is 65, spread
+					all over India and abroad.</p>
+					<p>The Institution provides leadership in Scientific and Technical areas of direct importance to the
+					national development and economy.
+					Government of India has recognised IETE as a Scientific and Industrial Research Organization (SIRO) and
+					also notified as an educational Institution of national eminence.
+					The objectives of IETE focus on advancing electro-technology.
+					The IETE conducts and sponsors technical meetings, conferences, symposia, and exhibitions all over
+					India, publishes technical journals and provides continuing education as well as career advancement
+					opportunities to its members.
+				</p>
+	
+	
+		</div>
+	
+	
+		<div ng-if="S.A.E" class="containers">
+			<h2><u>S.A.E</u></h2>
+			<h3 style="font-size:25px; font-family: calibri;">
+				<p>SAE brings together all automobile enthusiasts which include Engineers Executives from Industry,
+					Government Officials, Academics and Students to provide them a forum to discuss the trends, new
+					technologies and ideas for the development of automotive industry.</p>
+	
+					<p>SAE INDIA is an affiliate of the SAE INTERNATIONAL Organisation which undertakes the organisation of the
+					following events every year:</p>
+	
+					<p><br>1.SUPRA SAE INDIA</br>
+					<br>2.BAJA</br>
+					<br>3.EFFICYCLE</br>
+					<br>4.GO-KART</br></p>
+	
+					<p>SUPRA SAE INDIA: It is an inter-college competition to design, manufacture and race an F1 prototype
+					track racing vehicle that has to race on the prestigious Buddh International Circuit against other
+					college teams.</p>
+					<p>It is an experience of a lifetime to make a vehicle of that sort and to drive it on a track where
+					legends like Michael Schumacher have driven is a dream come true for us students.</p>
+	
+					<p>BAJA: BAJA is also an inter-college competition to design, manufacture and race but, an off-road vehicle
+					in the muddy track of Indore.</p>
+					<p>This is completely different from SUPRA in terms of muddy track, high ground clearances, off road
+					experience and a whole new dimension of rally racing.
+					Our college has been participating in this competition for the past 6 years now and has proven its metal
+					by giving 2 podium finishes in just 6 competitions.</p>
+	
+					<p>EFFICYCLE: It is an event to design, manufacture and race a 3 wheeled electrically powered, vehicle
+					which is energy efficient and fast.</p>
+					<p>This tests maximum engineering skill in the simplest way possible.
+					An interesting and innovating event which our college has been participating in since its start and each
+					year improving on the designs and innovations.
+	
+				</p>
+	
+	
+		</div>
+	
+	
+		<div ng-if="S.M.E" class="containers">
+			<h2><u>S.M.E</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+				<br>Objective of SME:</br>
+					The objective of the society is to enhance progress and prosperity in human community and its members
+					through advance manufacturing.
+	
+					<p>About SME:<br>
+					Society of Manufacturing Engineers (SME) is a non-profit organization.
+					Past eight decades it has been serving the needs its members, customers and manufacturing through its
+					various products and services.</p>
+					<p>Through its strategic areas of events, media, membership, training and development, and the SME
+					Education Foundation, SME is uniquely dedicated to advancing manufacturing by addressing both knowledge
+					and skill needs for industry.</p>
+					The motto of SME is “Making the Future Together”.
+	
+					<p>Source for Learning:</p>
+					<p>SME’s professional development opportunities, available to individuals, companies and educators, provide
+					the right tools and information to help advance careers and drive operations to new levels of
+					productivity and competitiveness.</p>
+					<p>A variety of delivery options allow manufacturers worldwide the flexibility and efficiency in satisfying
+					their training and workforce development needs:</p>
+	
+					1.Certification<br>
+					2.Tooling U<br>
+					3.Webinars<br>
+					4.Manufacturing Engineering® Magazine<br>
+					5.SME’s Industry Yearbooks<br>
+					6.E-newsletters<br></p>
+	
+					<p>Chapter in PEC</p>
+	
+					<p>The SME-PEC chapter has presently 48 active members on its rolls from production, mechanical and
+					metallurgical engineering departments.</p>
+					<p>Apart from organizing technical quizzes, events and workshops, the Society also organizes industrial
+					trip each year.
+				</p>
+	
+	
+		</div>
+	
+	
+	
+		<div ng-if="S.E.S.I" class="containers">
+			<h2><u>S.E.S.I</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+				<p>The Solar Energy of India (SESI), established in 1976, and having its Secretariat in New Delhi, is the
+					Indian Section of the International Solar Energy Society (ISES).</p>
+					<p>Its interests cover all aspects of renewable energy, including characteristics, effects and methods of
+					use, and it provides a common ground to all those concerned with the nature and utilization of this
+					renewable non-polluting resource.</p>
+	
+					<p>The Society is interdisciplinary in nature, with most of the leading energy researchers and
+					manufacturers of renewable energy systems and devices of the country as its members. High academic
+					attainments are not a prerequisite for membership and any person engaged in research, development or
+					utilization of renewable energy or in fields related to renewable energy and interested in the promotion
+					of renewable energy utilization can become a member of the society.
+				</p>
+	
+	
+		</div>
+	
+		<div ng-if="Robotics" class="containers">
+			<h2><u>Robotics</u></h2>
+			<h3 style="font-size:25px; font-family: calibri;">
+				<p>The ‘PEC Robotics Society’ is the foremost technical societies in ‘PEC University of Technology’.
+					We have the smartest minds working in sync to create the future of robotics.
+					There are members from every branch, be it ircuital or non circuital with only one thing in common,
+					curiosity.
+					If you ever wanted to know the ins and outs of robotics, or better, make your own robots, then this is
+					the place for you!! We teach you everything you need to know, to build robots and gadgets, ranging from
+					line followers, to gesture controlled bots, to Quadcopter’s and much more. Additionally you get to be
+					part of the various events, workshops and competitions that the society holds annually. That’s not all!
+					You get to decide the project you want to work on and we provide the money and support to your
+					endeavors.
+					The society works on the principle of ‘learn and teach’; hence there will be seniors, around the clock
+					to help you resolve an issue.
+					You can build your bots’ and enter various technical fests held in the top institutes of the country.
+					Many IIT’s feature on the list.
+					These competitions offer lucrative cash prizes.
+					The opportunities our society provides are abundant, but to avail them you have to be a part of it. The
+					question stands, are you smart enough? Every member of the society gets recruited after grueling written
+					test and a personal interview.
+					So if you think you have the passion, the élan to create the future then you could be the next.
+				</p>
+	
+	
+		</div>
+	
+	
+	</div>	
+	
+
+</body>
+
+</html>
