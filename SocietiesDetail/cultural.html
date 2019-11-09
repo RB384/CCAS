@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<title>Cultural Societies </title>
+
+<head>
+	<meta name="description" content="">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+</head>
+<style>
+.containers {
+    margin: 70px;
+    text-align:justify;
+
+}
+body {
+    margin: 0;
+}
+
+.topnav {
+
+    display: grid;
+    /* align-content: center; */
+}
+
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    overflow: hidden;
+    background-color: #333;
+    align-items: center;
+}
+
+ul.topnav li {
+    float: left;
+}
+
+ul.topnav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {
+    background-color: #111;
+}
+
+ul.topnav li a.active {
+    color: white;
+    font-size: 25px;
+    background-color: #000000;
+}
+
+ul.topnav li.right {
+    color: white;
+    font-size: 20px;
+    padding-top: 3px;
+    background-color: #000000;
+    float: right;
+}
+
+ul.topnav li.center {
+    color: white;
+    padding-top: 8px;
+    padding-left: 500px;
+    font-size: 30px;
+    /* justify-content: center; */
+    /* align-content: center; */
+}
+
+/*
+@media screen and (max-width: 600px) {
+ul.topnav li.right,
+ul.topnav li {float: none;}
+}*/
+body {
+    background: url("images/dashboard.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+    height: 100%;
+    width: 18%;
+    position: fixed;
+    z-index: 1;
+    top: 63;
+    color: white;
+    left: 0;
+    background-color: #3081C8;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.othernav {
+    height: 100%;
+    ;
+    width: 82%;
+    position: fixed;
+}
+
+.sidenav a {
+    padding: 6px 6px 6px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #FFFFFF;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-top: 75px;
+    margin-left: 200px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+#nam {
+    font-size: 27px;
+    text-align: center;
+}
+
+.split {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.left {
+    left: 0;
+}
+
+.right {
+    right: 0;
+}
+
+.anch a:hover,
+a:active {
+    text-decoration: none;
+    display: inline-block;
+    color: black;
+
+}
+
+.input100 {
+    display: block;
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    font-family: Poppins-Regular;
+    font-size: 22px;
+    color: #555555;
+    line-height: 1.2;
+    padding: 0 2px;
+}
+
+h4 {
+    font-size: 25px;
+    font-family: calibri;
+}
+</style>
+
+<header>
+	<div class="header" id="myHeader">
+		<ul class="topnav">
+			<li class="center">CULTURAL SOCIETIES </li>
+
+		</ul>
+	</div>
+</header>
+
+<body ng-app="" style="background-image:url(background.jpg)">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<div class="sidenav split left anch">
+		<img src="peclogo.png" width="250px" height="250px" style="margin: 0px 10px" ;>
+		<br><br><br>
+		<a
+			ng-click="Background=false; Dramatics_Club=false;  APC= true;    PDC= false;  Music_Club = false;   SAASC = false; Rotaract_Club= false; CIM= false; SCC = false; ">APC</a>
+		<a 
+			ng-click="Background=false; Dramatics_Club=false;   APC= false ;  PDC= false;  Music_Club = true;   SAASC = false; Rotaract_Club = false; CIM= false;  SCC = false ;">Music Club</a>
+		<a
+			ng-click="Background=false; Dramatics_Club=true;    APC= false ;  PDC= false;  Music_Club= false;   SAASC = false; Rotaract_Club = false; CIM = false; SCC = false;">Dramatics Club</a>
+		<a
+			ng-click="Background=false; Dramatics_Club=false;   APC= false ;  PDC= false;  Music_Club = false;  SAASC= true;  Rotaract_Club = false;  CIM = false;  SCC = false;">SAASC</a>
+		<a
+			ng-click="Background=false; Dramatics_Club=false;   APC= false ;  PDC= true;   Music_Club = false;   SAASC= false; Rotaract_Club = false; CIM = false;  SCC = false;">PDC</a>
+		<a
+			ng-click="Background=false; Dramatics_Club = false; APC= false ; PDC= false;  Music_Club = false; SAASC = false; Rotaract_Club = true; CIM= false;  SCC = false; ">Rotaract Club</a>
+		<a
+			ng-click="Background=false; Dramatics_Club = false; APC= false ; PDC= false;  Music_Club = false; SAASC = false; Rotaract_Club= false; CIM=true;   SCC = false ;">Communication, Information & Media Cell</a>
+		<a
+			ng-click="Background=false; Dramatics_Club = false; APC= false ; PDC= false;  Music_Club= false; SAASC = false; Rotaract_Club = false;
+			CIM=false;   SCC = true ">SCC</a>
+		
+	</div>
+	<div class="othernav split right" ng-init="Background=true">
+		<br>
+		<div ng-if="Background" style="padding:10px 10px 10px 40px">
+			
+		</div>
+
+		<div ng-if="APC" class="containers">
+			<h2><u>Art and Photography Club (APC)</u></h2>
+			<h3 style="font-size:25px; font-family: calibri;">
+				<p>“Everything you can imagine is real and everything that you see around would be someone’s imagination.”</p>
+
+						<p>Art and Photography Club is a blend of people who want to capture and create beauty. 
+						The club aims to create the opportunities for everyone to discover the artist within themselves. 
+						It also gives them the platform to paint their dreams into reality.</p>
+						
+						<p>We are a group of like-minded people who have a child’s eye for observation, an artist’s taste for beauty and a poet’s expression for emotion. 
+						We like to click and paint a bigger picture of our vision. 
+						Our purpose is to encourage people to express their thoughts and emotions through art or photography. 
+						We urge art and photography fanatics to gather and exchange their knowledge, with the help of events such as workshops, exhibitions and photography tours.</p>
+						
+						<p>The club has organised sneaker painting, graffiti, bicroma, click and various art and photography related events in past. This year we plan to show you our skills in a little different way.
+						 Stay tuned!
+				</p>
+		</div>
+		
+		<div ng-if="Music_Club" class="containers">
+			<h2><u>Music Club</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+				<p>The Music Club, one of the most prestigious and popular clubs of the institute has the responsibility of creating the sense of musical aura across the campus. <br>
+					<p>The members of the club take part in various intra and inter institute events throughout the year along with hosting various musical performances in the institute throughout the two semesters.</p>
+					Year around workshops are organised that cover all genres of music- Bollywood, western, Punjabi, pop, rock and rap.</p>
+
+						<p>The Club is a major contributor to intra institute activities including Independence Day celebrations, Republic Day celebrations etc.
+						The club is also the principal host of SPIC MACAY (Society for Promotion of Classical Music among Youth).
+						The Club hosts various events throughout the two semesters with musical performances by the members of the club. 
+						The first performance  CHORDS is the biggest event of the club in the 1st semester of every year, in which the new recruits of the club are introduced. 
+						It is closely followed by FRIDAY NIGHTS which is a new initiative that takes place in the student hub, PEC-Market, showcasing performances majorly by the third year. 
+						The second semester is started with ENCORE which contains an explosive mixture of performances from various members. 
+						The last event of the club is INTERLUDE which is the last performance of the year reserved majorly for the graduating year.</p>
+						
+						<p>The Club is majorly involved during the PEC Fest and is solely responsible for the megashow Rock Night Event. 
+						It also hosts various inter institute competitions during the Fest. 
+						The Club also has a vibrant history of winning competitions outside the institute.</p> 
+		</div>
+		<div ng-if="Dramatics_Club" class="containers">
+			<h2><u>Dramatics Club</u></h2>
+			<h3 style="font-size:25px;   font-family: calibri;">
+				<p >Taaliyaan bikti nahi, kamaayi jaati hain</p>
+
+						<p>Endless hours of practice;</p>
+						
+						<p>Extraordinary amount of hardwork and an exceptionally talented and co-operative group of individuals.</p>
+						
+						 
+						
+						<p>That is what makes the Dramatics Club the most prestigious and rewarding cultural society of PEC University of Technology.</p>
+						
+						<p>The journey of a Dramchee begins with an exuberant Recruitment workshop where an endeavour to add new members to the Dramatics family is made by giving them a glimpse of and instilling in them our core values which are Punctuality, Dedication and Enthusiasm.</p>
+						
+						<p>The chosen lot then begins preparing for their first event of college--</p>
+						
+						<p><b>AAGHAZ</b>: Where stars are born
+						
+						After a month of practice during which mutual respect and understanding for the co-workers is cultivated among the new members; they are given a chance to climb over our _mecca madina_: The Stage.
+						
+						During PECfest, which is a celebration of our hardwork and culture-- we organise the following events:</p>
+						
+						 
+						
+						<p><b>By Natyamanch(Acting Wing):</b><br>
+						
+						1.Drama Rama (Skit Competition)<br>
+						
+						2.Standup comedy Competition<br>
+						
+						3. Rangmanch(Stage Play Competition)<br>
+						
+						4. Halla Bol (Nukkad Natak competition)<br></p>
+						
+						 
+						
+						<p><b>	By Invincibles (Dance wing):</b><br>
+						
+						1. Naach meri jaan<br>
+						
+						2. Groovz<br></p>
+						
+						 
+						
+						
+						<p>Besides this, we conduct professional acting workshops in which our members are tutored by professional theatre artists to hone their skills and help them realise their acting potential to the fullest so that they can represent the college on national platforms to bring laurels to the institution's already jeweled legacy.</p>
+						
+						<p>The beautiful journey ends in a bittersweet farewell event called 'Chitrahaar' which is a delightful blend of incessant Bollywood dance and drama. Keeping the audience on the edge of their seats, it fulfills our promise of wholesome entertainment and makes up an evening filled with love and laughter.</p>
+						
+						<p>All in all, the Dramatics Club (or Drams  as it is fondly called) not only gives an opportunity to its members to stand out from the crowd as stupendous performers but also stand out as stupendous human beings and leaves them with priceless experiences and values which last a lifetime.</p>
+						
+						Kala ka Aadar ho
+						
+						Manch ka satikaar ho
+						
+						Bhaarat mata ki Jai ho
+						
+						Vande Maataram
+		</div>
+		<div ng-if="SAASC" class="containers">
+			<h2><u>Speaker's Association And Study Circle</u></h2>
+			<h3 style="font-size:25px; font-family: calibri;">
+				<p>SAASC, also known as the Speakers’ Association and Study Circle is the college’s only official literary club. 
+					It is responsible for initiating logical thinking, creativity and a sense of leadership within the students. 
+					The three forums that SAASC supports are quizzing, writing and speaking for which SAASC as an organization helps the budding engineers of PEC develop a lot of important skills necessary for their growth not only academically but also socially.
+
+				  <p>Among the many events this club has hosted, in order to develop the above mentioned skills in students, has been PEC’s only literary fest – Verve’.
+				   Verve is a challenging fest which allows an individual to improve his or her thinking capability and also help inculcate communication skills.
+				    At Verve we hosted a series of events ranging from parliamentary debates, group discussions, just a minute sessions, quizzes which saw the participation of students not only from the college but from all over the tricity as well. Cash prizes up to a whopping amount of 1 Lakh were awarded to the winners.</p>
+
+                 <p><b>PECMUN</b> was introduced last year by the club as a part of the technical fest. Students from various schools and colleges had registered as delegates for this event in a huge number. The event was a tremendous success.</p>
+
+               <p>Trivium for schools shows that SAASC is not only restricted to the colleges but it also takes immense interest in teaching the students of schools. 
+				   This event not only helps improve debating skills but also helps student with their social and communication skills. 
+				   TFS saw a lot of students participating from various schools from all over the tricity after which parliamentary debating was introduced to the students during the workshops that was conducted few days before the main event.
+				    During the main event a series of rounds of Parliamentary Debates’ which were adjudicated by members of the club.</p>
+
+                  <p> Every year the Intra-PEC PD is hosted by the club for the new recruits so that they get a brief idea about parliamentary debating.
+                  	Also, they are made aware of how a parliamentary house functions.
+ 						The recruits form teams and are made to compete against each other whereas the existing members adjudicate.</p>
+
+								<p>SAASC is a very prominent club of this university. 
+								Be it the technical or the cultural fest, SAASC members show active participation and they are valued for their contribution by the university.</p>
+		</div>
+	
+		<div ng-if="PDC" class="containers">
+			<h2><u>Projection Design Club</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+					<p>Projection Design Club, one of the prominent clubs of PEC, makes Short films/Documentaries, showcase movies, organizes events throughout the year, covers, directs and edits the video footage of all the events of PEC, designs posters, flexes and marketing brochures for various events like PECFEST, Cultural Marathon, Open house etc.</p>
+
+					<p> club conducts workshops for the students through which the club members acquire proficiency in designing software such as Adobe Photoshop, Adobe After Effects, Adobe Premiere and Adobe Audition.
+					 The club also conducts Camera Handling workshop where various movie directional skills like handling a camera, taking various shots, enhancing video features are taught. 
+					 The club runs a YouTube Channel where we upload our original documentaries. </p>
+					 <p>Some of which are Life at an Angle, Sukhna Diaries, The Diary – Handle With Care, Blood Donation Camp, Mock Drill @ PEC, Paper Wastage etc.
+					 Other achievements of the club are available in the club’s annual magazine. </p>
+					<p>PDC organizes its flagship event “PEC Film Festival” during PECfest and "French Film festival" in association with Alliance De Francis.
+					 PEC Film Festival is a nation-wide short movie/documentary making competition in which the short movies/documentaries from the country are invited and screened.
+					  The finest videos are awarded with cash prizes.</p>
+					
+					<p>Many exhibitions are also held throughout the year showcasing award-winning photographs and designs by club members.</p>
+		</div>
+	
+		<div ng-if="Rotaract_Club" class="containers">
+			<h2><u>Rotaract Club</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+				<p>
+						Rotaract Club, PEC, Chandigarh is a youth program of the prestigious Rotary International under the district code 3080. 
+						It is supported by the Rotary Club Chandigarh.<br>
+						 It aims to promote the virtue of responsible leadership by providing promising youngsters the opportunity to better understand, embody, and promote the characteristics of responsible citizenship and effective leadership.</p>
+
+						<p> of the events undertaken to fulfill the aforementioned objective include eye camps, visits to orphanages and old age homes, Rotaract Cricket League, Couture with rags, Inbox, blood drives, debates etc.</p>
+						
+						<p>Last session saw Rotaract Club initiating yet another act to help reach out to the less privileged by starting an event of candle selling. The deaf and dumb students from one of the homes from the city were encouraged to make candles which were then sold to the students of the college.
+						 The initiative was warmly received by the students who bought candles in large numbers. 
+						 The proceeds were then used to buy essentials for the welfare of the candle makers.</p>
+						
+						<p>The session also saw the club making its presence felt at the district level. 
+						One of the Rotaractors from the club won the Best Speaker award at a district level debate while two Rotaractors bagged the second and the third position at another debate.</p>
+						
+						<p>In another event for the disabled people, the club organized a number of activities to provide a platform for the participants to indulge in cultural and fun activities.
+						 The activities hosted were based on singing, poetry and experience sharing.</p>
+						
+						<p>Keeping in line with the tradition of sticking to its approach of holistic development, the club aims to undertake further such activities in the coming sessions.
+				</p>
+		</div>
+	
+		<div ng-if="CIM" class="containers">
+			<h2><u>Communication, Information & Media Cell</u></h2>
+			<h3 style="font-size:25px;  font-family: calibri;">
+					<p>Communication, Information & Media Cell is the student media body of the college.  
+					It is the youngest club of the institute and is responsible for handling PR activities of the college. 
+					It caters to the three major domains of the institute including Public Relations, Website and Facebook Page Management and Official Newspaper/Newsletter of the institute.</p>
+
+					<p><b>Public relations</b> – The club manages the media relations of the institute and keeps the media updated with the happenings at the institute. 
+					This primarily involves covering various events of the college , writing press releases , taking photographs and ensuring  that each and every event of the college gets its due media coverage.<br></p>
+					<p><b>Newsletter</b> – The club designs and compiles the official newsletter of PEC University of Technology which contains all the events and happenings of the campus, research papers published and  national and international conferences attended by the faculty members.<br>
+					<p><b>Website and Facebook Page </b>– The club provides content for periodic updation of the college’s website.</p>
+					 <p>Also the official Facebook page of college PEC University of Technology [Official]  is managed by the students of Communication Club.</p>
+					
+					<p>The Club also organizes various interesting events at the institute festival as well as during the academic session such as  Netagiri : a mock elections event and Guess Who : a quiz based event.</p>
+	
+		</div>
+	
+	
+		<div ng-if="SCC" class="containers">
+			<h2><u>Student Counselling Cell</u></h2>
+			<h3 style="font-size:25px; font-family: calibri;">
+
+					<p>The office of the counselling services aims at helping students reach their highest academic and personal potential. This may involve helping with personal, learning and career concerns and promoting success and wellness among them. The office provides a confidential atmosphere in which the students can explore any topic or situation and discuss any concerns thy may have. 
+						The students are helped to work through their problems, to develop self-awareness and to overcome problems.</p>
+
+					<p>The office offers free counselling to students on individual or group basis. 
+						The counselling cell also provides testing facilities which includes psychological testing and psychiatry.</p>
+					
+					<p>The counselling cell has a peer help group fondly known as “Happy Folks” of PEC comprising students from all branches and years. 
+						They are the volunteers who work in order to create a cheerful atmosphere in the college by organising regular interactive activities and motivating sessions, always ready to wor for the welfare of the students.</p>
+					
+					<p>“Cheer up Folks-Selfiesh”, “Decoding Spirituality”, “Say It All”,” Finding Happiness-Treasure Hunt”,” We have no business to be miserable”, “Falun Dafa”, “Meditation for vibrant health”, “Sakshatkaar”  are few of the many events successfully organized by the members of the pair help group.</p>
+					
+					<p><b>Our Events</b></p>
+					
+					<p><b>1# Orientation:</b><br></p>
+					
+					<p>The student counselling cell presented itself in front of the new batch of students for the year 2015-2019. It included the presentation by the Office In charge Prof.Raminder Kaur followed by a video presentation and an interactive session by the peer help group with the students.</p>
+					
+					 
+					
+					<p><b>2# Cheer up folks – Selfiesh</b> </p>
+					
+					<p>It was an interactive event held first time in the college to highlight the spirit of the Happy Folks of the college which aimed at building interaction between the students of different years and also with the teachers and the student counsellor. 
+						One of its own kind, this event had a participation of over 400 students who interacted among themselves by clicking cheerful pictures in the college to win the competition and the title of the “Happy Folks”.</p>
+					
+					<p><b>3# Decoding Spirituality:</b></p>
+					
+					<p>The event was organised in collaboration with the team of the Jigyasa foundation who enlightened the students on the scientific view of life and also included a demonstration of some therapies o release stress.</p>
+					
+					<p><b>4# PECfest 2015</b></p>
+					
+					<p>Student Counselling Cell organised four events in pecfest 2015.</p>
+					
+					<p>A minute to win it: This event included one minute fun tasks which focussed on making students work under constraints of time in a fun filled manner.
+					Say It All: This event aimed at letting the students express themselves by writing their thoughts on a virtual wall.
+					We have no business to be miserable: A motivation session for students and faculty by Shri. ParokshSujay who talked about the ideal way of living, free of stress and anxiety. In an interactive session, the speaker gave many real life scenarios and ended with a meditation activity.
+					Funding Happiness – Treasure Hunt : Treasure hunt competition was organized by SCC with the “Happiness” based concept. It marked participation of over 300 students.</p>
+					
+					<p><b>5# Falun Dafa</b></p> 
+					<p>An ancient Chinese spiritual practice that combines meditation and qigong exercises with a moral philosophy centered on the tenets of truthfulness, compassion, and forbearance. The guest, Mr. BharathValecha explained the usefulness of this practice and also gave a demonstration to the present audience.</p>
+					
+					<p><b>6# Meditation for vibrant health:</b></p>
+					
+					<p>Student Counselling Cell (SCC), PEC University of Technology organized a session on ‘Vipassana for Vibrant Health’. The speaker on the occasion was Shri B. M. Khanna, a 1956 PEC alumnus. An Indian Telecommunications Service (ITS) officer, Sh. Khanna retired as the Chairman & Managing Director of Mahanagar Telephone Nigam Ltd. in July, 1993. He expressed a wish that everyone should be exposed to ‘Vipaasana’ meditation for bringing about an inner change and bring about societal transformation while shining in their respective work spheres.</p>
+					
+					<p><b>7# Sakshatkaar </b>:</p>
+					<p>It is an annual event organized by the Student Counselling Cell. In this, the members conduct a survey to analyse the stress level of the students of the first year who fill a standard form prepared by the student counsellor of the institute. Based on the responses by the students, scores are allotted and a “Happiest branch” with lowest average score is selected and honoured and also the students with the need of guidance from the counsellor are identified and invited to the office of the counsellor.</p>
+					
+					<p><b>8# Omegle:</b></p>
+						<p>To end the year, SCC organized a fun interactive event, in which the students of the first year were asked to find some fun facts about the students of the final year. In this way the students interacted with their senior peers and learnt from their experiences at college and also gave them an opportunity to express themselves in front of others.</p>
+					
+					 
+					
+					Other Activities:
+					
+					Facebook:
+					
+					Student Counselling Cell has an online page on facebook through which it interacts with the people by posting all the updates about the happenings in the institute and also have gained recognition for sharing valuable quotes and thoughts about different spheres of life.
+					
+					 
+	
+		</div>
+	
+	
+		
+	
+
+</body>
+
+</html>

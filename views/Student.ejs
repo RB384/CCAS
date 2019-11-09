@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html  ng-app="Studentprofile" >
 <title>Student Functionality</title>
 
 <head>
@@ -110,6 +110,7 @@ h4{font-size:25px; font-family: calibri;}
 	font-family: calibri;
 	font-size:18px;
 	font-decoration:none;
+	margin : 10px;
 
 }
 .ViewAchievements table {
@@ -161,7 +162,7 @@ h4{font-size:25px; font-family: calibri;}
 		<div class="othernav split right" ng-init="Background=true">
 		<br><br><br>
 		<div ng-if="Background" style="padding:10px 10px 10px 40px">
-			<img src="background.jpg" width="250px" height="250px" style="margin: 0px 10px";>
+
 		</div>
 
 		<div ng-if="ViewProfile" style="padding:10px 10px 10px 40px">
@@ -337,65 +338,73 @@ h4{font-size:25px; font-family: calibri;}
 			</table>
 			</form>
 			</div>
-		<div ng-if="ViewAchievements" style="padding:10px 10px 10px 40px">
-		<h2><u>View Achievements</u></h2><br>
-		<h3>Participation</h3><br>
-      <table class="ViewAchievements" style="width:95%;">
-          <th style= "width:25%;">Activity Name</th><th style= "width:15%;">Activity Type</th>
-          <th style= "width:20%;">Activity Location</th><th style= "width:15%;">Activity Date</th>
-          <th style= "width:5%;">Consider For Certification</th><th style= "width:15%;">Society Associated</th>
-          <th style= "width:5%;">Marks Alloted</th>
+			<div ng-controller="ViewAchievements" ng-if="ViewAchievements" style="padding:10px 10px 10px 40px">
+			<h2><u>View Achievements</u></h2><br>
+			<h3>Participation</h3><br>
+	      <table class="ViewAchievements" style="width:95%;">
+	          <th style= "width:25%;">Activity Name</th><th style= "width:13%;">Activity Type</th>
+	          <th style= "width:25%;">Activity Location</th><th style= "width:17%;">Activity Date</th>
+	          <th style= "width:5%;">Consider For Certification</th><th style= "width:10%;">Society Associated</th>
+	          <th style= "width:5%;">Marks Alloted</th>
+						 <% for(var i=0; i < parti.length; i++) { %>
+						<tr>
+							<td ><input type="text" value="<%= parti[i].Activity_Name %>" class="input100"   required></td>
+							<td ><input type="text" value="<%= parti[i].Activity_Type %>"       class="input100"  required></td>
+							<td ><input type="text" value="<%= parti[i].Activity_Location %>"   class="input100"  required></td>
+							<td ><input type="text" value="<%= parti[i].Activity_Date %>"       class="input100"   required></td>
+							<td ><input type="text" value="<%= parti[i].Consider_for_certification %>"  class="input100"  ng-model="lt250" required></td>
+							<td ><input type="text" value="<%= parti[i].Society_Name %>"  class="input100"  ng-model="lt250" required></td>
+							<td ><input type="text" value="<%= parti[i].Marks %>"  class="input100"  ng-model="lt250" required></td>
+						</tr>
+						<% } %>
+			  </table>
+
+			  <br><h3>Achievement</h3><br>
+				<table class="ViewAchievements" style="width:95%;" >
+					<th style= "width:25%;">Activity Name</th><th style= "width:10%;">Activity Type</th>
+					<th style= "width:23%;">Activity Location</th><th style= "width:17%;">Activity Date</th>
+					<th style= "width:5%;">Consider For Certification</th><th style= "width:10%;">Society Associated</th>
+					<th style= "width:5%;">Position</th>
+					<th style= "width:5%;">Marks Alloted</th>
+					<% for(var i=0; i < achi.length; i++) { %>
 					<tr>
-						<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-						<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-						<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-						<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-						<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-						<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-						<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
+						<td ><input type="text"  value="<%= achi[i].Activity_Name %>" class="input100"   required></td>
+						<td ><input type="text"  value="<%= achi[i].Activity_Type %>" class="input100"   required></td>
+						<td ><input type="text"  value="<%= achi[i].Activity_Location %>" class="input100"   required></td>
+						<td ><input type="text"  value="<%= achi[i].Activity_Date %>" class="input100"   required></td>
+						<td ><input type="text"  value="<%= achi[i].Consider_for_certification %>" class="input100"  required></td>
+						<td ><input type="text"   value="<%= achi[i].Society_Name %>" class="input100"  required></td>
+							<td ><input type="text"  value="<%= achi[i].Achievement_Type %>" class="input100"  required></td>
+						<td ><input type="text"value="<%= achi[i].Marks %>" class="input100"  required></td>
 					</tr>
-		  </table>
+					<% } %>
+				</table>
 
-		  <br><h3>Achievement</h3><br>
-			<table class="ViewAchievements" style="width:95%;" >
-				<th style= "width:25%;">Activity Name</th><th style= "width:15%;">Activity Type</th>
-				<th style= "width:20%;">Activity Location</th><th style= "width:15%;">Activity Date</th>
-				<th style= "width:5%;">Consider For Certification</th><th style= "width:15%;">Society Associated</th>
-				<th style= "width:5%;">Marks Alloted</th>
-				<tr>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-				</tr>
-			</table>
+				<br><h3>Organizing</h3><br>
+				<table class="ViewAchievements" style="width:95%;" >
+					<th style= "width:25%;">Activity Name</th><th style= "width:13%;">Activity Type</th>
+					<th style= "width:25%;">Activity Location</th><th style= "width:17%;">Activity Date</th>
+					<th style= "width:5%;">Consider For Certification</th><th style= "width:10%;">Society Associated</th>
+					<th style= "width:5%;">Marks Alloted</th>
+					<% for(var i=0; i < organi.length; i++) { %>
+					<tr>
+						<td ><input type="text" value="<%= organi[i].Activity_Name %>"  class="input100"   required></td>
+						<td ><input type="text" value="<%= organi[i].Activity_Type %>" class="input100"   required></td>
+						<td ><input type="text" value="<%= organi[i].Activity_Location %>" class="input100"   required></td>
+						<td ><input type="text" value="<%= organi[i].Activity_Date %>"             class="input100"   required></td>
+						<td ><input type="text" value="<%= organi[i].Consider_for_certification %>"  class="input100"  required></td>
+						<td ><input type="text" value="<%= organi[i].Society_Name %>" class="input100"  required></td>
+						<td ><input type="text"  value="<%= organi[i].Marks %>" class="input100"  required></td>
+					</tr>
+					<% } %>
+				</table>
+			</div>
 
-			<br><h3>Organizing</h3><br>
-			<table class="ViewAchievements" style="width:95%;" >
-				<th style= "width:25%;">Activity Name</th><th style= "width:15%;">Activity Type</th>
-				<th style= "width:20%;">Activity Location</th><th style= "width:15%;">Activity Date</th>
-				<th style= "width:5%;">Consider For Certification</th><th style= "width:15%;">Society Associated</th>
-				<th style= "width:5%;">Marks Alloted</th>
-				<tr>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-					<td ><input type="text"  name="lt250"  class="input100"  ng-model="lt250" required></td>
-				</tr>
-			</table>
-		</div>
-
-		<div ng-if="ViewMarks">
+			<div ng-if="ViewMarks" ng-controller="View_marksc">
 			<table class="ViewAchievements" style="border:0px">
 				<th style="border:0px" >Society :</th>
 		  	<th style="border:0px">
-		  		<select    ng-model="Society" class="input100" required>
+		  		<select   id="Society" name="Society" ng-model="Society" class="input100" required>
 					  <option value="ATS">Aerospace Technical Society (ATS)</option>
 					  <option value="ASCE">American Society of Civil Engineers (ASCE)</option>
 					  <option value="ACM_CSS">ACM CSS</option>
@@ -421,11 +430,11 @@ h4{font-size:25px; font-family: calibri;}
 					  <option value="PED">Punjabi Editorial Board</option>
 					  <option value="SCC">Student Counselling Cell</option>
 			  </select></th >
-			<th style="width:30%;border:0px"><button style="width:70%; background-color: #4CAF50; color:white; " type="submit" class="button">
+			<th style="width:30%;border:0px"><button   ng-click="test()" style="width:70%; background-color: #4CAF50; color:white; " type="submit" class="button">
 				<h3 style="font-size:25px; font-family: calibri;">Display Marks </h3></button></th>
 		</table>
 
-							<div class="grid-container">
+							<div class="grid-container"   >
 							 	<div class="grid-item">
 							  	<table class="ViewAchievements" style="width:90%;">
 										<h3>First Year Marks</h3>
@@ -433,9 +442,9 @@ h4{font-size:25px; font-family: calibri;}
 										<th style= "width:25%;">Organizing</th>
 										<th style= "width:25%;">Achievement</th>
 										<tr>
-											<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-											<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-											<td ><input type="text "  name="lt250"  class="input100"   disabled></td>
+											<td ><input type="text"  name="lt250"    value="{{marks.P1}}"   class="input100"   disabled></td>
+											<td ><input type="text"  name="lt250"    value="{{marks.O1}}"   class="input100"   disabled></td>
+											<td ><input type="text"  name="lt250"    value="{{marks.A1}}"   class="input100"   disabled></td>
 										</tr>
 							  </table>
 							  </div>
@@ -447,9 +456,9 @@ h4{font-size:25px; font-family: calibri;}
 											<th style= "width:25%;">Organizing</th>
 											<th style= "width:25%;">Achievement</th>
 											<tr>
-													<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-													<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-													<td ><input type="text " disabled  name="lt250"  class="input100"   disabled></td>
+													<td ><input type="text"  name="lt250"    value="{{marks.P2}}"   class="input100"   disabled></td>
+													<td ><input type="text"  name="lt250"    value="{{marks.O2}}"   class="input100"   disabled></td>
+													<td ><input type="text"  name="lt250"    value="{{marks.A2}}"   class="input100"   disabled></td>
 											</tr>
 									</table>
 							  </div>
@@ -461,9 +470,9 @@ h4{font-size:25px; font-family: calibri;}
 												<th style= "width:25%;">Organizing</th>
 												<th style= "width:25%;">Achievement</th>
 												<tr>
-														<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-														<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-														<td ><input type="text "   name="lt250"  class="input100"   disabled></td>
+														<td ><input type="text"  name="lt250"    value="{{marks.P3}}"   class="input100"   disabled></td>
+														<td ><input type="text"  name="lt250"    value="{{marks.O3}}"   class="input100"   disabled></td>
+														<td ><input type="text"  name="lt250"    value="{{marks.A3}}"   class="input100"   disabled></td>
 												</tr>
 										</table>
 							  </div>
@@ -475,9 +484,9 @@ h4{font-size:25px; font-family: calibri;}
 												<th style= "width:25%;">Organizing</th>
 												<th style= "width:25%;">Achievement</th>
 												<tr>
-														<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-														<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-														<td ><input type="text " name="lt250"  class="input100"   disabled></td>
+														<td ><input type="text"  name="lt250"    value="{{marks.P4}}"   class="input100"   disabled></td>
+														<td ><input type="text"  name="lt250"    value="{{marks.O4}}"   class="input100"   disabled></td>
+														<td ><input type="text"  name="lt250"    value="{{marks.A4}}"   class="input100"   disabled></td>
 												</tr>
 										</table>
 							  </div>
@@ -489,13 +498,12 @@ h4{font-size:25px; font-family: calibri;}
 									<th style= "width:25%;">Organizing</th>
 									<th style= "width:25%;">Achievement</th>
 									<tr>
-											<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-											<td ><input type="text"  name="lt250"  class="input100"   disabled></td>
-											<td ><input type="text " name="lt250"  class="input100"   disabled></td>
+											<td ><input type="text"  name="lt250"    value="{{marks.P4+marks.P1+marks.P2+marks.P3}}"   class="input100"   disabled></td>
+											<td ><input type="text"  name="lt250"    value="{{marks.O1+marks.O2+marks.O3+marks.O4}}"   class="input100"   disabled></td>
+											<td ><input type="text " name="lt250"    value="{{marks.A1+marks.A2+marks.A3+marks.A4}}"   class="input100"   disabled></td>
 									</tr>
 							</table>
 	</div>
-
 
 		<div ng-if="RequestInitiation" style="padding:10px 10px 10px 40px">
 			<h2 ><u>Request Initiation Form </u></h2>
@@ -591,8 +599,31 @@ h4{font-size:25px; font-family: calibri;}
 			</tr>
 			</table>
 			</form>
-			{{PostDataResponse}}
 			</div>
 	</div>
+	<script>
+
+	  var myApp = angular.module('Studentprofile', []);
+	 	myApp.controller('View_marksc', function($scope, $http){
+	   $scope.test = function(){
+     var x=angular.element(document.getElementById("Society"));
+  	 var y=x.val();
+  	var path="http://localhost:3000/View_Marks/"+y;
+   	$http({
+					     method: 'get',
+					     url: path,
+							 responseType:'json'
+					 }).then(function (response) {
+					     $scope.marks = response.data;
+						 },function (error){
+					     console.log(error, 'can not get data.');
+					 });
+       }
+        });
+
+
+
+
+	 </script>
 </body>
 </html>

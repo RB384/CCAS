@@ -1,0 +1,125 @@
+if(req.session.loggedin){
+		var p,o;
+		if(req.body.P_Certification) p = 1; else p=0; 
+		if(req.body.O_Certification) o = 1;  else o=0;
+		var values= [req.session.Sname,req.body.Workshop_name,req.body.Workshop_Location,req.body.Workshop_Date,req.body.Workshop_Sponsors,
+			req.body.Workshop_Type,req.body.Participation_Count,p,o];
+			connection.query("Insert into Workshop_Details(Society_Name,Workshop_Name,Workshop_Location,Workshop_Date,Workshop_Sponsors,Workshop_Type,Participation_Count,P_Certification,O_Certification) Values (?,?,?,?,?,?,?,?,?)",values,function (err, result, fields) {
+			if (err) throw err;
+	});
+
+	const XLSX =require('xlsx');
+	const workbook = XLSX.readFile(__dirname + '/uploads/UploadCertificationData.xlsx');
+	const sheet_names = workbook.SheetNames;
+	var p_obj = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_names[0]]);
+	var o_obj = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_names[2]]);
+	var pitr =0;var oitr=0;
+
+async.series([
+    function(callback) {
+			connection.query("Select * from participation_marks",function (err, result1, fields) {
+			pmarks =result1;	if (err) throw err;
+      callback();
+			});
+    },
+    function(callback) {
+			connection.query("Select * from organizing_marks",function (err, result2, fields) {
+			omarks =result2;	if (err) throw err;
+      callback();});
+    },
+		function(callback){
+			var values2= [req.session.Sname,req.body.Workshop_name,req.body.Workshop_Location,req.body.Workshop_Date];
+			connection.query("Select * from Workshop_details where Society_Name =? and Workshop_Name =? and Workshop_Location =? and Workshop_Date=? ",values2,function (err, result3, fields) {
+			WorkshopId =result3[0].Workshop_ID;	if (err) throw err;
+			callback();});
+		},
+		function(callback){
+				while(p_obj[pitr++]){
+				var type= "Participation";var actualp;
+				if(p) {
+						actualp = pmarks[0].PEC_Participation;
+						var values3= [WorkshopId,req.body.Workshop_Type,p_obj[pitr-1].SID,type,actualp];
+						connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values3,function (err, result3, fields){if (err) throw err;});
+						}
+				else actualp=0;
+
+				connection.query("Select * From marks where SID=? and Societyname =?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){
+				if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){});})
+
+				if(p){
+
+							connection.query("SELECT * FROM student_details,marks where marks.SID = student_details.SID and marks.SID = ? and Societyname=?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result5, fields) {
+							year = result5[0].Year;
+							if(year =="First"){
+									connection.query("Update marks set P1= ? where SID=? and Societyname =?",[actualp + result5[0].P1,result5[0].SID,req.session.Sname],
+									function (err, result3, fields){});
+							}
+							else if(year == "Second"){
+										connection.query("Update marks set P2= ? where SID=? and Societyname =?",[actualp + result5[0].P2,result5[0].SID,req.session.Sname],
+										function (err, result3, fields){});
+							}
+							else if(year == "Third"){
+										connection.query("Update marks set P3= ? where SID=? and Societyname =?",[actualp + result5[0].P3,result5[0].SID,req.session.Sname],
+										function (err, result3, fields){});
+							}
+							else if(year == "Fourth"){
+										connection.query("Update marks set P4= ? where SID=? and Societyname =?",[actualp + result5[0].P4,result5[0].SID,req.session.Sname],
+										function (err, result3, fields){});
+							}
+
+						});
+					}
+	}
+	callback();
+},
+function(callback){
+
+	while(o_obj[oitr++]){
+
+			var actualo ;
+			if((req.body.Participation_Count <250) && (o ==1 )) actualo = omarks[0].Lt250;
+			else if((req.body.Participation_Count >= 250 ) && (o ==1 )) actualo = omarks[0].Gt250;
+			else actualo =0;
+
+			if(o)	{
+							var type ="organizers";
+							var values= [WorkshopId,req.body.Workshop_Type,o_obj[oitr-1].SID,type,actualo];
+							connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
+						}
+			else actuala=0;
+
+			connection.query("Select * From marks where SID=? and Societyname =?",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){
+			if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){});})
+
+		if(o && (oitr-1)<= omarks[0].Max_Organizers){
+
+					connection.query("SELECT * FROM student_details,marks where marks.SID = student_details.SID and marks.SID = ? and Societyname=?",[o_obj[oitr-1].SID,req.session.Sname],function (err, result, fields) {
+					year = result[0].Year;
+					if(year =="First"){
+						connection.query("Update marks set O1=? where SID=? and Societyname =?",[actualo + result[0].O1,result[0].SID,req.session.Sname],
+						function (err, result3, fields){});
+					}
+					else if(year == "Second"){
+						connection.query("Update marks set O2= ? where SID=? and Societyname =?",[actualo + result[0].O2,result[0].SID,req.session.Sname],
+						function (err, result3, fields){});
+					}
+					else if(year == "Third"){
+												connection.query("Update marks set O3=? where SID=? and Societyname =?",[actualo + result[0].O3,result[0].SID,req.session.Sname],
+						function (err, result3, fields){});
+					}
+					else if(year == "Fourth"){
+						connection.query("Update marks set O4=? where SID=? and Societyname =?",[actualo + result[0].O4,result[0].SID,req.session.Sname],
+						function (err, result3, fields){});
+					}
+				});
+			}
+	}
+	callback();
+}
+  ],
+  function(err) {
+  });
+		res.redirect('/SocietyHeadFunc');
+}
+	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
+});
