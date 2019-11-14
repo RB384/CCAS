@@ -479,19 +479,19 @@ h4{font-size:25px; font-family: calibri;}
 
 	 		</div>
 
-	 		<div ng-if="Award" style="padding:10px 10px 10px 40px" >
+	 		<div  ng-controller ="Award" ng-if="Award" style="padding:10px 10px 10px 40px" >
 				<h2 ><u>Award List</u></h2>
 	  		<table class="SocietyDropDown" style="border:0px ; width:70%" >
 	 		<th style="border:0px ; width:25%" >Select Award :</th>
 	 		  <th style="border:0px ">
-	 		  <select    ng-model="Society" class="input100" required>
+	 		  <select id="AwardType"   ng-model="AwardType" class="input100" required>
 
 	 		  <option value="COA">Certificate of Appreciation(COA)</option>
 	 		  <option value="COE">Certificate of Excellence(COE)</option>
 	 		  <option value="IC">Institute Color(IC)</option>
 	 		  </select>
 	 		</th >
-	 		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " type="submit" class="button">
+	 		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " type="submit"  ng-click="test3()"class="button">
 	 				<h3 style="font-size:20px; font-family: calibri;">Display Award List </h3></button></th>
 	 		</table>
 	 		<br>
@@ -501,9 +501,16 @@ h4{font-size:25px; font-family: calibri;}
 	     <th>Year</th><th>SID</th><th>Name</th><th>Society Associated</th>
 	 		 <th>Participation Marks</th><th>Achievement Marks</th><th>Organizing Marks</th><th>Total Marks</th>
 	   </tr>
-	   <tr>
-
-	   </tr>
+		 <tr ng-repeat ="Student in AwardList">
+			 <td>{{Student.Year}}</td>
+				 <td>{{Student.SID}}</td>
+				 <td>{{Student.Name}}</td>
+				 <td>{{Student.Society_Associated}}</td>
+				 <td>{{Student.P_Marks}}</td>
+				 <td>{{Student.A_Marks}}</td>
+				 <td>{{Student.O_Marks}}</td>
+				 <td>{{Student.Total_Marks}}</td>
+		   </tr>
 	 </table>
 
 	 		</div>
@@ -565,6 +572,26 @@ h4{font-size:25px; font-family: calibri;}
 					 });
 }
 });
+
+				myApp.controller('Award', function($scope, $http){
+
+				$scope.test3 = function(){
+						var   x=angular.element(document.getElementById("AwardType"));
+					 	var y = x.val();
+					 	var path ="http://localhost:3000/AwardList/" + y;
+
+						 $http({
+									method: 'GET',
+									url: path,
+									responseType:'json'
+
+							}).then(function (response) {
+									$scope.AwardList = response.data;
+								},function (error){
+									console.log(error, 'can not get data.');
+							});
+				}
+				});
 
 
 	 </script>

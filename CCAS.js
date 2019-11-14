@@ -184,12 +184,14 @@ app.get('/View_Marks/:Sname', function(req,res){
 	});
 app.post('/RequestInitiation',  uploadrequest.single('Certificate'),function(req,res){
 	if(req.session.loggedin){
-		var sql = "INSERT INTO Pending_Requests VALUES ?";
+		var sql = "INSERT INTO Pending_Requests(SID,Event_Name,Event_Location,Event_Date,Achievement_Type,Institute_Type,Society_Associated,Certificate_URL) VALUES ?";
 		var filepath = "Requests" + "/" + req.session.requestupload;
 		var value =[[req.session.SID,req.body.Event_Name,req.body.Event_Location,req.body.Event_Date,req.body.Achievement,
-		req.body.Institute_Type,req.body.Society,filepath,0]];
+		req.body.Institute_Type,req.body.Society,filepath]];
 		connection.query(sql,[value], function (err, result) {
-		if (err) throw err;});
+		if (err) throw err;
+		res.redirect('/StudentFunc');
+		});
 }
 		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
@@ -555,10 +557,11 @@ app.get('/CoaEligible/:Sname', function(req,res){
 	if(req.session.loggedin){
 		var second ="Second";
 		var third = "Third";
+		var fourth ="Fourth";
 		var status =0;
 
-		var sql ="Select * from student_details, Marks,eligibilty where student_details.SID = marks.SID and Societyname=? and ((Year = ? and (P1+ A1+O1) > COA ) or (Year= ? and COA_Status =? and (P2+A2+O2)> COA))";
-		connection.query(sql,[req.params['Sname'],second,third,status],function (err, result, fields) {
+		var sql ="Select * from student_details, Marks,eligibilty where student_details.SID = marks.SID and Societyname=? and ((Year = ? and (P1+ A1+O1) > COA ) or (Year= ? and COA_Status =? and (P2+A2+O2)> COA) or (Year=? and COA_Status=? and (P3+A3+O3)>COA))";
+		connection.query(sql,[req.params['Sname'],second,third,status,fourth,status],function (err, result, fields) {
 		if (err) throw err;
 		res.send(result);
 	});
@@ -572,11 +575,10 @@ app.get('/CoeEligible/:Sname', function(req,res){
 		var status = 1;
 		var fourth = "Fourth";
 		var status1 = 0;
-		var values =[req.params['Sname'],third,status,fourth,status,status1]
+		var values =[req.params['Sname'],third,status,fourth,status,status1];
 		var sql= "Select * from student_details, Marks,eligibilty where student_details.SID = marks.SID and Societyname = ? and ((Year = ? and COA_Status= ? and (P1+ A1+O1) > COE and (P2+A2+O2)> COE ) or (Year= ? and COA_Status = ? and COE_Status = ? and (P3+A3+O3)> COE and (P2+A2+O2)> COE))";
 		connection.query(sql,values,function (err, result, fields) {
 		if (err) throw err;
-		console.log(result);
 		res.send(result);
 	});
 
@@ -592,6 +594,204 @@ app.get('/IcEligible/:Sname', function(req,res){
 				if (err) throw err;
 					res.send(result);
 	});
+
+}
+});
+
+app.get('/AwardList/:AwardType', function(req,res){
+    if(req.session.loggedin){
+			if(req.params['AwardType']=="COA"){
+					var second ="Second";
+					var third = "Third";
+					var status =0;
+					var fourth ="Fourth";
+					connection.query("Delete from eligible_students",function(err,result,fields){});
+					connection.query("Insert into eligible_students(Societyname,COA) Select Societyname, Count(*) from student_details, Marks,eligibilty where student_details.SID = marks.SID and ((Year = ? and (P1+ A1+O1) > COA ) or (Year= ? and COA_Status =? and (P2+A2+O2)> COA) or (Year=? and COA_Status=? and (P3+A3+O3)>COA)) Group by Societyname",[second,third,status,fourth,status],function(err,result,fields){});
+
+
+					async.series([
+					    function(callback) {
+								connection.query("Select SUM(COA) as sum from eligible_students",function (err, result1, fields) {
+								sum_coa = result1[0].sum;
+								if (err) throw err; callback();
+								});
+					    },
+					    function(callback) {
+								connection.query("Select * from award_distribution",function (err, result2, fields) {
+								allowed  =(result2[0].Max_IC_Technical + result2[0].Max_IC_Cultural)* result2[0].COA_times;
+								if (err) throw err;
+					      callback();});
+					    },
+							function(callback) {
+								var multiply;
+								if(sum_coa<=allowed) multiply =1;
+								else multiply = allowed/sum_coa;
+								connection.query("Update eligible_students set COA= COA*?",multiply,function (err, result2, fields) {
+								if (err) throw err;callback();});
+					    },
+							function(callback) {
+								connection.query("Select Societyname,COA from eligible_students",function (err, result3, fields) {
+								if (err) throw err;
+								society_data =result3;
+								callback();});
+					    },
+						],
+						function(err) {
+							var sql3 ="Delete from COA_Award ";
+							connection.query(sql3,function (err, final_result, fields) {if (err) throw err;});
+
+							var second ="Second";
+							var third = "Third";
+							var status =0;
+							var fourth="Fourth";
+
+									var j=0;
+										while(society_data[j]){
+												var sql ="Insert into COA_Award Select Year,student_details.SID,name,marks.Societyname,(P1+P2+P3+P4) as P_marks,(A1+A2+A3+A4) as A_marks,(O1+O2+O3+O4) as O_marks,(P1+P2+P3+P4+A1+A2+A3+A4 +O1+O2+O3+O4) as total_marks from student_details, Marks,eligibilty,eligible_students where student_details.SID = marks.SID and marks.Societyname = eligible_students.Societyname and marks.Societyname = ? and  ((Year = ? and (P1+ A1+O1) > eligibilty.COA ) or (Year= ? and COA_Status =? and (P2+A2+O2)> eligibilty.COA) or (Year=? and COA_Status=? and (P3+A3+O3)>eligibilty.COA)) ORDER BY total_marks DESC LIMIT ?";
+												connection.query(sql,[society_data[j].Societyname,second,third,status,fourth,status,society_data[j].COA],function (err, result, fields) {
+												if (err) throw err;});
+													j++;
+												}
+
+									var sql2 ="Select * from COA_Award order by Total_Marks DESC";
+									connection.query(sql2,function (err, final_result, fields) {
+									if (err) throw err;
+									res.send(final_result);
+
+						});
+
+		}
+	)
+}
+			else if(req.params['AwardType']=="COE"){
+
+					var third="Third";
+					var status = 1;
+					var fourth = "Fourth";
+					var status1 = 0;
+					var values =[third,status,fourth,status,status1];
+					connection.query("Delete from eligible_students",function(err,result,fields){});
+					connection.query("Insert into eligible_students(Societyname,COE) Select Societyname, Count(*)  from student_details, Marks,eligibilty where student_details.SID = marks.SID and ((Year = ? and COA_Status= ? and (P1+ A1+O1) > COE and (P2+A2+O2)> COE ) or (Year= ? and COA_Status = ? and COE_Status = ? and (P3+A3+O3)> COE and (P2+A2+O2)> COE)) Group by Societyname",values,function(err,result,fields){});
+
+
+										async.series([
+										    function(callback) {
+													connection.query("Select SUM(COE) as sum from eligible_students",function (err, result1, fields) {
+													sum_coe = result1[0].sum;
+													if (err) throw err; callback();
+													});
+										    },
+										    function(callback) {
+													connection.query("Select * from award_distribution",function (err, result2, fields) {
+													allowed  =(result2[0].Max_IC_Technical + result2[0].Max_IC_Cultural)* result2[0].COE_times;
+													if (err) throw err;
+										      callback();});
+										    },
+												function(callback) {
+													var multiply;
+													if(sum_coe<=allowed) multiply =1;
+													else multiply = allowed/sum_coe;
+													connection.query("Update eligible_students set COE= COE*?",multiply,function (err, result2, fields) {
+													if (err) throw err;callback();});
+										    },
+												function(callback) {
+													connection.query("Select Societyname,COE from eligible_students",function (err, result3, fields) {
+													if (err) throw err;
+													society_data =result3;
+													callback();});
+										    },
+											],
+											function(err) {
+												var sql3 ="Delete from COE_Award ";
+												connection.query(sql3,function (err, final_result, fields) {if (err) throw err;});
+
+												var third="Third";
+												var status = 1;
+												var fourth = "Fourth";
+												var status1 = 0;
+
+														var j=0;
+															while(society_data[j]){
+																	var sql ="Insert into COE_Award Select Year,student_details.SID,name,marks.Societyname,(P1+P2+P3+P4) as P_marks,(A1+A2+A3+A4) as A_marks,(O1+O2+O3+O4) as O_marks,(P1+P2+P3+P4+A1+A2+A3+A4 +O1+O2+O3+O4) as total_marks from student_details, Marks,eligibilty,eligible_students where student_details.SID = marks.SID and marks.Societyname = eligible_students.Societyname and marks.Societyname = ? and  ((Year = ? and COA_Status= ? and (P1+ A1+O1) > eligibilty.COE and (P2+A2+O2)> eligibilty.COE ) or (Year= ? and COA_Status = ? and COE_Status = ? and (P3+A3+O3)> eligibilty.COE and (P2+A2+O2)> eligibilty.COE)) ORDER BY total_marks DESC LIMIT ?";
+																	connection.query(sql,[society_data[j].Societyname,third,status,fourth,status,status1,society_data[j].COE],function (err, result, fields) {
+																	if (err) throw err;
+																	console.log(result);});
+																		j++;
+																	}
+
+														var sql2 ="Select * from COE_Award order by Total_Marks DESC";
+														connection.query(sql2,function (err, final_result, fields) {
+														if (err) throw err;
+														res.send(final_result);
+
+											});
+
+							}
+						)
+			}
+			else if(req.params['AwardType']=="IC"){
+
+					var fourth = "Fourth";
+					var status = 1;
+					var icstatus = 0;
+					var values = [fourth,status,icstatus];
+					connection.query("Delete from eligible_students",function(err,result,fields){});
+					connection.query("Insert into eligible_students(Societyname,IC) Select Societyname,Count(*)  from student_details, Marks,eligibilty where student_details.SID =marks.SID and (Year = ? and COE_Status = ? and IC_Status = ? and (P4+A4+O4)> IC and (P3+A3+O3)> IC and (P2+A2+O2)> IC) Group by Societyname",values,function(err,result,fields){});
+
+					async.series([
+					    function(callback) {
+								connection.query("Select SUM(IC) as sum from eligible_students",function (err, result1, fields) {
+								sum_ic = result1[0].sum;
+								if (err) throw err; callback();
+								});
+					    },
+					    function(callback) {
+								connection.query("Select * from award_distribution",function (err, result2, fields) {
+								allowed  =(result2[0].Max_IC_Technical + result2[0].Max_IC_Cultural);
+								if (err) throw err;
+					      callback();});
+					    },
+							function(callback) {
+								var multiply;
+								if(sum_ic<=allowed) multiply =1;
+								else multiply = allowed/sum_ic;
+								connection.query("Update eligible_students set IC= IC*?",multiply,function (err, result2, fields) {
+								if (err) throw err;callback();});
+					    },
+							function(callback) {
+								connection.query("Select Societyname,IC from eligible_students",function (err, result3, fields) {
+								if (err) throw err;
+								society_data =result3;
+								callback();});
+					    },
+						],
+						function(err) {
+							var sql3 ="Delete from IC_Award";
+							connection.query(sql3,function (err, final_result, fields) {if (err) throw err;});
+
+							var fourth = "Fourth";
+							var status = 1;
+							var icstatus = 0;
+
+									var j=0;
+										while(society_data[j]){
+												var sql ="Insert into IC_Award Select Year,student_details.SID,name,marks.Societyname,(P1+P2+P3+P4) as P_marks,(A1+A2+A3+A4) as A_marks,(O1+O2+O3+O4) as O_marks,(P1+P2+P3+P4+A1+A2+A3+A4 +O1+O2+O3+O4) as total_marks from student_details, Marks,eligibilty,eligible_students where student_details.SID = marks.SID and marks.Societyname = eligible_students.Societyname and marks.Societyname = ? and (Year = ? and COE_Status = ? and IC_Status = ? and (P4+A4+O4)> eligibilty.IC and (P3+A3+O3)> eligibilty.IC and (P2+A2+O2)> eligibilty.IC) ORDER BY total_marks DESC LIMIT ?";
+												connection.query(sql,[society_data[j].Societyname,fourth,status,icstatus,society_data[j].IC],function (err, result, fields) {
+												if (err) throw err;});
+													j++;
+												}
+
+									var sql2 ="Select * from IC_Award order by Total_Marks DESC";
+									connection.query(sql2,function (err, final_result, fields) {
+									if (err) throw err;
+									console.log(final_result);
+									res.send(final_result);
+
+						});
+
+		}
+	)
+			}
 
 }
 });
