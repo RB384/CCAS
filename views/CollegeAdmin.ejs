@@ -153,7 +153,7 @@ h4{font-size:25px; font-family: calibri;}
 		<br><br>
 			<div ng-if="Specify_Criteria" style="padding:10px 10px 10px 40px">
 				<h3 style="font-size:25px; font-family: calibri;">
-				<form  name="Request" ng-model="Request" action="" method="POST">
+				<form  name="Request" ng-model="Request" action="/UpdateCriteria" method="POST">
           <h2><u>Cultural Clubs & Technical Societies Certification Criteria Specification</u></h2>
 					<br>
           <table style="width:70%; margin-left:10%" >
@@ -166,9 +166,9 @@ h4{font-size:25px; font-family: calibri;}
 
           <tr>
 					<td >PEC and other institutes </td>
-					<td > <input type="text"  class="input100"   name="Pec_Participation"
+					<td > <input type="text"  class="input100"   name="PEC_Participation"
 						value="<%= pmarks.PEC_Participation %>" required></td>
-					<td ><input type="text"  class="input100"   name="Pec_Award" value= "<%= pmarks.PEC_Award %>" required></td>
+					<td ><input type="text"  class="input100"   name="PEC_Award" value= "<%= pmarks.PEC_Award %>" required></td>
           </tr>
 
 					<tr>

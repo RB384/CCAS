@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Eligible">
 <title>College Administrator</title>
 
 <head>
@@ -149,11 +149,11 @@ h4{font-size:25px; font-family: calibri;}
 			<a href="/logout">Logout</a>
 		</div>
 
-		<div class="othernav split right" ng-app="Eligible">
+		<div class="othernav split right" >
 		<br><br>
 			<div ng-if="Specify_Criteria" style="padding:10px 10px 10px 40px">
 				<h3 style="font-size:25px; font-family: calibri;">
-				<form  name="Request" ng-model="Request" action="" method="POST">
+				<form  name="Request" ng-model="Request" action="/UpdateCriteria" method="POST">
           <h2><u>Cultural Clubs & Technical Societies Certification Criteria Specification</u></h2>
 					<br>
           <table style="width:70%; margin-left:10%" >
@@ -279,12 +279,12 @@ h4{font-size:25px; font-family: calibri;}
 </form>
 </div>
 
-	   	<div   ng-controller ="COA" ng-if="COA" style="padding:10px 10px 10px 40px" >
+	   	<div   ng-controller ="Appreciation" ng-if="COA" style="padding:10px 10px 10px 40px" >
 				<h2 ><u>COA Eligible List</u></h2>
  	 		<table class="SocietyDropDown" style="border:0px ; width:70%" >
  			<th style="border:0px ; width:25%" >Select Society :</th>
  			  <th style="border:0px ">
- 			  <select    ng-model="Society" class="input100" required>
+ 			  <select  id="ForCOA"  ng-model="Society" class="input100" required>
  			  <option value="ATS">Aerospace Technical Society (ATS)</option>
  			  <option value="ASCE">American Society of Civil Engineers (ASCE)</option>
  			  <option value="ACM_CSS">ACM CSS</option>
@@ -316,6 +316,7 @@ h4{font-size:25px; font-family: calibri;}
  			<th style="width:20%;border:0px"><button ng-click="test()" style="width:100%; background-color: #4CAF50; color:white; " class="button">
  					<h3 style="font-size:20px; font-family: calibri;">Display List </h3></button></th>
  			</table>
+
  			<br>
 
  			<table style="width:80%">
@@ -324,19 +325,33 @@ h4{font-size:25px; font-family: calibri;}
  			<th>A2</th><th>O2</th><th>P3</th><th>A3</th><th>O3</th><th>P4</th><th>A4</th><th>O4</th>
  	  </tr>
  	  <tr ng-repeat ="Student in CoaEligble">
-			<td>{{Student.SID}} </td>
+			<td>{{Student.Year}}</td>
+			<td>{{Student.SID}}</td>
+			<td>{{Student.name}}</td>
+			<td>{{Student.P1}}</td>
+			<td>{{Student.A1}}</td>
+			<td>{{Student.O1}}</td>
+			<td>{{Student.P2}}</td>
+			<td>{{Student.A2}}</td>
+			<td>{{Student.O2}}</td>
+			<td>{{Student.P3}}</td>
+			<td>{{Student.A3}}</td>
+			<td>{{Student.O3}}</td>
+			<td>{{Student.P4}}</td>
+			<td>{{Student.A4}}</td>
+			<td>{{Student.O4}}</td>
  	  </tr>
  	</table>
 
 
 </div>
 
-			<div ng-if="COE" style="padding:10px 10px 10px 40px" >
+			<div ng-controller="Excellence" ng-if="COE" style="padding:10px 10px 10px 40px" >
 				<h2 ><u>COE Eligible List</u></h2>
 	  		<table class="SocietyDropDown" style="border:0px ; width:70%" >
 	 		<th style="border:0px ; width:25%" >Select Society :</th>
 	 		  <th style="border:0px ">
-	 		  <select    ng-model="Society" class="input100" required>
+	 		  <select   id="ForCOE" ng-model="Society" class="input100" required>
 	 		  <option value="ATS">Aerospace Technical Society (ATS)</option>
 	 		  <option value="ASCE">American Society of Civil Engineers (ASCE)</option>
 	 		  <option value="ACM_CSS">ACM CSS</option>
@@ -365,7 +380,7 @@ h4{font-size:25px; font-family: calibri;}
 
 	 		  </select>
 	 		</th >
-	 		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " type="submit" class="button">
+	 		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " ng-click="test1()" type="submit" class="button">
 	 				<h3 style="font-size:20px; font-family: calibri;">Display List </h3></button></th>
 	 		</table>
 	 		<br>
@@ -377,18 +392,33 @@ h4{font-size:25px; font-family: calibri;}
 	 	<th>Name</th><th>P1</th><th>A1</th><th>O1</th><th>P2</th>
 	 	<th>A2</th><th>O2</th><th>P3</th><th>A3</th><th>O3</th><th>P4</th><th>A4</th><th>O4</th>
 	   </tr>
-	   <tr>
+	   <tr ng-repeat ="Student in CoeEligble">
+			<td>{{Student.Year}}</td>
+ 			<td>{{Student.SID}}</td>
+ 			<td>{{Student.name}}</td>
+ 			<td>{{Student.P1}}</td>
+ 			<td>{{Student.A1}}</td>
+ 			<td>{{Student.O1}}</td>
+ 			<td>{{Student.P2}}</td>
+ 			<td>{{Student.A2}}</td>
+ 			<td>{{Student.O2}}</td>
+ 			<td>{{Student.P3}}</td>
+ 			<td>{{Student.A3}}</td>
+ 			<td>{{Student.O3}}</td>
+ 			<td>{{Student.P4}}</td>
+ 			<td>{{Student.A4}}</td>
+ 			<td>{{Student.O4}}</td>
 
 	   </tr>
 	 </table>
 			</div>
 
-			<div ng-if="IC" style="padding:10px 10px 10px 40px" >
+			<div ng-controller ="Institue_color" ng-if="IC" style="padding:10px 10px 10px 40px" >
 				<h2 ><u>IC Eligible List</u></h2>
 	  		<table class="SocietyDropDown" style="border:0px ; width:70%" >
 	 		<th style="border:0px ; width:25%" >Select Society :</th>
 	 		  <th style="border:0px ">
-	 		  <select    ng-model="Society" class="input100" required>
+	 		  <select   id="ForIC" ng-model="Society" class="input100" required>
 	 		  <option value="ATS">Aerospace Technical Society (ATS)</option>
 	 		  <option value="ASCE">American Society of Civil Engineers (ASCE)</option>
 	 		  <option value="ACM_CSS">ACM CSS</option>
@@ -417,7 +447,7 @@ h4{font-size:25px; font-family: calibri;}
 
 	 		  </select>
 	 		</th >
-	 		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " type="submit" class="button">
+	 		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " type="submit" ng-click="test2()" class="button">
 	 				<h3 style="font-size:20px; font-family: calibri;">Display List </h3></button></th>
 	 		</table>
 	 		<br>
@@ -428,26 +458,40 @@ h4{font-size:25px; font-family: calibri;}
 	     <th>SID</th><th>Name</th><th>P1</th><th>A1</th><th>O1</th><th>P2</th>
 	 		 <th>A2</th><th>O2</th><th>P3</th><th>A3</th><th>O3</th><th>P4</th><th>A4</th><th>O4</th>
 	   </tr>
-	   <tr>
-
+	   <tr ng-repeat ="Student in IcEligble">
+			 <td>{{Student.Year}}</td>
+				 <td>{{Student.SID}}</td>
+				 <td>{{Student.name}}</td>
+				 <td>{{Student.P1}}</td>
+				 <td>{{Student.A1}}</td>
+				 <td>{{Student.O1}}</td>
+				 <td>{{Student.P2}}</td>
+				 <td>{{Student.A2}}</td>
+				 <td>{{Student.O2}}</td>
+				 <td>{{Student.P3}}</td>
+				 <td>{{Student.A3}}</td>
+				 <td>{{Student.O3}}</td>
+				 <td>{{Student.P4}}</td>
+				 <td>{{Student.A4}}</td>
+				 <td>{{Student.O4}}</td>
 	   </tr>
 	 </table>
 
 	 		</div>
 
-	 		<div ng-if="Award" style="padding:10px 10px 10px 40px" >
+	 		<div  ng-controller ="Award" ng-if="Award" style="padding:10px 10px 10px 40px" >
 				<h2 ><u>Award List</u></h2>
 	  		<table class="SocietyDropDown" style="border:0px ; width:70%" >
 	 		<th style="border:0px ; width:25%" >Select Award :</th>
 	 		  <th style="border:0px ">
-	 		  <select    ng-model="Society" class="input100" required>
+	 		  <select id="AwardType"   ng-model="AwardType" class="input100" required>
 
 	 		  <option value="COA">Certificate of Appreciation(COA)</option>
 	 		  <option value="COE">Certificate of Excellence(COE)</option>
 	 		  <option value="IC">Institute Color(IC)</option>
 	 		  </select>
 	 		</th >
-	 		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " type="submit" class="button">
+	 		<th style="width:20%;border:0px"><button style="width:100%; background-color: #4CAF50; color:white; " type="submit"  ng-click="test3()"class="button">
 	 				<h3 style="font-size:20px; font-family: calibri;">Display Award List </h3></button></th>
 	 		</table>
 	 		<br>
@@ -457,29 +501,99 @@ h4{font-size:25px; font-family: calibri;}
 	     <th>Year</th><th>SID</th><th>Name</th><th>Society Associated</th>
 	 		 <th>Participation Marks</th><th>Achievement Marks</th><th>Organizing Marks</th><th>Total Marks</th>
 	   </tr>
-	   <tr>
-
-	   </tr>
+		 <tr ng-repeat ="Student in AwardList">
+			 <td>{{Student.Year}}</td>
+				 <td>{{Student.SID}}</td>
+				 <td>{{Student.Name}}</td>
+				 <td>{{Student.Society_Associated}}</td>
+				 <td>{{Student.P_Marks}}</td>
+				 <td>{{Student.A_Marks}}</td>
+				 <td>{{Student.O_Marks}}</td>
+				 <td>{{Student.Total_Marks}}</td>
+		   </tr>
 	 </table>
 
 	 		</div>
 		</div>
 		<script>
 	  var myApp = angular.module('Eligible', []);
-	 	myApp.controller('COA', function($scope, $http){
-	   $scope.CoaEligible = [];
+	 	myApp.controller('Appreciation', function($scope, $http){
 
 	   $scope.test = function(){
-	 		 console.log("getting user projects, please wait ......");
-	        $http.get("http://localhost:3000/CoaEligible", {}).
-	    			success(function(data, status, headers, config) {
-	               $scope.CoaEligble = data;
-	    }).
-	    error(function(data, status, headers, config) {
-	 	 console.log(headers); });
-	   };
+			 var   x=angular.element(document.getElementById("ForCOA"));
+ 	    	var y = x.val();var path ="http://localhost:3000/CoaEligible/" + y;
 
-	 });
+					$http({
+					     method: 'GET',
+					     url: path,
+							 responseType:'json'
+
+					 }).then(function (response) {
+					     $scope.CoaEligble = response.data;
+						 },function (error){
+					     console.log(error, 'can not get data.');
+					 });
+}
+});
+
+			myApp.controller('Excellence', function($scope, $http){
+
+			$scope.test1 = function(){
+			 var   x=angular.element(document.getElementById("ForCOE"));
+				var y = x.val();var path ="http://localhost:3000/CoeEligible/" + y;
+
+					$http({
+							 method: 'GET',
+							 url: path,
+							 responseType:'json'
+
+					 }).then(function (response) {
+							 $scope.CoeEligble = response.data;
+						 },function (error){
+							 console.log(error, 'can not get data.');
+					 });
+			}
+			});
+
+			myApp.controller('Institue_color', function($scope, $http){
+	   	$scope.test2 = function(){
+			 var   x=angular.element(document.getElementById("ForIC"));
+ 	    	var y = x.val();var path ="http://localhost:3000/IcEligible/" + y;
+
+					$http({
+					     method: 'GET',
+					     url: path,
+							 responseType:'json'
+
+					 }).then(function (response) {
+					     $scope.IcEligble = response.data;
+						 },function (error){
+					     console.log(error, 'can not get data.');
+					 });
+}
+});
+
+				myApp.controller('Award', function($scope, $http){
+
+				$scope.test3 = function(){
+						var   x=angular.element(document.getElementById("AwardType"));
+					 	var y = x.val();
+					 	var path ="http://localhost:3000/AwardList/" + y;
+
+						 $http({
+									method: 'GET',
+									url: path,
+									responseType:'json'
+
+							}).then(function (response) {
+									$scope.AwardList = response.data;
+								},function (error){
+									console.log(error, 'can not get data.');
+							});
+				}
+				});
+
+
 	 </script>
 </body>
 

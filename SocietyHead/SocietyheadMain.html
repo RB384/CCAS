@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Societyhead">
 <title>Society Head Functionality</title>
 
 <head>
@@ -115,11 +115,6 @@ h4{font-size:25px; font-family: calibri;}
 .RequestApproval table {
 	border: 2px solid black;
 }
-
-
-
-
-
 
 </style>
 </head>
@@ -302,48 +297,116 @@ h4{font-size:25px; font-family: calibri;}
         </table>
 				</form>
 			</div>
-			<div ng-if="Request_Approval" style="padding:10px 10px 10px 40px">
+
+
+			<!--<div ng-if="Request_Approval" style="padding:10px 10px 10px 40px">
 			<h1 style="margin-left:3%" ><u>	Request Approval</u> </h1>
-      <br>
-      <br>
-
-
+      <br><br>
       <table  class="RequestApproval" style="width:82%; margin-left:5%">
       <tr>
-      <th  style="width:10%">  SID                                         </th>
-      <th  style="width:15%"> Student Name                                 </th>
-      <th  style="width:15%">  Event name                                  </th>
-      <th  style="width:20%">  Event Location                              </th>
-      <th  style="width:10%">  Achievement Type                            </th>
-      <th  style="width:20%">  Institute Type                              </th>
-      <th  style="width:10%">  Uploaded Certificate                       </th>
+      <th  style="width:10%">  SID                                         	</th>
+      <th  style="width:15%">  Student Name                                 </th>
+      <th  style="width:15%">  Event name                                  	</th>
+      <th  style="width:20%">  Event Location                              	</th>
+      <th  style="width:10%">  Achievement Type                            	</th>
+      <th  style="width:20%">  Institute Type                              	</th>
+      <th  style="width:10%">  Uploaded Certificate                       	</th>
       </tr>
-
-
-
-
-
-
-
-
-
-
       </table>
+		</div>-->
 
+			<div ng-if="Request_Approval" style="padding:10px 10px 10px 40px" ng-controller="RequestApproval">
+			<h1 style="margin-left:3%" ><u>	Request Approval</u> </h1>
+			<br><br>
+			<table  style="margin-left:5%" >
+			<th style="width:30%;border:0px"><button   ng-click="test()" style="width:70%; background-color: #4CAF50; color:white; " type="submit" class="button">
+			<h3 style="font-size:25px; font-family: calibri;">Display Pending Request </h3></button></th>
+			</table>
+			<br><br>
 
+			<table ng-if="display=true" class="RequestApproval" style="width:100%; margin-left:2%" >
+			  <tr>
+			    <th  style="width:2%">  SID </th>
+			    <th  style="width:10%"> Event Name</th>
+			    <th  style="width:20%">  Event Location</th>
+			    <th  style="width:5%">  Event Date </th>
+			    <th  style="width:10%">  Achievement Type  </th>
+			    <th  style="width:15%">  Institute Type  </th>
+			    <th  style="width:38%">  Uploaded Certificate </th>
+			 </tr>
 
+			  <tr>
+			    <td  ><input type="text"  value="{{R_D.SID}}"               disabled></td>
+			    <td   ><input type="text"  value="{{R_D.Event_Name}}"      disabled></td>
+			    <td   ><input type="text"  value="{{R_D.Event_Location}}"    disabled></td>
+					<td   ><input type="text"  value="{{R_D.Event_Date}}"    disabled></td>
+			    <td   ><input type="text"  value="{{R_D.Achievement_Type}}"  disabled></td>
+			    <td   ><input type="text"  value="{{R_D.Institute_Type}}"    disabled></td>
+			    <td  ><input type="text"  value="{{R_D.Certificate_URL}}"       disabled></td>
+			  </tr>
+			</table>
 
+			<br><br>
+			   <table  style="margin-left=15%" ng-if="display=true">
+			     <th style="width:70%;border:0px;margin-left: 5%"><button   ng-click="test1()" style="width:70%; background-color: #4CAF50; color:white; " type="submit" class="button">
+			     <h3 style="font-size:25px; font-family: calibri;">Request Approve </h3></button></th>
 
+			     <th style="width:70%;border:0px;margin-left: 5%"><button   ng-click="test2()" style="width:70%; background-color: #4CAF50; color:white; " type="submit" class="button">
+			     <h3 style="font-size:25px; font-family: calibri;">Request Reject </h3></button></th>
+				 </table>
+		</div>
 
-
-
-
-
-
-
-
-			</div>
 </div>
 </body>
+
+<script>
+
+  	var display;
+	  var myApp = angular.module('Societyhead', []);
+	 	myApp.controller('RequestApproval', function($scope, $http){
+	   $scope.test = function(){
+	   //$scope.display=true;
+  	var path="http://localhost:3000/RequestDisplay";
+   	$http({
+					     method: 'get',
+					     url: path,
+							 responseType:'json'
+					 }).then(function (response) {
+					     $scope.R_D = response.data;
+						 },function (error){
+					     console.log(error, 'No pending Request ');
+					 });
+       }
+
+
+      $scope.test1 = function(){
+  		var x=$scope.R_D.Request_ID;
+  		var path="http://localhost:3000/Requestapprove/"+x;
+   		$http({
+					     method: 'get',
+					     url: path,
+							 responseType:'json'
+					 }).then(function (response) {
+
+						 },function (error){
+					     console.log(error, 'No pending Request ');
+					 });
+       }
+
+    	$scope.test2 = function(){
+     	var x=$scope.R_D.Request_ID;
+			var path="http://localhost:3000/Requestreject/"+x;
+   		$http({
+					     method: 'get',
+					     url: path,
+							 responseType:'json'
+					 }).then(function (response) {
+
+						 },function (error){
+					     console.log(error, 'Request not rejected  ');
+					 });
+       }
+ });
+</script>
 
 </html>

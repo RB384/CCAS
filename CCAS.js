@@ -182,6 +182,12 @@ app.get('/View_Marks/:Sname', function(req,res){
 	       });
 	  }
 	});
+app.get('/SocietyHeadFunc', function(req,res){
+		if(req.session.loggedin){
+			res.sendFile(__dirname + '/SocietyHead/SocietyheadMain.html')
+	}
+		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
+	});
 app.post('/RequestInitiation',  uploadrequest.single('Certificate'),function(req,res){
 	if(req.session.loggedin){
 		var sql = "INSERT INTO Pending_Requests(SID,Event_Name,Event_Location,Event_Date,Achievement_Type,Institute_Type,Society_Associated,Certificate_URL) VALUES ?";
@@ -194,6 +200,160 @@ app.post('/RequestInitiation',  uploadrequest.single('Certificate'),function(req
 		});
 }
 		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
+});
+app.get('/RequestDisplay', function(req,res){
+	if(req.session.loggedin){
+							var s="Pending";
+							connection.query("Select * from pending_requests where Society_Associated=? and Request_Status=? Limit 1 ",[req.session.Sname,s],function(err,result1,fields){
+							res.send(result1[0]);});
+						}
+});
+app.get('/Requestreject/:RID', function(req,res){
+		if(req.session.loggedin){
+			var t="Reject";
+			connection.query("Update pending_requests  SET Request_Status=? where Request_ID=? ",[t,req.params['RID']],function(err,result1){});
+			res.redirect('/SocietyHeadFunc');
+		}
+		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
+});
+app.get('/Requestapprove/:Sname', function(req,res){
+		if(req.session.loggedin){
+
+		async.series([
+		function(callback) {
+					connection.query("Select * from pending_requests,student_details  where pending_requests.SID=student_details.SID and Request_ID=?",[req.params['Sname']],function (err, result1, fields) {
+					s1 =result1[0];	if (err) throw err;
+					callback();});
+		    },
+
+ 		function(callback) {
+			values=[s1.Society_Associated,s1.Event_Name,s1.Event_Location,s1.Event_Date];
+			connection.query("Insert into event_details(Society_Name,Event_Name,Event_Location,Event_Date) Values(?,?,?,?)",values,function(err,result){
+			if(err) throw err;
+			callback();});
+		},
+		function(callback){
+			connection.query("Select * from participation_marks",function(err,result,fields){
+			 m1=result[0];
+			callback();});
+		},
+		function(callback){
+			if(s1.Achievement_Type=="Participation" && s1.Institute_Type=="International")
+			m2=m1.Int_Participation;
+			else if((s1.Achievement_Type=="First" || s1.Achievement_Type=="Second" || s1.Achievement_Type=="Third" ||s1.Achievement_Type=="Fourth")&&s1.Institute_Type=="International")
+			m2=m1.Int_Award;
+			else if(s1.Achievement_Type=="Participation" && s1.Institute_Type=="National_P")
+			m2=m1.Pr_Participation;
+			else if((s1.Achievement_Type=="First" || s1.Achievement_Type=="Second" || s1.Achievement_Type=="Third" ||s1.Achievement_Type=="Fourth")&&s1.Institute_Type=="National_P")
+			m2=m1.Pr_Award;
+			else if(s1.Achievement_Type=="Participation" && s1.Institute_Type=="National_NP")
+			m2=m1.PEC_Participation;
+			else if((s1.Achievement_Type=="First" || s1.Achievement_Type=="Second" || s1.Achievement_Type=="Third" ||s1.Achievement_Type=="Fourth")&&s1.Institute_Type=="National_NP")
+			m2=m1.PEC_Award;
+
+			connection.query("Select * from event_details where Event_Name=?",[s1.Event_Name],function(err,result,fields){
+			w=result[0];
+			callback();});
+		},
+
+		function(callback){
+			console.log(m2);
+				val=[w.Event_ID,"Event",s1.SID,s1.Achievement_Type,m2];
+				connection.query("Insert into activity_mapping(Activity_ID,Activity_Type,SID,Achievement_Type,Marks) Values(?,?,?,?,?)",val,function(err,result){
+				if(err) throw err;
+				callback();});
+			},
+
+			function(callback){
+				connection.query("Select * From marks where SID=? and Societyname =?",[s1.SID,s1.Society_Associated],function (err, result4, fields){
+					if(err) throw err;
+					rows= result4;	callback();});
+		},
+		function(callback){
+				if(rows.length == 0) connection.query("Insert into marks(SID,Societyname) Values(?,?)",[s1.SID,s1.Society_Associated],function (err, result5, fields){
+					callback();
+				});
+
+			},
+		function(callback){
+				connection.query("Select * from marks where SID=? and Societyname=?",[s1.SID,s1.Society_Associated],function(err,result,fields){
+				r=result[0];
+				callback();});
+		},
+
+		function(callback){
+
+				if(s1.Achievement_Type=="Participation" && s1.Year=="First"){
+				q=r.P1+m2;
+				c=[q,s1.SID,s1.Society_Associated];
+				connection.query("Update marks SET P1=? where SID=? and Societyname=?",c,function(err,result) {
+				if(err) throw err;});
+				}
+				else if((s1.Achievement_Type=="First" || s1.Achievement_Type=="Second" || s1.Achievement_Type=="Third" ||s1.Achievement_Type=="Fourth")&&s1.Year=="First")
+				{
+				q=r.A1+m2;
+				c=[q,s1.SID,s1.Society_Associated];
+				callbackonnection.query("Update marks SET A1=? where SID=? and Societyname=?",c,function(err,result) {
+				if(err) throw err;
+				});
+				}
+				else if(s1.Achievement_Type=="Participation" && s1.Year=="Second")
+				{
+				q=r.P2+m2;
+				c=[q,s1.SID,s1.Society_Associated];
+				connection.query("Update marks SET P2=? where SID=? and Societyname=?",c,function(err,result) {
+				if(err) throw err;
+				});
+				}
+				else if((s1.Achievement_Type=="First" || s1.Achievement_Type=="Second" || s1.Achievement_Type=="Third" ||s1.Achievement_Type=="Fourth")&&s1.Year=="Second")
+				{
+				q=r.A2+m2;
+				c=[q,s1.SID,s1.Society_Associated];
+				connection.query("Update marks SET A2=? where SID=? and Societyname=?",c,function(err,result) {
+				if(err) throw err;
+				});
+				}
+				else if(s1.Achievement_Type=="Participation" && s1.Year=="Third")
+				{
+				q=r.P3+m2;
+				c=[q,s1.SID,s1.Society_Associated];
+				connection.query("Update marks SET P3=? where SID=? and Societyname=?",c,function(err,result) {
+				if(err) throw err;
+				});
+				}
+				else if((s1.Achievement_Type=="First" || s1.Achievement_Type=="Second" || s1.Achievement_Type=="Third" ||s1.Achievement_Type=="Fourth")&&s1.Year=="Third")
+				{
+				q=r.A3+m2;
+				c=[q,s1.SID,s1.Society_Associated];
+				connection.query("Update marks SET A3=? where SID=? and Societyname=?",c,function(err,result) {
+				if(err) throw err;
+				});
+				}
+				else if(s1.Achievement_Type=="Participation" && s1.Year=="Fourth")
+				{
+				q=r.P4+m2;
+				c=[q,s1.SID,s1.Society_Associated];
+				connection.query("Update marks SET P4=? where SID=? and Societyname=?",c,function(err,result) {
+				if(err) throw err;
+				});
+				}
+				else if((s1.Achievement_Type=="First" || s1.Achievement_Type=="Second" || s1.Achievement_Type=="Third" ||s1.Achievement_Type=="Fourth")&&s1.Year=="Fourth")
+				{
+				q=r.A4+m2;
+				c=[q,s1.SID,s1.Society_Associated];
+				connection.query("Update marks SET A4=? where SID=? and Societyname=?",c,function(err,result) {
+				if(err) throw err;
+				});
+				}
+			}
+	]);
+
+var t ="Accept";
+connection.query("Update pending_requests  SET Request_Status=? where Request_ID=?    ",[t,req.params['Sname']],function(err,result1){
+if(err) throw err;});
+
+res.redirect('/SocietyHeadFunc');
+}
 });
 app.post('/UpdateStProfile', function(req,res){
 	if(req.session.loggedin){
@@ -209,12 +369,7 @@ app.post('/UpdateStProfile', function(req,res){
 	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
 
-app.get('/SocietyHeadFunc', function(req,res){
-	if(req.session.loggedin){
-		res.sendFile(__dirname + '/SocietyHead/SocietyheadMain.html')
-}
-	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
-});
+
 
 app.post('/AddEventDetails', upload.single('Upload_Certification_Data'),function(req,res){
 	if(req.session.loggedin){
@@ -256,16 +411,16 @@ async.series([
 		function(callback){
 				while(p_obj[pitr++]){
 				var type= "Participation";var actualp;
-				if(p) {
-						actualp = pmarks[0].PEC_Participation;
-						var activity_type ="Event";
-						var values3= [eventId,activity_type,p_obj[pitr-1].SID,type,actualp];
-						connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values3,function (err, result3, fields){if (err) throw err;});
-						}
+
+				if(p) actualp = pmarks[0].PEC_Participation;
 				else actualp=0;
 
+				var activity_type ="Event";
+				var values3= [eventId,activity_type,p_obj[pitr-1].SID,type,actualp];
+				connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values3,function (err, result3, fields){if (err) throw err;});
+
 				connection.query("Select * From marks where SID=? and Societyname =?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){
-				if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){});})
+				if(result4.length == 0) connection.query("Insert into marks(SID,Societyname) Values(?,?)",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){});})
 
 				if(p){
 
@@ -297,12 +452,12 @@ async.series([
 		while(a_obj[aitr++]){
 
 			var actuala ;
-			if(a)	{ actuala = pmarks[0].PEC_Award;
-							var activity_type ="Event";
-							var values= [eventId,activity_type,a_obj[aitr-1].SID,a_obj[aitr-1].Position,actuala];
-							connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
-						}
+			if(a)	actuala = pmarks[0].PEC_Award;
 			else actuala=0;
+
+			var activity_type ="Event";
+			var values= [eventId,activity_type,a_obj[aitr-1].SID,a_obj[aitr-1].Position,actuala];
+			connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
 
 			connection.query("Select * From marks where SID=? and Societyname =?",[a_obj[aitr-1].SID,req.session.Sname],function (err, result4, fields){
 			if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[a_obj[aitr-1].SID,req.session.Sname],function (err, result4, fields){});})
@@ -340,13 +495,10 @@ function(callback){
 			else if((req.body.Participation_Count >= 250 ) && (o ==1 )) actualo = omarks[0].Gt250;
 			else actualo =0;
 
-			if(o)	{
-							var type ="organizers";
-							var activity_type ="Event";
-							var values= [eventId,activity_type,o_obj[oitr-1].SID,type,actualo];
-							connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
-						}
-			else actuala=0;
+			var type ="organizers";
+			var activity_type ="Event";
+			var values= [eventId,activity_type,o_obj[oitr-1].SID,type,actualo];
+			connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
 
 			connection.query("Select * From marks where SID=? and Societyname =?",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){
 			if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){});})
@@ -424,16 +576,15 @@ app.post('/AddWorkshopDetails', upload.single('Upload_Certification_Data'), func
 			function(callback){
 					while(p_obj[pitr++]){
 					var type= "Participation";var actualp;
-					if(p) {
-							actualp = pmarks[0].PEC_Participation;
-							var activity_type ="Workshop";
-							var values3= [workshopId,activity_type,p_obj[pitr-1].SID,type,actualp];
-							connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values3,function (err, result3, fields){if (err) throw err;});
-							}
+					if(p) actualp = pmarks[0].PEC_Participation;
 					else actualp=0;
 
+					var activity_type ="Workshop";
+					var values3= [workshopId,activity_type,p_obj[pitr-1].SID,type,actualp];
+					connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values3,function (err, result3, fields){if (err) throw err;});
+
 					connection.query("Select * From marks where SID=? and Societyname =?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){
-					if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){});})
+					if(result4.length == 0) connection.query("Insert into marks(SID,Societyname) Values(?,?)",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){});})
 
 					if(p){
 								connection.query("SELECT * FROM student_details,marks where marks.SID = student_details.SID and marks.SID = ? and Societyname=?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result5, fields) {
@@ -473,15 +624,11 @@ app.post('/AddWorkshopDetails', upload.single('Upload_Certification_Data'), func
 				else if((req.body.Participation_Count >= 250 ) && (o ==1 )) actualo = omarks[0].Gt250;
 				else actualo =0;
 
-				if(o)	{
-								var type ="organizers";
-								var activity_type ="Workshop";
-								var values= [workshopId,activity_type,o_obj[oitr-1].SID,type,actualo];
-								connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
-								console.log("1row inserted");
-							}
-				else actuala=0;
-
+				var type ="organizers";
+				var activity_type ="Workshop";
+				var values= [workshopId,activity_type,o_obj[oitr-1].SID,type,actualo];
+				connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
+	
 				connection.query("Select * From marks where SID=? and Societyname =?",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){
 				if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){});})
 
@@ -530,6 +677,7 @@ app.get('/CollegeAdmin', function(req,res){
 app.post('/UpdateCriteria', function(req,res){
 	if(req.session.loggedin){
 
+
 		var sql1 = "UPDATE participation_marks SET PEC_Participation= ? ,Pec_Award = ?,Pr_Participation=?,Pr_Award=?,Int_Participation=?,Int_Award=?";
 		var value1 =[req.body.PEC_Participation,req.body.PEC_Award,req.body.Pr_Participation,req.body.Pr_Award,req.body.Int_Participation,req.body.Int_Award];
 		connection.query(sql1,value1, function (err, result) {	if (err) throw err;});
@@ -546,10 +694,7 @@ app.post('/UpdateCriteria', function(req,res){
 		var value4 =[req.body.Max_IC_Technical,req.body.Max_IC_Cultural,req.body.COA_times,req.body.COE_times];
 		connection.query(sql4,value4, function (err, result) {	if (err) throw err;});
 
-		connection.query("SELECT * FROM participation_marks, organizing_marks ,eligibilty,award_distribution LIMIT 1",function (err, result, fields) {
-		if (err) throw err;
-		res.render('CollegeAdmin',{pmarks:result[0],omarks:result[0],eligibility:result[0],award:result[0]});
-	});
+		res.redirect('/CollegeAdmin');
 	}
 	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
