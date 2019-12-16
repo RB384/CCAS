@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style >
+
+.input100 {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  font-family: Poppins-Regular;
+  font-size: 22px;
+  color: #555555;
+  line-height: 1.2;
+  padding: 0 2px;
+}
+
+h4{font-size:25px; font-family: calibri;}
+</style>
+
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+
+
+
+</head>
+<body ng-app="" >
+
+<div>
+
+<h2 ><u>Request Initiation Form </u></h2>
+<h3 style="font-size:25px; font-family: calibri;">
+<form  name="Request" ng-model="Request" action="" method="POST">
+<table style="width:70%; margin-left:10%" >
+
+  <tr>
+  <td style="width:30%">Event Name :</td>
+  <td style="width:30%"> <input type="text"  class="input100"  placeholder="Enter Event Name" name="Event_name"  ng-model="Event_name" required></td>
+  <td style="width:40%"><span ng-show="Request.Event_name.$touched && Request.Event_name.$invalid"><h4><b><p style="color:red">Event Name is required.</p></b></h4></span></td>
+  </tr>
+
+  <tr>
+  <td style="width:30%">Event Location :</td>
+  <td style="width:30%"><input type="text"  name="Event_Location"  class="input100" placeholder="Enter Event Location" ng-model="Event_Location" required></td>
+  <td style="width:40%"><span ng-show="Request.Event_Location.$touched && Request.Event_Location.$invalid"><h4><b><p style="color:red">Event Location required</p></b></h4></span>     </td>
+  </tr>
+
+  <tr>
+  <td style="width:30%">Event Date :</td>
+  <td style="width:30%"><input type="date"   name="date"   class="input100" ng-model="Event_Date" required></td>
+  <td style="width:40%"><span ng-show="Request.Event_Date.$touched && Request.Event_Date.$invalid"><h4><b><p style="color:red">Event Date required</p></b></h4></span>   </td>
+  </tr>
+
+  <tr>
+  <td style="width:30%">Achievement Type :</td>
+  <td style="width:30%">
+    <select name="Achievement" ng-model="Achievement"   class="input100" required >
+      <option value="Participation">Participation</option>
+      <option value="First Prize">1</option>
+      <option value="Second Prize">2</option>
+      <option vlaue="Third Prize">3</option>
+      <option value="Consolation Prize">4</option>
+    </select>
+  <td style="width:40%"><span ng-show="Request.Achievement.$touched && Request.Achievement.$invalid"><h4><b><p style="color:red">Achievement Type is required.</p></b></h4></span>  </td>
+  </tr>
+
+  <tr>
+  <td style="width:30%">Society  Assocaited :</td>
+  <td style="width:30%">
+    <select name="Society" ng-model="Society" class="input100" required>
+    <option value="ATS">Aerospace Technical Society (ATS)</option>
+    <option value="ASCE">American Society of Civil Engineers (ASCE)</option>
+    <option value="ACM_CSS">ACM CSS</option>
+    <option value="IIM">Indian Institute of Metals (IIM)</option>
+    <option value="ASPS">Astronomy and Space Physics Society (ASPS)</option>
+    <option value="IEEE">Institute of Electronics and Electrical Engineers (IEEE)</option>
+    <option value="IETE">The Institution of Electronics and Telecommunication Engineers(IETE)</option>
+    <option value="SAE">Society of Automotive Engineers (SAE)</option>
+    <option value="SME">Society of Manufacturing Engineers (SME)</option>
+    <option value="SESI">Solar Energy Society of India (SESI)</option>
+    <option value="RE">Robotics Society</option>
+    <option value="ASME">American Society of Mechanical Engineers (ASME)</option>
+    <option value="APC">Art and Photography Club (APC)</option>
+    <option value="MC">Music Club</option>
+    <option value="DC">Dramatics Club</option>
+    <option value="SAASC">Speakers Association & Study Circle (SAASC)</option>
+    <option value="PDC">Production and Design Club (PDC)</option>
+    <option value="RC">Rotaract Club</option>
+    <option value="CIMC">Communication, Information & Media Cell (CIM)</option>
+    <option value="EED">English Editorial Board (EEB)</option>
+    <option value="EIC">Entrepreneurship & Incubation Cell (EIC)</option>
+    <option value="HED">Hindi Editorial Board</option>
+    <option value="PED">Punjabi Editorial Board (PEB)</option>
+    <option value="SCC">Student Counselling Cell (SCC)</option>
+    </select>
+  <td style="width:40%"><span ng-show="Request.Society.$touched && Request.Society.$invalid"><b><p style="color:red">Society Associated is required.</p></b></span>  </td>
+</tr>
+
+  <tr>
+  <td style="width:30%">Upload Certificate :</td>
+  <td style="width:30%"><input type="file" name="pic"  class="input100"  ng-controller="up" ng-model="pic" accept="image/*"
+ ng-pattern="fileext" required></td>
+  <td style="width:40%"></td>
+  </tr>
+<tr>
+<td style="width:30%"</td>
+<td style="width:30%"><button style="width:70%; background-color: #4CAF50; color:white; " type="submit" class="button"><h3 style="font-size:25px; font-family: calibri;">Submit Request </h3></button></td>
+</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

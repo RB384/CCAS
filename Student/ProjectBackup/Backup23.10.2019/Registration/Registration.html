@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title> Student Registration </title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100" ng-app="signup_form" ng-controller="signupCtrl">
+			<div class="login100-more" style="background-image: url('images/12.jpg');"></div>
+			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
+
+			<form class="login100-form validate-form" action="" method="POST">
+					<span class="login100-form-title p-b-59">
+						Sign Up
+					</span>
+
+					
+                    <div class="wrap-input100 validate-input" data-validate="Enter valid SID (Format 8 digit integer)">
+						<span class="label-input100">SID</span>
+						<input class="input100" type="text" ng-model= "SID" name="SID" placeholder="SID...">
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input" data-validate="Name is required">
+						<span class="label-input100">Full Name</span>
+						<input class="input100" type="text" name="name" ng-model= "name" placeholder="Name...">
+						<span class="focus-input100"></span>
+					</div>
+                    
+                    <div class="wrap-input100 validate-input" data-validate = "Enter valid Email ex@abc.xyz">
+						<span class="label-input100">Email</span>
+						<input class="input100" type="text" name="email" ng-model= "email" placeholder="Email addess...">
+						<span class="focus-input100"></span>
+					</div>
+                    
+
+                   
+                    <div class="wrap-input100 validate-input" data-validate = "Enter valid Mobile number">
+						<span class="label-input100">Mobile No</span>
+						<input class="input100" type="text" name="Mobile" ng-model= "Mobile" placeholder="Mobile....">
+						<span class="focus-input100"></span>
+					</div>
+
+                    
+                    <div class="wrap-input100 validate-input"  data-validate="Enter valid CGPA " >
+						<span class="label-input100">C.G.P.A</span>
+						<input class="input100" type="text" name="CGPA" ng-model= "CGPA" placeholder="C.G.P.A">
+						<span class="focus-input100"></span>
+					</div>
+
+
+					
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<span class="label-input100">Password</span>
+						<input class="input100" type="password" name="pass" ng-model= "pass" placeholder="*************">
+						<span class="focus-input100"></span>
+					</div>
+                    
+                    <!--<div class="wrap-input100 validate-input" data-validate = "Repeat Password doesnot match">
+						<span class="label-input100">Repeat Password</span>
+						<input class="input100" type="password" name="repeat-pass" ng-model="repeat-pass" placeholder="*************">
+						<span class="focus-input100"></span>
+					</div>-->
+
+					<div class="flex-m w-full p-b-33">
+						<div class="contact100-form-checkbox">
+							<input class="input-checkbox100" id="ckb1" type="checkbox" name="backlog" ng-model="backlog">
+							<label class="label-checkbox100" for="ckb1">
+								<span class="txt1">
+									Backlog Status
+
+								</span>
+							</label>
+						</div>
+
+					</div>
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button  ng-click="SendData()" class="login100-form-btn">
+								Sign Up
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			{{ PostDataResponse }}
+			</div>
+	</div>
+	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/select2/select2.min.js"></script>
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<script src="js/main.js"></script>
+	<script>
+        var app = angular.module("signup_form",[]);
+        app.controller("signupCtrl", function($scope,$http){
+        $scope.SendData = function() {
+            var data = {
+                    SID : $scope.SID,
+                    name : $scope.name,
+                    email : $scope.email,
+                    Mobile : $scope.Mobile,
+                    CGPA : $scope.CGPA,
+                    pass : $scope.pass,
+                    backlog : $scope.backlog,
+                }
+            $http.post('/postSignup', data)
+                .success(function (data, status, headers, config) {
+                    $scope.PostDataResponse = data;
+                })
+                .error(function(data, status, header, config){
+                    $scope.PostDataResponse = "Data: " + status;
+
+
+                });
+        };  
+        });
+    </script>
+
+</body>
+</html>

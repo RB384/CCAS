@@ -148,7 +148,7 @@ h4{font-size:25px; font-family: calibri;}
 
 <body ng-app="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-		<div class="sidenav split left anch" >
+		<div class="sidenav split left anch" ng-init="Background=true;" >
 			<img src="peclogo.png" width="250px" height="250px" style="margin: 0px 10px";>
 			<br><br><br>
 			<a ng-click="Background=false; ViewMarks=false; ViewProfile= true ;UpdateProfile= false; ViewAchievements = false;  RequestInitiation =false;" >View Profile</a>
@@ -161,8 +161,8 @@ h4{font-size:25px; font-family: calibri;}
 
 		<div class="othernav split right" ng-init="Background=true">
 		<br><br><br>
-		<div ng-if="Background" style="padding:10px 10px 10px 40px">
-
+		<div ng-if="Background">
+			<img src="StudentBg.jpg" style="margin-left:0px;margin-top:-30px;" width="100%" height="703px">
 		</div>
 
 		<div ng-if="ViewProfile" style="padding:10px 10px 10px 40px">

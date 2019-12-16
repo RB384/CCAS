@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<title>CCAS Login </title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<link rel="icon" type="image/png" href="images/favicon.ico"/>
+
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/animate/Lanimate.css">
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/Lhamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/Lanimsition.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/select2/Lselect2.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/Ldaterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="css/Lutil.css">
+	<link rel="stylesheet" type="text/css" href="css/Lmain.css">
+	<style>
+		#dialogdialog {
+    display: none;
+}</style>
+
+</head>
+<body ng-app="">
+
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<div class="wrap-login100 p-t-30 p-b-50">
+				<span class="login100-form-title p-b-41">
+				<u>Account Login </u>
+				</span>
+
+				<div class="ng-cloak">
+				<p style ="font-size:20px; color:white;"> Select Role :
+  				<select ng-model="Logintype">
+  				<option value="Student">Student
+  				<option value="Societyhead">Society Head
+  				<option value="CollegeAdmin">College Administrator
+				</select>
+
+
+  				<div ng-switch ="Logintype">
+  					<div ng-switch-when="Student">
+							<form class="login100-form validate-form p-b-33 p-t-5" action="/authenticate" method ="POST">
+							<div class="wrap-input100 validate-input" data-validate = "Enter username">
+									<input class="input100" type="text" name="username" placeholder="Student ID " required>
+									<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+							</div>
+
+							<div class="wrap-input100 validate-input" data-validate="Enter password">
+								<input class="input100" type="password" name="pass" placeholder="Password" required>
+								<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+							</div>
+								 <input type="hidden"  name="interface" value="Student">
+						<div class="container-login100-form-btn m-t-32">
+							<button class="login100-form-btn">Login</button>
+						</div>
+
+						<a style="font-size:15px" href="../Register"><u>New User? Signup</u></a>
+						</form>
+					</div>
+
+				<div ng-switch-when="Societyhead">
+					<form class="login100-form validate-form p-b-33 p-t-5" action="/authenticate" method ="POST">
+					<select name="Society" class="input100" required>
+					<option value="SelectDefault">Select Society</option>
+					 <option value="ATS">Aerospace Technical Society (ATS)</option>
+					 <option value="ASCE">American Society of Civil Engineers (ASCE)</option>
+					 <option value="ACM_CSS">ACM CSS</option>
+					 <option value="IIM">Indian Institute of Metals (IIM)</option>
+					 <option value="ASPS">Astronomy and Space Physics Society (ASPS)</option>
+					 <option value="IEEE">Institute of Electronics and Electrical Engineers (IEEE)</option>
+					 <option value="IETE">The Institution of Electronics and Telecommunication Engineers(IETE)</option>
+					 <option value="SAE">Society of Automotive Engineers (SAE)</option>
+					 <option value="SME">Society of Manufacturing Engineers (SME)</option>
+					 <option value="SESI">Solar Energy Society of India (SESI)</option>
+					 <option value="RE">Robotics Society</option>
+					 <option value="ASME">American Society of Mechanical Engineers (ASME)</option>
+					 <option value="APC">Art and Photography Club (APC)</option>
+					 <option value="MC">Music Club</option>
+					 <option value="DC">Dramatics Club</option>
+					 <option value="SAASC">Speakers Association & Study Circle (SAASC)</option>
+					 <option value="PDC">Production and Design Club (PDC)</option>
+					 <option value="RC">Rotaract Club</option>
+					 <option value="CIMC">Communication, Information & Media Cell (CIM)</option>
+					 <option value="EED">English Editorial Board (EEB)</option>
+					 <option value="EIC">Entrepreneurship & Incubation Cell (EIC)</option>
+					 <option value="HED">Hindi Editorial Board</option>
+					 <option value="PED">Punjabi Editorial Board (PEB)</option>
+					 <option value="SCC">Student Counselling Cell (SCC)</option>
+					 </select>
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" name="username" placeholder="Society Head ID" required>
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100" type="password" name="pass" placeholder="Password" required>
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+							<input type="hidden"  name="interface" value="SocietyHead">
+					<div class="container-login100-form-btn m-t-32">
+						<button class="login100-form-btn"> Login</button>
+					</div>
+					</form>
+				</div>
+
+				<div ng-switch-when="CollegeAdmin">
+					<form class="login100-form validate-form p-b-33 p-t-5" action="/authenticate" method ="POST">
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" name="username" placeholder="College Administrator ID" required>
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100" type="password" name="pass" placeholder="Password" required>
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+						<input type="hidden"  name="interface" value="CollegeAdmin">
+					<div class="container-login100-form-btn m-t-32">
+						<button class="login100-form-btn"> Login </button>
+					</div>
+					</form>
+					</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script src="vendor/jquery/Ljquery-3.2.1.min.js"></script>
+	<script src="vendor/animsition/js/Lanimsition.min.js"></script>
+	<script src="vendor/bootstrap/js/Lpopper.js"></script>
+	<script src="vendor/bootstrap/js/Lbootstrap.min.js"></script>
+	<script src="vendor/select2/Lselect2.min.js"></script>
+	<script src="vendor/daterangepicker/Lmoment.min.js"></script>
+	<script src="vendor/daterangepicker/Ldaterangepicker.js"></script>
+	<script src="vendor/countdowntime/Lcountdowntime.js"></script>
+	<script src="js/Lmain.js"></script>
+
+</body>
+</html>

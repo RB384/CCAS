@@ -1,0 +1,140 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Oct 22, 2019 at 03:45 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.10
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ccas`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activity_mapping`
+--
+
+CREATE TABLE `activity_mapping` (
+  `Activity_ID` varchar(9) NOT NULL,
+  `Activity_Type` varchar(8) NOT NULL,
+  `SID` int(11) NOT NULL,
+  `Achievement_Type` varchar(15) NOT NULL,
+  `Marks` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `award_distribution`
+--
+
+CREATE TABLE `award_distribution` (
+  `Max_IC_Technical` int(11) NOT NULL,
+  `Max_IC_Cultural` int(11) NOT NULL,
+  `COA_times` int(11) NOT NULL,
+  `COE_times` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `eligibilty`
+--
+
+CREATE TABLE `eligibilty` (
+  `IC` int(11) NOT NULL,
+  `COA` int(11) NOT NULL,
+  `COE` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `eligible_students`
+--
+
+CREATE TABLE `eligible_students` (
+  `Societyname` varchar(10) NOT NULL,
+  `COA` int(11) NOT NULL,
+  `COE` int(11) NOT NULL,
+  `IC` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `marks`
+--
+
+CREATE TABLE `marks` (
+  `SID` int(11) NOT NULL,
+  `Societyname` varchar(10) NOT NULL,
+  `P1` int(11) NOT NULL,
+  `A1` int(11) NOT NULL,
+  `O1` int(11) NOT NULL,
+  `P2` int(11) NOT NULL,
+  `A2` int(11) NOT NULL,
+  `O2` int(11) NOT NULL,
+  `P3` int(11) NOT NULL,
+  `A3` int(11) NOT NULL,
+  `O3` int(11) NOT NULL,
+  `P4` int(11) NOT NULL,
+  `A4` int(11) NOT NULL,
+  `O4` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `organizing_marks`
+--
+
+CREATE TABLE `organizing_marks` (
+  `Lt250` int(11) NOT NULL,
+  `Gt250` int(11) NOT NULL,
+  `Max_Organizers` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `participation_marks`
+--
+
+CREATE TABLE `participation_marks` (
+  `PEC_Participation` int(11) NOT NULL,
+  `PEC_Award` int(11) NOT NULL,
+  `Pr_Participation` int(11) NOT NULL,
+  `Pr_Award` int(11) NOT NULL,
+  `Int_Participation` int(11) NOT NULL,
+  `Int_Award` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `activity_mapping`
+--
+ALTER TABLE `activity_mapping`
+  ADD PRIMARY KEY (`Activity_ID`,`SID`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

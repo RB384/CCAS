@@ -8,12 +8,13 @@ const mime = require('mime');
 var app = express();
 var async=require('async');
 
-
 app.use(express.static('Homepage'));
 app.use(express.static('Login'));
 app.use(express.static('Registration'));
 app.use(express.static('Student'));
 app.use(express.static('SocietyHead'));
+app.use(express.static('CollegeAdmin'));
+app.use(express.static('Images'));
 app.use(express.static('uploads'));
 app.use(express.static('DisplayCriteria'));
 app.use(express.static('uploads/Requests'));
@@ -24,7 +25,6 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true
 }));
-
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads/')
@@ -33,7 +33,6 @@ var storage = multer.diskStorage({
       cb(null,"UploadCertificationData.xlsx");
   }
 });
-
 var storage2 = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './SocietyHead/Requests')
@@ -53,14 +52,12 @@ app.set('view engine', 'ejs');
 app.get('/', function(req,res){
 	res.sendFile(__dirname + '/Homepage/index.html');
 });
-
 app.get('/Login', function(req,res){
 	if(req.session.loggedin){
 		req.session.destroy();
 	}
 	res.sendFile(__dirname + '/Login/Login.html');
 });
-
 app.post('/authenticate', function(req, res) {
 
 	if(req.session.loggedin)	req.session.destroy();
@@ -89,14 +86,12 @@ app.post('/authenticate', function(req, res) {
 							res.send("<h1>Incorrect Username and/or password !!!  Please <a href=\"/login\"> Login</a> again with correct credentials");
 });
 });
-
 app.get('/Register', function(req,res){
 	if(req.session.loggedin){
 		req.session.destroy();
 	}
 	res.sendFile(__dirname + '/Registration/Registration.html');
 });
-
 app.post("/postSignup", function (req, res) {
         var sql = "INSERT INTO student_details VALUES ?";
         var value =[[req.body.SID,req.body.UG_PG,req.body.Branch,req.body.Year,req.body.name,req.body.email
@@ -124,7 +119,6 @@ function studen(req,res,next){
 	}
 	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 	}
-
 function participation(req,res,next){
 	if(req.session.loggedin){
 
@@ -141,7 +135,6 @@ function participation(req,res,next){
 	}
 		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 	}
-
 function achievement(req,res,next){
 	if(req.session.loggedin){
 	var type="Event";
@@ -157,8 +150,7 @@ function achievement(req,res,next){
 	}
 		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 	}
-
-	function organizer(req,res){
+function organizer(req,res){
 		if(req.session.loggedin){
 
 			var type="organizers";
@@ -174,19 +166,25 @@ function achievement(req,res,next){
 	}
 		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 	}
-
+app.post('/UpdateStProfile', function(req,res){
+		if(req.session.loggedin){
+			var values= [req.body.address,req.body.Email,req.body.Mobile,req.body.Year,req.body.CGPA,req.body.Backlog,req.session.SID];
+			connection.query("Update Student_Details set address= ? ,email = ?, Mobile= ? ,Year= ?, CGPA= ? , backlog= ? where SID = ?",values,function (err, result, fields) {
+	    if (err) throw err;
+		});
+			connection.query("SELECT * FROM Student_Details where SID = ?",[req.session.SID],function (err, result, fields) {
+			if (err) throw err;
+			res.redirect('/StudentFunc');
+	});
+	}
+		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
+	});
 app.get('/View_Marks/:Sname', function(req,res){
 	if(req.session.loggedin){
 		      connection.query("SELECT * FROM marks where SID =? and  Societyname =?",[req.session.SID,req.params['Sname']],function(err,result2,fields){
 	        res.send(result2[0]);
 	       });
 	  }
-	});
-app.get('/SocietyHeadFunc', function(req,res){
-		if(req.session.loggedin){
-			res.sendFile(__dirname + '/SocietyHead/SocietyheadMain.html')
-	}
-		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 	});
 app.post('/RequestInitiation',  uploadrequest.single('Certificate'),function(req,res){
 	if(req.session.loggedin){
@@ -201,6 +199,15 @@ app.post('/RequestInitiation',  uploadrequest.single('Certificate'),function(req
 }
 		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
+
+app.get('/SocietyHeadFunc', function(req,res){
+		if(req.session.loggedin){
+			sname = req.session.Sname;
+			res.render('SocietyHead',{data:sname});
+		//	res.sendFile(__dirname + '/SocietyHead/SocietyheadMain.html')
+	}
+		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
+	});
 app.get('/RequestDisplay', function(req,res){
 	if(req.session.loggedin){
 							var s="Pending";
@@ -212,20 +219,17 @@ app.get('/Requestreject/:RID', function(req,res){
 		if(req.session.loggedin){
 			var t="Reject";
 			connection.query("Update pending_requests  SET Request_Status=? where Request_ID=? ",[t,req.params['RID']],function(err,result1){});
-			res.redirect('/SocietyHeadFunc');
 		}
 		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
 app.get('/Requestapprove/:Sname', function(req,res){
 		if(req.session.loggedin){
-
 		async.series([
 		function(callback) {
 					connection.query("Select * from pending_requests,student_details  where pending_requests.SID=student_details.SID and Request_ID=?",[req.params['Sname']],function (err, result1, fields) {
 					s1 =result1[0];	if (err) throw err;
 					callback();});
 		    },
-
  		function(callback) {
 			values=[s1.Society_Associated,s1.Event_Name,s1.Event_Location,s1.Event_Date];
 			connection.query("Insert into event_details(Society_Name,Event_Name,Event_Location,Event_Date) Values(?,?,?,?)",values,function(err,result){
@@ -251,20 +255,17 @@ app.get('/Requestapprove/:Sname', function(req,res){
 			else if((s1.Achievement_Type=="First" || s1.Achievement_Type=="Second" || s1.Achievement_Type=="Third" ||s1.Achievement_Type=="Fourth")&&s1.Institute_Type=="National_NP")
 			m2=m1.PEC_Award;
 
-			connection.query("Select * from event_details where Event_Name=?",[s1.Event_Name],function(err,result,fields){
+			connection.query("Select * from event_details where Event_Name=? and Society_Name =? and Event_Location=? and Event_Date=? ",[s1.Event_Name,s1.Society_Associated,s1.Event_Location,s1.Event_Date],function(err,result,fields){
 			w=result[0];
 			callback();});
 		},
-
 		function(callback){
-			console.log(m2);
 				val=[w.Event_ID,"Event",s1.SID,s1.Achievement_Type,m2];
 				connection.query("Insert into activity_mapping(Activity_ID,Activity_Type,SID,Achievement_Type,Marks) Values(?,?,?,?,?)",val,function(err,result){
 				if(err) throw err;
 				callback();});
 			},
-
-			function(callback){
+		function(callback){
 				connection.query("Select * From marks where SID=? and Societyname =?",[s1.SID,s1.Society_Associated],function (err, result4, fields){
 					if(err) throw err;
 					rows= result4;	callback();});
@@ -280,7 +281,6 @@ app.get('/Requestapprove/:Sname', function(req,res){
 				r=result[0];
 				callback();});
 		},
-
 		function(callback){
 
 				if(s1.Achievement_Type=="Participation" && s1.Year=="First"){
@@ -349,28 +349,10 @@ app.get('/Requestapprove/:Sname', function(req,res){
 	]);
 
 var t ="Accept";
-connection.query("Update pending_requests  SET Request_Status=? where Request_ID=?    ",[t,req.params['Sname']],function(err,result1){
+connection.query("Update pending_requests  SET Request_Status=? where Request_ID=?",[t,req.params['Sname']],function(err,result1){
 if(err) throw err;});
-
-res.redirect('/SocietyHeadFunc');
 }
 });
-app.post('/UpdateStProfile', function(req,res){
-	if(req.session.loggedin){
-		var values= [req.body.address,req.body.Email,req.body.Mobile,req.body.Year,req.body.CGPA,req.body.Backlog,req.session.SID];
-		connection.query("Update Student_Details set address= ? ,email = ?, Mobile= ? ,Year= ?, CGPA= ? , backlog= ? where SID = ?",values,function (err, result, fields) {
-    if (err) throw err;
-	});
-		connection.query("SELECT * FROM Student_Details where SID = ?",[req.session.SID],function (err, result, fields) {
-		if (err) throw err;
-		res.redirect('/StudentFunc');
-});
-}
-	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
-});
-
-
-
 app.post('/AddEventDetails', upload.single('Upload_Certification_Data'),function(req,res){
 	if(req.session.loggedin){
 		var p,a,o;
@@ -409,42 +391,45 @@ async.series([
 			callback();});
 		},
 		function(callback){
+
 				while(p_obj[pitr++]){
-				var type= "Participation";var actualp;
+								var type= "Participation";var actualp;
 
-				if(p) actualp = pmarks[0].PEC_Participation;
-				else actualp=0;
+								if(p) actualp = pmarks[0].PEC_Participation; else actualp=0;
+								var activity_type ="Event";
 
-				var activity_type ="Event";
-				var values3= [eventId,activity_type,p_obj[pitr-1].SID,type,actualp];
-				connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values3,function (err, result3, fields){if (err) throw err;});
+								var values3= [eventId,activity_type,p_obj[pitr-1].SID,type,actualp];
+								sid = p_obj[pitr-1].SID;
+								connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values3,function (err, result3, fields){if (err) throw err;});
 
-				connection.query("Select * From marks where SID=? and Societyname =?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){
-				if(result4.length == 0) connection.query("Insert into marks(SID,Societyname) Values(?,?)",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){});})
+								connection.query("Insert into marks(SID,Societyname) Values(?,?) ",[sid,req.session.Sname],function (err, result4, fields){});
+								if(p){
 
-				if(p){
+											connection.query("SELECT * FROM student_details,marks where marks.SID = student_details.SID and marks.SID = ? and Societyname=?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result5, fields) {
+											year = result5[0].Year;
+											if(year =="First"){
+													var toupdate = actualp + result5[0].P1;
+													connection.query("Update marks set P1= ? where SID=? and Societyname =?",[toupdate,result5[0].SID,req.session.Sname],
+													function (err, result3, fields){});
+											}
+											else if(year == "Second"){
+														var toupdate = actualp + result5[0].P2;
+														connection.query("Update marks set P2= ? where SID=? and Societyname =?",[toupdate,result5[0].SID,req.session.Sname],
+														function (err, result3, fields){});
+											}
+											else if(year == "Third"){
+														var toupdate = actualp + result5[0].P3;
+														connection.query("Update marks set P3= ? where SID=? and Societyname =?",[toupdate,result5[0].SID,req.session.Sname],
+														function (err, result3, fields){if(err) console.log(err);});
+											}
+											else if(year == "Fourth"){
+													var toupdate = actualp + result5[0].P4;
+														connection.query("Update marks set P4= ? where SID=? and Societyname =?",[toupdate,result5[0].SID,req.session.Sname],
+														function (err, result3, fields){});
+											}
 
-							connection.query("SELECT * FROM student_details,marks where marks.SID = student_details.SID and marks.SID = ? and Societyname=?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result5, fields) {
-							year = result5[0].Year;
-							if(year =="First"){
-									connection.query("Update marks set P1= ? where SID=? and Societyname =?",[actualp + result5[0].P1,result5[0].SID,req.session.Sname],
-									function (err, result3, fields){});
-							}
-							else if(year == "Second"){
-										connection.query("Update marks set P2= ? where SID=? and Societyname =?",[actualp + result5[0].P2,result5[0].SID,req.session.Sname],
-										function (err, result3, fields){});
-							}
-							else if(year == "Third"){
-										connection.query("Update marks set P3= ? where SID=? and Societyname =?",[actualp + result5[0].P3,result5[0].SID,req.session.Sname],
-										function (err, result3, fields){});
-							}
-							else if(year == "Fourth"){
-										connection.query("Update marks set P4= ? where SID=? and Societyname =?",[actualp + result5[0].P4,result5[0].SID,req.session.Sname],
-										function (err, result3, fields){});
-							}
-
-						});
-					}
+										});
+									}
 	}
 	callback();
 },
@@ -459,26 +444,29 @@ async.series([
 			var values= [eventId,activity_type,a_obj[aitr-1].SID,a_obj[aitr-1].Position,actuala];
 			connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
 
-			connection.query("Select * From marks where SID=? and Societyname =?",[a_obj[aitr-1].SID,req.session.Sname],function (err, result4, fields){
-			if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[a_obj[aitr-1].SID,req.session.Sname],function (err, result4, fields){});})
-
+				sid = a_obj[aitr-1].SID;
+				connection.query("Insert into marks(SID,Societyname) Values(?,?)",[sid,req.session.Sname],function (err, result4, fields){});
 			if(a){
 						connection.query("SELECT * FROM student_details,marks where marks.SID = student_details.SID and marks.SID = ? and Societyname=?",[a_obj[aitr-1].SID,req.session.Sname],function (err, result, fields) {
 						year = result[0].Year;
 						if(year =="First"){
-							connection.query("Update marks set A1=? where SID=? and Societyname =?",[actuala + result[0].A1,result[0].SID,req.session.Sname],
+							var toupdate = actuala + result[0].A1;
+							connection.query("Update marks set A1=? where SID=? and Societyname =?",[toupdate,result[0].SID,req.session.Sname],
 							function (err, result3, fields){});
 						}
 						else if(year == "Second"){
-							connection.query("Update marks set A2=? where SID=? and Societyname =?",[actuala + result[0].A2,result[0].SID,req.session.Sname],
+								var toupdate = actuala + result[0].A2;
+							connection.query("Update marks set A2=? where SID=? and Societyname =?",[toupdate,result[0].SID,req.session.Sname],
 							function (err, result3, fields){});
 						}
 						else if(year == "Third"){
-							connection.query("Update marks set A3= ? where SID=? and Societyname =?",[actuala + result[0].A3,result[0].SID,req.session.Sname],
+								var toupdate = actuala + result[0].A3;
+							connection.query("Update marks set A3= ? where SID=? and Societyname =?",[toupdate,result[0].SID,req.session.Sname],
 							function (err, result3, fields){});
 						}
 						else if(year == "Fourth"){
-							connection.query("Update marks set A4=? where SID=? and Societyname =?",[actuala+ result[0].A4,result[0].SID,req.session.Sname],
+								var toupdate = actuala + result[0].A4;
+							connection.query("Update marks set A4=? where SID=? and Societyname =?",[toupdate,result[0].SID,req.session.Sname],
 							function (err, result3, fields){});
 						}
 					});
@@ -500,27 +488,31 @@ function(callback){
 			var values= [eventId,activity_type,o_obj[oitr-1].SID,type,actualo];
 			connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
 
-			connection.query("Select * From marks where SID=? and Societyname =?",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){
-			if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){});})
+			sid = o_obj[oitr-1].SID;
+			connection.query("Insert into marks(SID,Societyname) Values(?,?)",[sid,req.session.Sname],function (err, result4, fields){});
 
-		if(o && (oitr-1)<= omarks[0].Max_Organizers){
+			if(o && (oitr-1)<= omarks[0].Max_Organizers){
 
 					connection.query("SELECT * FROM student_details,marks where marks.SID = student_details.SID and marks.SID = ? and Societyname=?",[o_obj[oitr-1].SID,req.session.Sname],function (err, result, fields) {
 					year = result[0].Year;
 					if(year =="First"){
-						connection.query("Update marks set O1=? where SID=? and Societyname =?",[actualo + result[0].O1,result[0].SID,req.session.Sname],
+							var toupdate = actualo + result[0].O1;
+						connection.query("Update marks set O1=? where SID=? and Societyname =?",[toupdate,result[0].SID,req.session.Sname],
 						function (err, result3, fields){});
 					}
 					else if(year == "Second"){
-						connection.query("Update marks set O2= ? where SID=? and Societyname =?",[actualo + result[0].O2,result[0].SID,req.session.Sname],
+						var toupdate = actualo + result[0].O2;
+						connection.query("Update marks set O2= ? where SID=? and Societyname =?",[toupdate,result[0].SID,req.session.Sname],
 						function (err, result3, fields){});
 					}
 					else if(year == "Third"){
-												connection.query("Update marks set O3=? where SID=? and Societyname =?",[actualo + result[0].O3,result[0].SID,req.session.Sname],
+						var toupdate = actualo + result[0].O3;
+						connection.query("Update marks set O3=? where SID=? and Societyname =?",[toupdate,result[0].SID,req.session.Sname],
 						function (err, result3, fields){});
 					}
 					else if(year == "Fourth"){
-						connection.query("Update marks set O4=? where SID=? and Societyname =?",[actualo + result[0].O4,result[0].SID,req.session.Sname],
+						var toupdate = actualo + result[0].O4;
+						connection.query("Update marks set O4=? where SID=? and Societyname =?",[toupdate,result[0].SID,req.session.Sname],
 						function (err, result3, fields){});
 					}
 				});
@@ -535,7 +527,6 @@ function(callback){
 }
 	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
-
 app.post('/AddWorkshopDetails', upload.single('Upload_Certification_Data'), function(req,res){
 	if(req.session.loggedin){
 			var p,o;
@@ -583,8 +574,8 @@ app.post('/AddWorkshopDetails', upload.single('Upload_Certification_Data'), func
 					var values3= [workshopId,activity_type,p_obj[pitr-1].SID,type,actualp];
 					connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values3,function (err, result3, fields){if (err) throw err;});
 
-					connection.query("Select * From marks where SID=? and Societyname =?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){
-					if(result4.length == 0) connection.query("Insert into marks(SID,Societyname) Values(?,?)",[p_obj[pitr-1].SID,req.session.Sname],function (err, result4, fields){});})
+						sid = p_obj[pitr-1].SID;
+					  connection.query("Insert into marks(SID,Societyname) Values(?,?)",[sid,req.session.Sname],function (err, result4, fields){});
 
 					if(p){
 								connection.query("SELECT * FROM student_details,marks where marks.SID = student_details.SID and marks.SID = ? and Societyname=?",[p_obj[pitr-1].SID,req.session.Sname],function (err, result5, fields) {
@@ -601,8 +592,6 @@ app.post('/AddWorkshopDetails', upload.single('Upload_Certification_Data'), func
 
 											connection.query("Update marks set P3= ? where SID=? and Societyname =?",[actualp + result5[0].P3,result5[0].SID,req.session.Sname],
 											function (err, result3, fields){
-											console.log(result3);
-											console.log(err);
 											});
 								}
 								else if(year == "Fourth"){
@@ -628,9 +617,9 @@ app.post('/AddWorkshopDetails', upload.single('Upload_Certification_Data'), func
 				var activity_type ="Workshop";
 				var values= [workshopId,activity_type,o_obj[oitr-1].SID,type,actualo];
 				connection.query("Insert into activity_mapping Values(?,?,?,?,?)",values,function (err, result3, fields){if (err) throw err;});
-	
-				connection.query("Select * From marks where SID=? and Societyname =?",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){
-				if(result4.length == 0) connection.query("Insert into marks Value(?,?)",[o_obj[oitr-1].SID,req.session.Sname],function (err, result4, fields){});})
+
+				sid = o_obj[oitr-1].SID;
+				connection.query("Insert into marks Value(?,?)",[sid,req.session.Sname],function (err, result4, fields){});
 
 			if(o && (oitr-1)<= omarks[0].Max_Organizers){
 
@@ -645,7 +634,7 @@ app.post('/AddWorkshopDetails', upload.single('Upload_Certification_Data'), func
 							function (err, result3, fields){});
 						}
 						else if(year == "Third"){
-													connection.query("Update marks set O3=? where SID=? and Societyname =?",[actualo + result[0].O3,result[0].SID,req.session.Sname],
+							connection.query("Update marks set O3=? where SID=? and Societyname =?",[actualo + result[0].O3,result[0].SID,req.session.Sname],
 							function (err, result3, fields){});
 						}
 						else if(year == "Fourth"){
@@ -664,6 +653,7 @@ app.post('/AddWorkshopDetails', upload.single('Upload_Certification_Data'), func
 	}
 		else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 	});
+
 app.get('/CollegeAdmin', function(req,res){
 	if(req.session.loggedin){
 		connection.query("SELECT * FROM participation_marks, organizing_marks ,eligibilty,award_distribution LIMIT 1",function (err, result, fields) {
@@ -673,7 +663,6 @@ app.get('/CollegeAdmin', function(req,res){
 	}
 	else res.send("<h1>Session Timed Out Please <a href=\"/login\"> Login</a> again");
 });
-
 app.post('/UpdateCriteria', function(req,res){
 	if(req.session.loggedin){
 
@@ -742,7 +731,6 @@ app.get('/IcEligible/:Sname', function(req,res){
 
 }
 });
-
 app.get('/AwardList/:AwardType', function(req,res){
     if(req.session.loggedin){
 			if(req.params['AwardType']=="COA"){
@@ -945,27 +933,22 @@ app.get('/logout', function(req,res){
 	if(req.session.loggedin){req.session.destroy();}
 	res.redirect('/');
 });
-
 app.get('/homeredirect', function(req,res){
 	if(req.session.loggedin){}
 	else res.send("<h1>To access this functionality Please <a href=\"/login\"> Login</a>");
 });
-
 app.get('/DisplayCriteria', function(req,res){
 		connection.query("SELECT * FROM participation_marks, organizing_marks ,eligibilty,award_distribution LIMIT 1",function (err, result, fields) {
 		if (err) throw err;
 		res.render('DisplayCriteria',{pmarks:result[0],omarks:result[0],eligibility:result[0],award:result[0]});
 	});
 });
-
 app.get('/TechnicalDispaly', function(req,res){
 	res.sendFile(__dirname + '/SocietiesDetail/technical.html');
 });
-
 app.get('/CulturalDisplay', function(req,res){
 	res.sendFile(__dirname + '/SocietiesDetail/cultural.html');
 });
-
 app.listen(3000, '0.0.0.0', function() {
 	console.log('Hosting started...');
 });

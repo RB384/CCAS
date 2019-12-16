@@ -138,19 +138,23 @@ h4{font-size:25px; font-family: calibri;}
 </header>
 
 <body ng-app>
-		<div class="sidenav split left anch" style="width:300px;">
+		<div class="sidenav split left anch" style="width:300px;" ng-init="Background=true;">
 			<img src="peclogo.png" width="270px" height="270px" style="margin: 0px 10px";>
 			<br><br><br>
-			<a ng-click="Award=false;IC=false; IC=false;COA=false;COE=false;Specify_Criteria=true; ">Specify Criteria</a>
-			<a ng-click="Award=false;IC=false;IC=false; COA=true;COE=false;Specify_Criteria=false; " >COA Elgible List</a>
-			<a ng-click="Award=false;IC=false; IC=false;COA=false;COE=true;Specify_Criteria=false; ">COE Eligible List</a>
-			<a ng-click="Award=false;IC=false; IC=true;COA=false;COE=false;Specify_Criteria=false; ">IC Eligible List</a>
-			<a ng-click="Award=true;IC=false; IC=false;COA=false;COE=false;Specify_Criteria=false; ">Generate Award List</a>
+			<a ng-click="Background =false;Award=false;IC=false;COA=false;COE=false;Specify_Criteria=true; ">Specify Criteria</a>
+			<a ng-click="Background =false;Award=false;IC=false; COA=true;COE=false;Specify_Criteria=false; " >COA Elgible List</a>
+			<a ng-click="Background=false;Award=false;IC=false;COA=false;COE=true;Specify_Criteria=false; ">COE Eligible List</a>
+			<a ng-click="Background=false;Award=false; IC=true;COA=false;COE=false;Specify_Criteria=false; ">IC Eligible List</a>
+			<a ng-click="Background=false;Award=true;IC=false;COA=false;COE=false;Specify_Criteria=false; ">Generate Award List</a>
 			<a href="/logout">Logout</a>
 		</div>
 
 		<div class="othernav split right" >
 		<br><br>
+			<div ng-if="Background">
+				<img src="AdminBg.jpg" style="margin-left:23px;margin-top:-10px;" width="100%" height="120%">
+			</div>
+
 			<div ng-if="Specify_Criteria" style="padding:10px 10px 10px 40px">
 				<h3 style="font-size:25px; font-family: calibri;">
 				<form  name="Request" ng-model="Request" action="/UpdateCriteria" method="POST">
